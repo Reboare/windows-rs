@@ -2,14 +2,13 @@ use super::*;
 
 // TODO: need to gate all types
 
-pub fn gen_interface(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStream {
+pub fn gen_interface(def: &TypeDef, gen: &Gen) -> TokenStream {
     let name = gen_type_name(def, gen);
     let struct_phantoms = gen_phantoms(def);
     let constraints = gen_constraints(def);
     let type_signature = gen_guid_signature(def, &format!("{{{:#?}}}", def.guid()));
     let guid = gen_type_guid(def, gen);
 
-    if include == TypeInclude::Full {
         let abi_name = gen_abi_name(def, gen);
         let abi_phantoms = gen_phantoms(def);
 
@@ -110,21 +109,6 @@ pub fn gen_interface(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStr
                 #(pub #abi_phantoms,)*
             ) where #constraints;
         }
-    } else {
-        quote! {
-            #[repr(transparent)]
-            #[derive(::core::cmp::PartialEq, ::core::cmp::Eq, ::core::clone::Clone, ::core::fmt::Debug)]
-            #[doc(hidden)]
-            pub struct #name(pub ::windows::core::IInspectable, #(#struct_phantoms,)*) where #constraints;
-            unsafe impl<#constraints> ::windows::core::Interface for #name {
-                type Vtable = <::windows::core::IUnknown as ::windows::core::Interface>::Vtable;
-                const IID: ::windows::core::GUID = #guid;
-            }
-            unsafe impl<#constraints> ::windows::core::RuntimeType for #name {
-                const SIGNATURE: ::windows::core::ConstBuffer = #type_signature;
-            }
-        }
-    }
 }
 
 fn interfaces(def: &TypeDef) -> Vec<InterfaceInfo> {

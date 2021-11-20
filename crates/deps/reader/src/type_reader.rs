@@ -37,7 +37,6 @@ impl TypeReader {
         let files = workspace_winmds();
         let mut nested = HashMap::<Row, BTreeMap<&'static str, TypeDef>>::new();
         let mut types = TypeTree::from_namespace("");
-        types.include = true;
 
         for file in files {
             let row_count = file.type_def_table().row_count;
@@ -102,62 +101,17 @@ impl TypeReader {
         self.types.namespaces()
     }
 
-    pub fn import_namespace(&mut self, namespace: &str) -> bool {
-        // TODO: borrow hackery going on here...
-        if let Some(namespace) = Self::get().types.get_namespace(namespace) {
-            for name in namespace.types.keys() {
-                self.import_type_include(namespace.namespace, name, TypeInclude::Full);
-            }
-
-            true
-        } else {
-            false
-        }
-    }
-
-    pub fn import_type(&mut self, namespace: &str, name: &str) -> bool {
-        self.import_type_include(namespace, name, TypeInclude::Full)
-    }
-
-    pub fn include_type_name<T: HasTypeName>(&mut self, type_name: T, include: TypeInclude) -> bool {
-        self.import_type_include(type_name.namespace(), type_name.name(), include)
-    }
-
-    fn import_type_include(&mut self, namespace: &str, name: &str, mut include: TypeInclude) -> bool {
-        // The `Windows.Foundation` namespace includes supporting types that should
-        // always be fully-defined when included because their methods are almost
-        // always needed.
-        if include != TypeInclude::Full && namespace.starts_with("Windows.Foundation") {
-            include = TypeInclude::Full;
-        }
-
-        if let Some(entry) = self.types.get_namespace_mut(namespace).and_then(|tree| tree.get_type_mut(name)) {
-            if include == TypeInclude::Full {
-                if entry.include != TypeInclude::Full {
-                    entry.include = TypeInclude::Full;
-                    entry.def.iter().for_each(|def| def.include_dependencies(include));
-                }
-            } else if entry.include == TypeInclude::None {
-                entry.include = TypeInclude::Minimal;
-                entry.def.iter().for_each(|def| def.include_dependencies(include));
-            }
-
-            true
-        } else {
-            false
-        }
-    }
-
     pub fn nested_types(&'static self, enclosing: &TypeDef) -> Option<&BTreeMap<&'static str, TypeDef>> {
         self.nested.get(&enclosing.row)
     }
 
-    pub fn get_type_entry<T: HasTypeName>(&'static self, type_name: T) -> Option<&TypeEntry> {
+    pub fn get_type_entry<T: HasTypeName>(&'static self, type_name: T) -> Option<&Vec<ElementType>> {
         self.types.get_namespace(type_name.namespace()).and_then(|tree| tree.get_type(type_name.name()))
     }
 
+    // TODO: Why is this using "first"?
     pub fn get_type<T: HasTypeName>(&'static self, type_name: T) -> Option<&ElementType> {
-        self.types.get_namespace(type_name.namespace()).and_then(|tree| tree.get_type(type_name.name())).and_then(|entry| entry.def.first())
+        self.types.get_namespace(type_name.namespace()).and_then(|tree| tree.get_type(type_name.name())).and_then(|entry| entry.first())
     }
 
     pub fn expect_type_def<T: HasTypeName>(&'static self, type_name: T) -> TypeDef {

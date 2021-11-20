@@ -1,14 +1,17 @@
 use rayon::prelude::*;
 use std::io::prelude::*;
+use reader::*;
+use quote::*;
+use gen::*;
 
 fn main() {
     let start = std::time::Instant::now();
-    let mut output = std::path::PathBuf::from(reader::workspace_dir());
+    let mut output = std::path::PathBuf::from(workspace_dir());
     output.push("crates/deps/sys/src/Windows");
     let _ = std::fs::remove_dir_all(&output);
     output.pop();
 
-    let reader = reader::TypeReader::get_mut();
+    let reader = TypeReader::get_mut();
     include_all(&mut reader.types);
 
     let root = reader.types.get_namespace("Windows").unwrap();
@@ -24,7 +27,7 @@ fn main() {
     println!("Elapsed: {} ms", start.elapsed().as_millis());
 }
 
-fn write_toml(output: &std::path::Path, tree: &reader::TypeTree) {
+fn write_toml(output: &std::path::Path, tree: &TypeTree) {
     let mut file = std::fs::File::create(&output).unwrap();
 
     file.write_all(
@@ -65,14 +68,14 @@ default = []
     write_features(&mut file, tree.namespace, tree);
 }
 
-fn write_features(file: &mut std::fs::File, root: &'static str, tree: &reader::TypeTree) {
+fn write_features(file: &mut std::fs::File, root: &'static str, tree: &TypeTree) {
     for tree in tree.namespaces.values() {
         write_feature(file, root, tree);
         write_features(file, root, tree);
     }
 }
 
-fn write_feature(file: &mut std::fs::File, root: &'static str, tree: &reader::TypeTree) {
+fn write_feature(file: &mut std::fs::File, root: &'static str, tree: &TypeTree) {
     if !tree.include {
         return;
     }
@@ -88,17 +91,7 @@ fn write_feature(file: &mut std::fs::File, root: &'static str, tree: &reader::Ty
     }
 }
 
-fn include_all(tree: &mut reader::TypeTree) {
-    tree.include = true;
-
-    tree.types.values_mut().for_each(|entry| entry.include = reader::TypeInclude::Full);
-
-    tree.namespaces.values_mut().for_each(include_all);
-
-    tree.exclude_namespace("Windows.Win32.Interop");
-}
-
-fn collect_trees<'a>(output: &std::path::Path, root: &'static str, tree: &'a reader::TypeTree, trees: &mut Vec<&'a reader::TypeTree>) {
+fn collect_trees<'a>(output: &std::path::Path, root: &'static str, tree: &'a TypeTree, trees: &mut Vec<&'a TypeTree>) {
     trees.push(tree);
 
     tree.namespaces.values().for_each(|tree| collect_trees(output, root, tree, trees));
@@ -108,18 +101,14 @@ fn collect_trees<'a>(output: &std::path::Path, root: &'static str, tree: &'a rea
     std::fs::create_dir_all(&path).unwrap();
 }
 
-fn gen_tree(output: &std::path::Path, root: &'static str, tree: &reader::TypeTree) {
-    if !tree.include {
-        return;
-    }
-
+fn gen_tree(output: &std::path::Path, root: &'static str, tree: &TypeTree) {
     println!("{}", tree.namespace);
     let mut path = std::path::PathBuf::from(output);
 
     path.push(tree.namespace.replace('.', "/"));
     path.push("mod.rs");
 
-    let tokens = gen::gen_sys_file(root, tree, false);
+    let tokens = gen_sys_file(root, tree, false);
 
     let mut child = std::process::Command::new("rustfmt").stdin(std::process::Stdio::piped()).stdout(std::process::Stdio::piped()).spawn().expect("Failed to spawn `rustfmt`");
     let mut stdin = child.stdin.take().expect("Failed to open stdin");
@@ -129,4 +118,27 @@ fn gen_tree(output: &std::path::Path, root: &'static str, tree: &reader::TypeTre
     let output = child.wait_with_output().unwrap();
     assert!(output.status.success());
     std::fs::write(&path, String::from_utf8(output.stdout).expect("Failed to parse UTF-8")).unwrap();
+}
+
+fn gen_sys_file(root: &'static str, tree: &TypeTree, ignore_windows_features: bool) -> TokenStream {
+    let gen = Gen { relative: tree.namespace, root, ignore_windows_features, docs: false, build: false };
+    let types = gen_sys(tree, &gen);
+
+    let namespaces = tree.namespaces.iter().filter_map(move |(name, tree)| {
+        if !tree.include {
+            return None;
+        }
+
+        let name = to_ident(name);
+        let namespace = tree.namespace[tree.namespace.find('.').unwrap() + 1..].replace('.', "_");
+        Some(quote! {
+            #[cfg(feature = #namespace)] pub mod #name;
+        })
+    });
+
+    quote! {
+        #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
+        #(#namespaces)*
+        #types
+    }
 }

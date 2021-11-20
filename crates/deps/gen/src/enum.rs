@@ -1,6 +1,6 @@
 use super::*;
 
-pub fn gen_enum(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStream {
+pub fn gen_enum(def: &TypeDef, gen: &Gen) -> TokenStream {
     let name = gen_type_name(def, gen);
     let underlying_type = def.underlying_type();
 
@@ -54,9 +54,6 @@ pub fn gen_enum(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStream {
 
     let fields: Vec<Field> = def.fields().collect();
 
-    // A minimal enum definition  still include all fields unless there are too many fields.
-    // In such cases, the build script simply needs to import the type directly to generate all fields.
-    let fields = if include == TypeInclude::Full || fields.len() < 100 {
         let fields = fields.iter().filter_map(|field| {
             if field.is_literal() {
                 let field_name = to_ident(field.name());
@@ -87,7 +84,7 @@ pub fn gen_enum(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStream {
             }
         });
 
-        if def.is_scoped() {
+        let fields = if def.is_scoped() {
             quote! {
                 impl #name {
                     #(#fields)*
@@ -97,10 +94,7 @@ pub fn gen_enum(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStream {
             quote! {
                 #(#fields)*
             }
-        }
-    } else {
-        TokenStream::new()
-    };
+        };
 
     let runtime_type = if def.is_winrt() {
         let signature = Literal::byte_string(def.type_signature().as_bytes());

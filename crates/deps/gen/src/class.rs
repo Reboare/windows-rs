@@ -74,14 +74,13 @@ impl Class {
         result
     }
 
-    pub fn gen(&self, gen: &Gen, include: TypeInclude) -> TokenStream {
+    pub fn gen(&self, gen: &Gen) -> TokenStream {
         let name = gen_type_name(&self.0, gen);
         let interfaces = self.interfaces();
         let features = gen.class_features(&self.0);
         let cfg = gen.gen_cfg(&features);
         let doc = gen.gen_cfg_doc(&features);
 
-        if include == TypeInclude::Full {
             let methods = InterfaceInfo::gen_methods(&interfaces, gen);
             let runtime_name = format!("{}", self.0.type_name());
 
@@ -193,29 +192,6 @@ impl Class {
                     }
                 }
             }
-        } else {
-            let default_interface = interfaces.iter().find(|i| i.kind == InterfaceKind::Default).unwrap();
-
-            let guid = gen_type_guid(&default_interface.def, gen);
-            let type_signature = Literal::byte_string(self.0.type_signature().as_bytes());
-
-            quote! {
-                #cfg
-                #[repr(transparent)]
-                #[derive(::core::cmp::PartialEq, ::core::cmp::Eq, ::core::clone::Clone, ::core::fmt::Debug)]
-                #[doc(hidden)]
-                pub struct #name(pub ::windows::core::IInspectable);
-                #cfg
-                unsafe impl ::windows::core::Interface for #name {
-                    type Vtable = <::windows::core::IUnknown as ::windows::core::Interface>::Vtable;
-                    const IID: ::windows::core::GUID = #guid;
-                }
-                #cfg
-                unsafe impl ::windows::core::RuntimeType for #name {
-                    const SIGNATURE: ::windows::core::ConstBuffer = ::windows::core::ConstBuffer::from_slice(#type_signature);
-                }
-            }
-        }
     }
 
     fn gen_base_conversions<'a>(&'a self, from: &'a TokenStream, gen: &'a Gen) -> impl Iterator<Item = TokenStream> + 'a {

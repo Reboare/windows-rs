@@ -1,10 +1,9 @@
 use super::*;
 
-pub fn gen_com_interface(def: &TypeDef, gen: &Gen, include: TypeInclude) -> TokenStream {
+pub fn gen_com_interface(def: &TypeDef, gen: &Gen) -> TokenStream {
     let name = gen_type_name(def, gen);
     let guid = gen_type_guid(def, gen);
 
-    if include == TypeInclude::Full {
         let abi_name = gen_abi_name(def, gen);
 
         let (bases, inspectable) = def.base_interfaces();
@@ -129,18 +128,6 @@ pub fn gen_com_interface(def: &TypeDef, gen: &Gen, include: TypeInclude) -> Toke
                 #(#abi_signatures)*
             );
         }
-    } else {
-        quote! {
-            #[repr(transparent)]
-            #[derive(::core::cmp::PartialEq, ::core::cmp::Eq, ::core::clone::Clone, ::core::fmt::Debug)]
-            #[doc(hidden)]
-            pub struct #name(pub ::windows::core::IUnknown);
-            unsafe impl ::windows::core::Interface for #name {
-                type Vtable = <::windows::core::IUnknown as ::windows::core::Interface>::Vtable;
-                const IID: ::windows::core::GUID = #guid;
-            }
-        }
-    }
 }
 
 fn gen_method(vtable_offset: usize, method: &MethodDef, method_names: &mut BTreeMap<String, u32>, gen: &Gen) -> TokenStream {
