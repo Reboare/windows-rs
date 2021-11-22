@@ -18,7 +18,7 @@ fn gen_types(tree: &TypeTree, gen: &Gen) -> TokenStream {
     let mut tokens = TokenStream::new();
 
     for entry in tree.types.values() {
-        for def in &entry.def {
+        for def in entry {
             tokens.combine(&gen_type(def, gen));
         }
     }
@@ -359,7 +359,7 @@ fn gen_functions(tree: &TypeTree, gen: &Gen) -> TokenStream {
 fn gen_function_if(entry: &Vec<ElementType>, gen: &Gen) -> TokenStream {
     let mut tokens = TokenStream::new();
 
-    for def in &entry.def {
+    for def in entry {
         if let ElementType::MethodDef(def) = def {
             tokens.combine(&gen_function(def, gen));
         }

@@ -43,7 +43,7 @@ fn gen_namespaces<'a>(namespaces: &'a BTreeMap<&'static str, TypeTree>) -> impl 
 pub fn gen_type_entry(entry: &Vec<ElementType>, gen: &Gen) -> TokenStream {
     let mut tokens = TokenStream::new();
 
-    for def in &entry.def {
+    for def in entry {
         tokens.combine(&match def {
             ElementType::TypeDef(def) => gen_type(&def.clone().with_generics(), gen),
             ElementType::MethodDef(def) => gen_function(def, gen),

@@ -12,8 +12,6 @@ fn main() {
     output.pop();
 
     let reader = TypeReader::get_mut();
-    include_all(&mut reader.types);
-
     let root = reader.types.get_namespace("Windows").unwrap();
 
     let mut trees = Vec::new();

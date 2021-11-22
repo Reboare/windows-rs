@@ -1,8 +1,6 @@
-mod build_macro;
 mod implement;
 mod implement_macro;
 
-use build_macro::*;
 use gen::*;
 use implement_macro::*;
 use quote::*;
