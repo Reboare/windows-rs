@@ -1,785 +1,783 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn BstrFromVector(psa: *const super::Com::SAFEARRAY, pbstr: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn ClearCustData(pcustdata: *mut super::Com::CUSTDATA);
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn CreateDispTypeInfo(pidata: *mut INTERFACEDATA, lcid: u32, pptinfo: *mut super::Com::ITypeInfo) -> ::windows_sys::core::HRESULT;
-    pub fn CreateErrorInfo(pperrinfo: *mut ICreateErrorInfo) -> ::windows_sys::core::HRESULT;
-    pub fn CreateOleAdviseHolder(ppoaholder: *mut IOleAdviseHolder) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn CreateStdDispatch(punkouter: ::windows_sys::core::IUnknown, pvthis: *mut ::core::ffi::c_void, ptinfo: super::Com::ITypeInfo, ppunkstddisp: *mut ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn CreateTypeLib(syskind: super::Com::SYSKIND, szfile: super::super::Foundation::PWSTR, ppctlib: *mut ICreateTypeLib) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn CreateTypeLib2(syskind: super::Com::SYSKIND, szfile: super::super::Foundation::PWSTR, ppctlib: *mut ICreateTypeLib2) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn DispCallFunc(pvinstance: *const ::core::ffi::c_void, ovft: usize, cc: super::Com::CALLCONV, vtreturn: u16, cactuals: u32, prgvt: *const u16, prgpvarg: *const *const super::Com::VARIANT, pvargresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn DispGetIDsOfNames(ptinfo: super::Com::ITypeInfo, rgsznames: *const super::super::Foundation::PWSTR, cnames: u32, rgdispid: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn DispGetParam(pdispparams: *const super::Com::DISPPARAMS, position: u32, vttarg: u16, pvarresult: *mut super::Com::VARIANT, puargerr: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn DispInvoke(_this: *mut ::core::ffi::c_void, ptinfo: super::Com::ITypeInfo, dispidmember: i32, wflags: u16, pparams: *mut super::Com::DISPPARAMS, pvarresult: *mut super::Com::VARIANT, pexcepinfo: *mut super::Com::EXCEPINFO, puargerr: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn DoDragDrop(pdataobj: super::Com::IDataObject, pdropsource: IDropSource, dwokeffects: u32, pdweffect: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn DosDateTimeToVariantTime(wdosdate: u16, wdostime: u16, pvtime: *mut f64) -> i32;
-    pub fn GetActiveObject(rclsid: *const ::windows_sys::core::GUID, pvreserved: *mut ::core::ffi::c_void, ppunk: *mut ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetAltMonthNames(lcid: u32, prgp: *mut *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    pub fn GetRecordInfoFromGuids(rguidtypelib: *const ::windows_sys::core::GUID, uvermajor: u32, uverminor: u32, lcid: u32, rguidtypeinfo: *const ::windows_sys::core::GUID, pprecinfo: *mut IRecordInfo) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn GetRecordInfoFromTypeInfo(ptypeinfo: super::Com::ITypeInfo, pprecinfo: *mut IRecordInfo) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserFree(param0: *const u32, param1: *const super::super::Graphics::Gdi::HRGN);
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserFree64(param0: *const u32, param1: *const super::super::Graphics::Gdi::HRGN);
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserMarshal(param0: *const u32, param1: *mut u8, param2: *const super::super::Graphics::Gdi::HRGN) -> *mut u8;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserMarshal64(param0: *const u32, param1: *mut u8, param2: *const super::super::Graphics::Gdi::HRGN) -> *mut u8;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserSize(param0: *const u32, param1: u32, param2: *const super::super::Graphics::Gdi::HRGN) -> u32;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserSize64(param0: *const u32, param1: u32, param2: *const super::super::Graphics::Gdi::HRGN) -> u32;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserUnmarshal(param0: *const u32, param1: *const u8, param2: *mut super::super::Graphics::Gdi::HRGN) -> *mut u8;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn HRGN_UserUnmarshal64(param0: *const u32, param1: *const u8, param2: *mut super::super::Graphics::Gdi::HRGN) -> *mut u8;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn IsAccelerator(haccel: super::super::UI::WindowsAndMessaging::HACCEL, caccelentries: i32, lpmsg: *mut super::super::UI::WindowsAndMessaging::MSG, lpwcmd: *mut u16) -> super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn LHashValOfNameSys(syskind: super::Com::SYSKIND, lcid: u32, szname: super::super::Foundation::PWSTR) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn LHashValOfNameSysA(syskind: super::Com::SYSKIND, lcid: u32, szname: super::super::Foundation::PSTR) -> u32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn LoadRegTypeLib(rguid: *const ::windows_sys::core::GUID, wvermajor: u16, wverminor: u16, lcid: u32, pptlib: *mut super::Com::ITypeLib) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn LoadTypeLib(szfile: super::super::Foundation::PWSTR, pptlib: *mut super::Com::ITypeLib) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn LoadTypeLibEx(szfile: super::super::Foundation::PWSTR, regkind: REGKIND, pptlib: *mut super::Com::ITypeLib) -> ::windows_sys::core::HRESULT;
-    pub fn OaBuildVersion() -> u32;
-    pub fn OaEnablePerUserTLibRegistration();
-    pub fn OleBuildVersion() -> u32;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreate(rclsid: *const ::windows_sys::core::GUID, riid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn OleCreateDefaultHandler(clsid: *const ::windows_sys::core::GUID, punkouter: ::windows_sys::core::IUnknown, riid: *const ::windows_sys::core::GUID, lplpobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleCreateEmbeddingHelper(clsid: *const ::windows_sys::core::GUID, punkouter: ::windows_sys::core::IUnknown, flags: u32, pcf: super::Com::IClassFactory, riid: *const ::windows_sys::core::GUID, lplpobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateEx(rclsid: *const ::windows_sys::core::GUID, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleCreateFontIndirect(lpfontdesc: *mut FONTDESC, riid: *const ::windows_sys::core::GUID, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateFromData(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateFromDataEx(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateFromFile(rclsid: *const ::windows_sys::core::GUID, lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, renderopt: u32, lpformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateFromFileEx(rclsid: *const ::windows_sys::core::GUID, lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateLink(pmklinksrc: super::Com::IMoniker, riid: *const ::windows_sys::core::GUID, renderopt: u32, lpformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateLinkEx(pmklinksrc: super::Com::IMoniker, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateLinkFromData(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateLinkFromDataEx(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateLinkToFile(lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, renderopt: u32, lpformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateLinkToFileEx(lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_UI_WindowsAndMessaging")]
-    pub fn OleCreateMenuDescriptor(hmenucombined: super::super::UI::WindowsAndMessaging::HMENU, lpmenuwidths: *mut OleMenuGroupWidths) -> isize;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleCreatePictureIndirect(lppictdesc: *mut PICTDESC, riid: *const ::windows_sys::core::GUID, fown: super::super::Foundation::BOOL, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleCreatePropertyFrame(hwndowner: super::super::Foundation::HWND, x: u32, y: u32, lpszcaption: super::super::Foundation::PWSTR, cobjects: u32, ppunk: *mut ::windows_sys::core::IUnknown, cpages: u32, ppageclsid: *mut ::windows_sys::core::GUID, lcid: u32, dwreserved: u32, pvreserved: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleCreatePropertyFrameIndirect(lpparams: *mut OCPFIPARAMS) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleCreateStaticFromData(psrcdataobj: super::Com::IDataObject, iid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn OleDestroyMenuDescriptor(holemenu: isize) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com_StructuredStorage")]
-    pub fn OleDoAutoConvert(pstg: super::Com::StructuredStorage::IStorage, pclsidnew: *mut ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn OleDraw(punknown: ::windows_sys::core::IUnknown, dwaspect: u32, hdcdraw: super::super::Graphics::Gdi::HDC, lprcbounds: *mut super::super::Foundation::RECT) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleDuplicateData(hsrc: super::super::Foundation::HANDLE, cfformat: u16, uiflags: u32) -> super::super::Foundation::HANDLE;
-    pub fn OleFlushClipboard() -> ::windows_sys::core::HRESULT;
-    pub fn OleGetAutoConvert(clsidold: *const ::windows_sys::core::GUID, pclsidnew: *mut ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleGetClipboard(ppdataobj: *mut super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleGetClipboardWithEnterpriseInfo(dataobject: *mut super::Com::IDataObject, dataenterpriseid: *mut super::super::Foundation::PWSTR, sourcedescription: *mut super::super::Foundation::PWSTR, targetdescription: *mut super::super::Foundation::PWSTR, datadescription: *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleGetIconOfClass(rclsid: *const ::windows_sys::core::GUID, lpszlabel: super::super::Foundation::PWSTR, fusetypeaslabel: super::super::Foundation::BOOL) -> isize;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleGetIconOfFile(lpszpath: super::super::Foundation::PWSTR, fusefileaslabel: super::super::Foundation::BOOL) -> isize;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleIconToCursor(hinstexe: super::super::Foundation::HINSTANCE, hicon: super::super::UI::WindowsAndMessaging::HICON) -> super::super::UI::WindowsAndMessaging::HCURSOR;
-    pub fn OleInitialize(pvreserved: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleIsCurrentClipboard(pdataobj: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleIsRunning(pobject: IOleObject) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_System_Com_StructuredStorage")]
-    pub fn OleLoad(pstg: super::Com::StructuredStorage::IStorage, riid: *const ::windows_sys::core::GUID, pclientsite: IOleClientSite, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleLoadFromStream(pstm: super::Com::IStream, iidinterface: *const ::windows_sys::core::GUID, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleLoadPicture(lpstream: super::Com::IStream, lsize: i32, frunmode: super::super::Foundation::BOOL, riid: *const ::windows_sys::core::GUID, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleLoadPictureEx(lpstream: super::Com::IStream, lsize: i32, frunmode: super::super::Foundation::BOOL, riid: *const ::windows_sys::core::GUID, xsizedesired: u32, ysizedesired: u32, dwflags: u32, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleLoadPictureFile(varfilename: super::Com::VARIANT, lplpdisppicture: *mut super::Com::IDispatch) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleLoadPictureFileEx(varfilename: super::Com::VARIANT, xsizedesired: u32, ysizedesired: u32, dwflags: u32, lplpdisppicture: *mut super::Com::IDispatch) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleLoadPicturePath(szurlorpath: super::super::Foundation::PWSTR, punkcaller: ::windows_sys::core::IUnknown, dwreserved: u32, clrreserved: u32, riid: *const ::windows_sys::core::GUID, ppvret: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleLockRunning(punknown: ::windows_sys::core::IUnknown, flock: super::super::Foundation::BOOL, flastunlockcloses: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleMetafilePictFromIconAndLabel(hicon: super::super::UI::WindowsAndMessaging::HICON, lpszlabel: super::super::Foundation::PWSTR, lpszsourcefile: super::super::Foundation::PWSTR, iiconindex: u32) -> isize;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleNoteObjectVisible(punknown: ::windows_sys::core::IUnknown, fvisible: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleQueryCreateFromData(psrcdataobject: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleQueryLinkFromData(psrcdataobject: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleRegEnumFormatEtc(clsid: *const ::windows_sys::core::GUID, dwdirection: u32, ppenum: *mut super::Com::IEnumFORMATETC) -> ::windows_sys::core::HRESULT;
-    pub fn OleRegEnumVerbs(clsid: *const ::windows_sys::core::GUID, ppenum: *mut IEnumOLEVERB) -> ::windows_sys::core::HRESULT;
-    pub fn OleRegGetMiscStatus(clsid: *const ::windows_sys::core::GUID, dwaspect: u32, pdwstatus: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleRegGetUserType(clsid: *const ::windows_sys::core::GUID, dwformoftype: u32, pszusertype: *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    pub fn OleRun(punknown: ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleSave(pps: super::Com::StructuredStorage::IPersistStorage, pstg: super::Com::StructuredStorage::IStorage, fsameasload: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleSavePictureFile(lpdisppicture: super::Com::IDispatch, bstrfilename: super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleSaveToStream(ppstm: super::Com::IPersistStream, pstm: super::Com::IStream) -> ::windows_sys::core::HRESULT;
-    pub fn OleSetAutoConvert(clsidold: *const ::windows_sys::core::GUID, clsidnew: *const ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OleSetClipboard(pdataobj: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleSetContainedObject(punknown: ::windows_sys::core::IUnknown, fcontained: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleSetMenuDescriptor(holemenu: isize, hwndframe: super::super::Foundation::HWND, hwndactiveobject: super::super::Foundation::HWND, lpframe: IOleInPlaceFrame, lpactiveobj: IOleInPlaceActiveObject) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleTranslateAccelerator(lpframe: IOleInPlaceFrame, lpframeinfo: *mut OIFI, lpmsg: *mut super::super::UI::WindowsAndMessaging::MSG) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn OleTranslateColor(clr: u32, hpal: super::super::Graphics::Gdi::HPALETTE, lpcolorref: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleUIAddVerbMenuA(lpoleobj: IOleObject, lpszshorttype: super::super::Foundation::PSTR, hmenu: super::super::UI::WindowsAndMessaging::HMENU, upos: u32, uidverbmin: u32, uidverbmax: u32, baddconvert: super::super::Foundation::BOOL, idconvert: u32, lphmenu: *mut super::super::UI::WindowsAndMessaging::HMENU) -> super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleUIAddVerbMenuW(lpoleobj: IOleObject, lpszshorttype: super::super::Foundation::PWSTR, hmenu: super::super::UI::WindowsAndMessaging::HMENU, upos: u32, uidverbmin: u32, uidverbmax: u32, baddconvert: super::super::Foundation::BOOL, idconvert: u32, lphmenu: *mut super::super::UI::WindowsAndMessaging::HMENU) -> super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Media"))]
-    pub fn OleUIBusyA(param0: *const OLEUIBUSYA) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Media"))]
-    pub fn OleUIBusyW(param0: *const OLEUIBUSYW) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUICanConvertOrActivateAs(rclsid: *const ::windows_sys::core::GUID, fislinkedobject: super::super::Foundation::BOOL, wformat: u16) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIChangeIconA(param0: *const OLEUICHANGEICONA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIChangeIconW(param0: *const OLEUICHANGEICONW) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_Controls_Dialogs"))]
-    pub fn OleUIChangeSourceA(param0: *const OLEUICHANGESOURCEA) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_Controls_Dialogs"))]
-    pub fn OleUIChangeSourceW(param0: *const OLEUICHANGESOURCEW) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIConvertA(param0: *const OLEUICONVERTA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIConvertW(param0: *const OLEUICONVERTW) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIEditLinksA(param0: *const OLEUIEDITLINKSA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIEditLinksW(param0: *const OLEUIEDITLINKSW) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleUIInsertObjectA(param0: *const OLEUIINSERTOBJECTA) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OleUIInsertObjectW(param0: *const OLEUIINSERTOBJECTW) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_UI_Controls", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleUIObjectPropertiesA(param0: *const OLEUIOBJECTPROPSA) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_UI_Controls", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn OleUIObjectPropertiesW(param0: *const OLEUIOBJECTPROPSW) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleUIPasteSpecialA(param0: *const OLEUIPASTESPECIALA) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn OleUIPasteSpecialW(param0: *const OLEUIPASTESPECIALW) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIPromptUserA(ntemplate: i32, hwndparent: super::super::Foundation::HWND) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIPromptUserW(ntemplate: i32, hwndparent: super::super::Foundation::HWND) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIUpdateLinksA(lpoleuilinkcntr: IOleUILinkContainerA, hwndparent: super::super::Foundation::HWND, lpsztitle: super::super::Foundation::PSTR, clinks: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OleUIUpdateLinksW(lpoleuilinkcntr: IOleUILinkContainerW, hwndparent: super::super::Foundation::HWND, lpsztitle: super::super::Foundation::PWSTR, clinks: i32) -> super::super::Foundation::BOOL;
-    pub fn OleUninitialize();
-    pub fn QueryPathOfRegTypeLib(guid: *const ::windows_sys::core::GUID, wmaj: u16, wmin: u16, lcid: u32, lpbstrpathname: *mut *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn RegisterActiveObject(punk: ::windows_sys::core::IUnknown, rclsid: *const ::windows_sys::core::GUID, dwflags: u32, pdwregister: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegisterDragDrop(hwnd: super::super::Foundation::HWND, pdroptarget: IDropTarget) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn RegisterTypeLib(ptlib: super::Com::ITypeLib, szfullpath: super::super::Foundation::PWSTR, szhelpdir: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn RegisterTypeLibForUser(ptlib: super::Com::ITypeLib, szfullpath: super::super::Foundation::PWSTR, szhelpdir: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn ReleaseStgMedium(param0: *mut super::Com::STGMEDIUM);
-    pub fn RevokeActiveObject(dwregister: u32, pvreserved: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RevokeDragDrop(hwnd: super::super::Foundation::HWND) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayAccessData(psa: *const super::Com::SAFEARRAY, ppvdata: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayAddRef(psa: *const super::Com::SAFEARRAY, ppdatatorelease: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayAllocData(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayAllocDescriptor(cdims: u32, ppsaout: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayAllocDescriptorEx(vt: u16, cdims: u32, ppsaout: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayCopy(psa: *const super::Com::SAFEARRAY, ppsaout: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayCopyData(psasource: *const super::Com::SAFEARRAY, psatarget: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayCreate(vt: u16, cdims: u32, rgsabound: *const super::Com::SAFEARRAYBOUND) -> *mut super::Com::SAFEARRAY;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayCreateEx(vt: u16, cdims: u32, rgsabound: *const super::Com::SAFEARRAYBOUND, pvextra: *const ::core::ffi::c_void) -> *mut super::Com::SAFEARRAY;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayCreateVector(vt: u16, llbound: i32, celements: u32) -> *mut super::Com::SAFEARRAY;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayCreateVectorEx(vt: u16, llbound: i32, celements: u32, pvextra: *const ::core::ffi::c_void) -> *mut super::Com::SAFEARRAY;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayDestroy(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayDestroyData(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayDestroyDescriptor(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetDim(psa: *const super::Com::SAFEARRAY) -> u32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetElement(psa: *const super::Com::SAFEARRAY, rgindices: *const i32, pv: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetElemsize(psa: *const super::Com::SAFEARRAY) -> u32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetIID(psa: *const super::Com::SAFEARRAY, pguid: *mut ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetLBound(psa: *const super::Com::SAFEARRAY, ndim: u32, pllbound: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetRecordInfo(psa: *const super::Com::SAFEARRAY, prinfo: *mut IRecordInfo) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetUBound(psa: *const super::Com::SAFEARRAY, ndim: u32, plubound: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayGetVartype(psa: *const super::Com::SAFEARRAY, pvt: *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayLock(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayPtrOfIndex(psa: *const super::Com::SAFEARRAY, rgindices: *const i32, ppvdata: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayPutElement(psa: *const super::Com::SAFEARRAY, rgindices: *const i32, pv: *const ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayRedim(psa: *mut super::Com::SAFEARRAY, psaboundnew: *const super::Com::SAFEARRAYBOUND) -> ::windows_sys::core::HRESULT;
-    pub fn SafeArrayReleaseData(pdata: *const ::core::ffi::c_void);
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayReleaseDescriptor(psa: *const super::Com::SAFEARRAY);
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArraySetIID(psa: *const super::Com::SAFEARRAY, guid: *const ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArraySetRecordInfo(psa: *const super::Com::SAFEARRAY, prinfo: IRecordInfo) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayUnaccessData(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SafeArrayUnlock(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SystemTimeToVariantTime(lpsystemtime: *const super::super::Foundation::SYSTEMTIME, pvtime: *mut f64) -> i32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn UnRegisterTypeLib(libid: *const ::windows_sys::core::GUID, wvermajor: u16, wverminor: u16, lcid: u32, syskind: super::Com::SYSKIND) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn UnRegisterTypeLibForUser(libid: *const ::windows_sys::core::GUID, wmajorvernum: u16, wminorvernum: u16, lcid: u32, syskind: super::Com::SYSKIND) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarAbs(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarAdd(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarAnd(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarBoolFromCy(cyin: super::Com::CY, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromDate(datein: f64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBoolFromDec(pdecin: *const super::super::Foundation::DECIMAL, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarBoolFromDisp(pdispin: super::Com::IDispatch, lcid: u32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBoolFromI1(cin: super::super::Foundation::CHAR, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromI2(sin: i16, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromI4(lin: i32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromI8(i64in: i64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromR4(fltin: f32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromR8(dblin: f64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBoolFromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromUI1(bin: u8, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromUI2(uiin: u16, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromUI4(ulin: u32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarBoolFromUI8(i64in: u64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrCat(bstrleft: super::super::Foundation::BSTR, bstrright: super::super::Foundation::BSTR, pbstrresult: *mut *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrCmp(bstrleft: super::super::Foundation::BSTR, bstrright: super::super::Foundation::BSTR, lcid: u32, dwflags: u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromBool(boolin: i16, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarBstrFromCy(cyin: super::Com::CY, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromDate(datein: f64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromDec(pdecin: *const super::super::Foundation::DECIMAL, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarBstrFromDisp(pdispin: super::Com::IDispatch, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromI1(cin: super::super::Foundation::CHAR, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromI2(ival: i16, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromI4(lin: i32, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromI8(i64in: i64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromR4(fltin: f32, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromR8(dblin: f64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromUI1(bval: u8, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromUI2(uiin: u16, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromUI4(ulin: u32, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarBstrFromUI8(ui64in: u64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarCat(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarCmp(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, lcid: u32, dwflags: u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyAbs(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyAdd(cyleft: super::Com::CY, cyright: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyCmp(cyleft: super::Com::CY, cyright: super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyCmpR8(cyleft: super::Com::CY, dblright: f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFix(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromBool(boolin: i16, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromDate(datein: f64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarCyFromDec(pdecin: *const super::super::Foundation::DECIMAL, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromDisp(pdispin: super::Com::IDispatch, lcid: u32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarCyFromI1(cin: super::super::Foundation::CHAR, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromI2(sin: i16, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromI4(lin: i32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromI8(i64in: i64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromR4(fltin: f32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromR8(dblin: f64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarCyFromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromUI1(bin: u8, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromUI2(uiin: u16, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromUI4(ulin: u32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyFromUI8(ui64in: u64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyInt(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyMul(cyleft: super::Com::CY, cyright: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyMulI4(cyleft: super::Com::CY, lright: i32, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyMulI8(cyleft: super::Com::CY, lright: i64, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyNeg(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCyRound(cyin: super::Com::CY, cdecimals: i32, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarCySub(cyleft: super::Com::CY, cyright: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromBool(boolin: i16, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarDateFromCy(cyin: super::Com::CY, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDateFromDec(pdecin: *const super::super::Foundation::DECIMAL, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarDateFromDisp(pdispin: super::Com::IDispatch, lcid: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDateFromI1(cin: super::super::Foundation::CHAR, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromI2(sin: i16, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromI4(lin: i32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromI8(i64in: i64, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromR4(fltin: f32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromR8(dblin: f64, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDateFromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromUI1(bin: u8, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromUI2(uiin: u16, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromUI4(ulin: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarDateFromUI8(ui64in: u64, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDateFromUdate(pudatein: *const UDATE, dwflags: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDateFromUdateEx(pudatein: *const UDATE, lcid: u32, dwflags: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecAbs(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecAdd(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecCmp(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecCmpR8(pdecleft: *const super::super::Foundation::DECIMAL, dblright: f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecDiv(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFix(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromBool(boolin: i16, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarDecFromCy(cyin: super::Com::CY, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromDate(datein: f64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarDecFromDisp(pdispin: super::Com::IDispatch, lcid: u32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromI1(cin: super::super::Foundation::CHAR, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromI2(uiin: i16, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromI4(lin: i32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromI8(i64in: i64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromR4(fltin: f32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromR8(dblin: f64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromUI1(bin: u8, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromUI2(uiin: u16, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromUI4(ulin: u32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecFromUI8(ui64in: u64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecInt(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecMul(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecNeg(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecRound(pdecin: *const super::super::Foundation::DECIMAL, cdecimals: i32, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarDecSub(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarDiv(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarEqv(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFix(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFormat(pvarin: *const super::Com::VARIANT, pstrformat: super::super::Foundation::PWSTR, ifirstday: i32, ifirstweek: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFormatCurrency(pvarin: *const super::Com::VARIANT, inumdig: i32, iinclead: i32, iuseparens: i32, igroup: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFormatDateTime(pvarin: *const super::Com::VARIANT, inamedformat: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFormatFromTokens(pvarin: *const super::Com::VARIANT, pstrformat: super::super::Foundation::PWSTR, pbtokcur: *const u8, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR, lcid: u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFormatNumber(pvarin: *const super::Com::VARIANT, inumdig: i32, iinclead: i32, iuseparens: i32, igroup: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarFormatPercent(pvarin: *const super::Com::VARIANT, inumdig: i32, iinclead: i32, iuseparens: i32, igroup: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromBool(boolin: i16, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarI1FromCy(cyin: super::Com::CY, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromDate(datein: f64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromDec(pdecin: *const super::super::Foundation::DECIMAL, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarI1FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromI2(uiin: i16, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromI4(lin: i32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromI8(i64in: i64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromR4(fltin: f32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromR8(dblin: f64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromUI1(bin: u8, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromUI2(uiin: u16, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromUI4(ulin: u32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI1FromUI8(i64in: u64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromBool(boolin: i16, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarI2FromCy(cyin: super::Com::CY, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromDate(datein: f64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI2FromDec(pdecin: *const super::super::Foundation::DECIMAL, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarI2FromDisp(pdispin: super::Com::IDispatch, lcid: u32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI2FromI1(cin: super::super::Foundation::CHAR, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromI4(lin: i32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromI8(i64in: i64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromR4(fltin: f32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromR8(dblin: f64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI2FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromUI1(bin: u8, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromUI2(uiin: u16, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromUI4(ulin: u32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI2FromUI8(ui64in: u64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromBool(boolin: i16, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarI4FromCy(cyin: super::Com::CY, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromDate(datein: f64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI4FromDec(pdecin: *const super::super::Foundation::DECIMAL, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarI4FromDisp(pdispin: super::Com::IDispatch, lcid: u32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI4FromI1(cin: super::super::Foundation::CHAR, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromI2(sin: i16, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromI8(i64in: i64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromR4(fltin: f32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromR8(dblin: f64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI4FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromUI1(bin: u8, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromUI2(uiin: u16, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromUI4(ulin: u32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI4FromUI8(ui64in: u64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromBool(boolin: i16, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarI8FromCy(cyin: super::Com::CY, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromDate(datein: f64, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI8FromDec(pdecin: *const super::super::Foundation::DECIMAL, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarI8FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI8FromI1(cin: super::super::Foundation::CHAR, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromI2(sin: i16, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromR4(fltin: f32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromR8(dblin: f64, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarI8FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromUI1(bin: u8, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromUI2(uiin: u16, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromUI4(ulin: u32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    pub fn VarI8FromUI8(ui64in: u64, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarIdiv(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarImp(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarInt(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarMod(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarMonthName(imonth: i32, fabbrev: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarMul(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarNeg(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarNot(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarNumFromParseNum(pnumprs: *const NUMPARSE, rgbdig: *const u8, dwvtbits: u32, pvar: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarOr(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarParseNumFromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pnumprs: *mut NUMPARSE, rgbdig: *mut u8) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarPow(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4CmpR8(fltleft: f32, dblright: f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromBool(boolin: i16, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarR4FromCy(cyin: super::Com::CY, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromDate(datein: f64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarR4FromDec(pdecin: *const super::super::Foundation::DECIMAL, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarR4FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarR4FromI1(cin: super::super::Foundation::CHAR, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromI2(sin: i16, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromI4(lin: i32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromI8(i64in: i64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromR8(dblin: f64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarR4FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromUI1(bin: u8, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromUI2(uiin: u16, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromUI4(ulin: u32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR4FromUI8(ui64in: u64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromBool(boolin: i16, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarR8FromCy(cyin: super::Com::CY, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromDate(datein: f64, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarR8FromDec(pdecin: *const super::super::Foundation::DECIMAL, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarR8FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarR8FromI1(cin: super::super::Foundation::CHAR, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromI2(sin: i16, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromI4(lin: i32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromI8(i64in: i64, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromR4(fltin: f32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarR8FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromUI1(bin: u8, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromUI2(uiin: u16, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromUI4(ulin: u32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8FromUI8(ui64in: u64, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8Pow(dblleft: f64, dblright: f64, pdblresult: *mut f64) -> ::windows_sys::core::HRESULT;
-    pub fn VarR8Round(dblin: f64, cdecimals: i32, pdblresult: *mut f64) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarRound(pvarin: *const super::Com::VARIANT, cdecimals: i32, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarSub(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarTokenizeFormatString(pstrformat: super::super::Foundation::PWSTR, rgbtok: *mut u8, cbtok: i32, ifirstday: i32, ifirstweek: i32, lcid: u32, pcbactual: *const i32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromBool(boolin: i16, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI1FromCy(cyin: super::Com::CY, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromDate(datein: f64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI1FromDec(pdecin: *const super::super::Foundation::DECIMAL, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI1FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI1FromI1(cin: super::super::Foundation::CHAR, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromI2(sin: i16, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromI4(lin: i32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromI8(i64in: i64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromR4(fltin: f32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromR8(dblin: f64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI1FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromUI2(uiin: u16, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromUI4(ulin: u32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI1FromUI8(ui64in: u64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromBool(boolin: i16, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI2FromCy(cyin: super::Com::CY, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromDate(datein: f64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI2FromDec(pdecin: *const super::super::Foundation::DECIMAL, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI2FromDisp(pdispin: super::Com::IDispatch, lcid: u32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI2FromI1(cin: super::super::Foundation::CHAR, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromI2(uiin: i16, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromI4(lin: i32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromI8(i64in: i64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromR4(fltin: f32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromR8(dblin: f64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI2FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromUI1(bin: u8, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromUI4(ulin: u32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI2FromUI8(i64in: u64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromBool(boolin: i16, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI4FromCy(cyin: super::Com::CY, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromDate(datein: f64, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI4FromDec(pdecin: *const super::super::Foundation::DECIMAL, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI4FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI4FromI1(cin: super::super::Foundation::CHAR, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromI2(uiin: i16, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromI4(lin: i32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromI8(i64in: i64, plout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromR4(fltin: f32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromR8(dblin: f64, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI4FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromUI1(bin: u8, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromUI2(uiin: u16, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI4FromUI8(ui64in: u64, plout: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromBool(boolin: i16, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI8FromCy(cyin: super::Com::CY, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromDate(datein: f64, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI8FromDec(pdecin: *const super::super::Foundation::DECIMAL, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn VarUI8FromDisp(pdispin: super::Com::IDispatch, lcid: u32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI8FromI1(cin: super::super::Foundation::CHAR, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromI2(sin: i16, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromI8(ui64in: i64, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromR4(fltin: f32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromR8(dblin: f64, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUI8FromStr(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromUI1(bin: u8, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromUI2(uiin: u16, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    pub fn VarUI8FromUI4(ulin: u32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarUdateFromDate(datein: f64, dwflags: u32, pudateout: *mut UDATE) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VarWeekdayName(iweekday: i32, fabbrev: i32, ifirstday: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VarXor(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VariantChangeType(pvargdest: *mut super::Com::VARIANT, pvarsrc: *const super::Com::VARIANT, wflags: u16, vt: u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VariantChangeTypeEx(pvargdest: *mut super::Com::VARIANT, pvarsrc: *const super::Com::VARIANT, lcid: u32, wflags: u16, vt: u16) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VariantClear(pvarg: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VariantCopy(pvargdest: *mut super::Com::VARIANT, pvargsrc: *const super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VariantCopyInd(pvardest: *mut super::Com::VARIANT, pvargsrc: *const super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VariantInit(pvarg: *mut super::Com::VARIANT);
-    pub fn VariantTimeToDosDateTime(vtime: f64, pwdosdate: *mut u16, pwdostime: *mut u16) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VariantTimeToSystemTime(vtime: f64, lpsystemtime: *mut super::super::Foundation::SYSTEMTIME) -> i32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn VectorFromBstr(bstr: super::super::Foundation::BSTR, ppsa: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
-}
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type BstrFromVector = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, pbstr: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type ClearCustData = unsafe extern "system" fn(pcustdata: *mut super::Com::CUSTDATA);
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type CreateDispTypeInfo = unsafe extern "system" fn(pidata: *mut INTERFACEDATA, lcid: u32, pptinfo: *mut super::Com::ITypeInfo) -> ::windows_sys::core::HRESULT;
+pub type CreateErrorInfo = unsafe extern "system" fn(pperrinfo: *mut ICreateErrorInfo) -> ::windows_sys::core::HRESULT;
+pub type CreateOleAdviseHolder = unsafe extern "system" fn(ppoaholder: *mut IOleAdviseHolder) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type CreateStdDispatch = unsafe extern "system" fn(punkouter: ::windows_sys::core::IUnknown, pvthis: *mut ::core::ffi::c_void, ptinfo: super::Com::ITypeInfo, ppunkstddisp: *mut ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type CreateTypeLib = unsafe extern "system" fn(syskind: super::Com::SYSKIND, szfile: super::super::Foundation::PWSTR, ppctlib: *mut ICreateTypeLib) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type CreateTypeLib2 = unsafe extern "system" fn(syskind: super::Com::SYSKIND, szfile: super::super::Foundation::PWSTR, ppctlib: *mut ICreateTypeLib2) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type DispCallFunc = unsafe extern "system" fn(pvinstance: *const ::core::ffi::c_void, ovft: usize, cc: super::Com::CALLCONV, vtreturn: u16, cactuals: u32, prgvt: *const u16, prgpvarg: *const *const super::Com::VARIANT, pvargresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type DispGetIDsOfNames = unsafe extern "system" fn(ptinfo: super::Com::ITypeInfo, rgsznames: *const super::super::Foundation::PWSTR, cnames: u32, rgdispid: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type DispGetParam = unsafe extern "system" fn(pdispparams: *const super::Com::DISPPARAMS, position: u32, vttarg: u16, pvarresult: *mut super::Com::VARIANT, puargerr: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type DispInvoke = unsafe extern "system" fn(_this: *mut ::core::ffi::c_void, ptinfo: super::Com::ITypeInfo, dispidmember: i32, wflags: u16, pparams: *mut super::Com::DISPPARAMS, pvarresult: *mut super::Com::VARIANT, pexcepinfo: *mut super::Com::EXCEPINFO, puargerr: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type DoDragDrop = unsafe extern "system" fn(pdataobj: super::Com::IDataObject, pdropsource: IDropSource, dwokeffects: u32, pdweffect: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type DosDateTimeToVariantTime = unsafe extern "system" fn(wdosdate: u16, wdostime: u16, pvtime: *mut f64) -> i32;
+pub type GetActiveObject = unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, pvreserved: *mut ::core::ffi::c_void, ppunk: *mut ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetAltMonthNames = unsafe extern "system" fn(lcid: u32, prgp: *mut *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+pub type GetRecordInfoFromGuids = unsafe extern "system" fn(rguidtypelib: *const ::windows_sys::core::GUID, uvermajor: u32, uverminor: u32, lcid: u32, rguidtypeinfo: *const ::windows_sys::core::GUID, pprecinfo: *mut IRecordInfo) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type GetRecordInfoFromTypeInfo = unsafe extern "system" fn(ptypeinfo: super::Com::ITypeInfo, pprecinfo: *mut IRecordInfo) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserFree = unsafe extern "system" fn(param0: *const u32, param1: *const super::super::Graphics::Gdi::HRGN);
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserFree64 = unsafe extern "system" fn(param0: *const u32, param1: *const super::super::Graphics::Gdi::HRGN);
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserMarshal = unsafe extern "system" fn(param0: *const u32, param1: *mut u8, param2: *const super::super::Graphics::Gdi::HRGN) -> *mut u8;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserMarshal64 = unsafe extern "system" fn(param0: *const u32, param1: *mut u8, param2: *const super::super::Graphics::Gdi::HRGN) -> *mut u8;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserSize = unsafe extern "system" fn(param0: *const u32, param1: u32, param2: *const super::super::Graphics::Gdi::HRGN) -> u32;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserSize64 = unsafe extern "system" fn(param0: *const u32, param1: u32, param2: *const super::super::Graphics::Gdi::HRGN) -> u32;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserUnmarshal = unsafe extern "system" fn(param0: *const u32, param1: *const u8, param2: *mut super::super::Graphics::Gdi::HRGN) -> *mut u8;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type HRGN_UserUnmarshal64 = unsafe extern "system" fn(param0: *const u32, param1: *const u8, param2: *mut super::super::Graphics::Gdi::HRGN) -> *mut u8;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type IsAccelerator = unsafe extern "system" fn(haccel: super::super::UI::WindowsAndMessaging::HACCEL, caccelentries: i32, lpmsg: *mut super::super::UI::WindowsAndMessaging::MSG, lpwcmd: *mut u16) -> super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type LHashValOfNameSys = unsafe extern "system" fn(syskind: super::Com::SYSKIND, lcid: u32, szname: super::super::Foundation::PWSTR) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type LHashValOfNameSysA = unsafe extern "system" fn(syskind: super::Com::SYSKIND, lcid: u32, szname: super::super::Foundation::PSTR) -> u32;
+#[cfg(feature = "Win32_System_Com")]
+pub type LoadRegTypeLib = unsafe extern "system" fn(rguid: *const ::windows_sys::core::GUID, wvermajor: u16, wverminor: u16, lcid: u32, pptlib: *mut super::Com::ITypeLib) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type LoadTypeLib = unsafe extern "system" fn(szfile: super::super::Foundation::PWSTR, pptlib: *mut super::Com::ITypeLib) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type LoadTypeLibEx = unsafe extern "system" fn(szfile: super::super::Foundation::PWSTR, regkind: REGKIND, pptlib: *mut super::Com::ITypeLib) -> ::windows_sys::core::HRESULT;
+pub type OaBuildVersion = unsafe extern "system" fn() -> u32;
+pub type OaEnablePerUserTLibRegistration = unsafe extern "system" fn();
+pub type OleBuildVersion = unsafe extern "system" fn() -> u32;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreate = unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, riid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type OleCreateDefaultHandler = unsafe extern "system" fn(clsid: *const ::windows_sys::core::GUID, punkouter: ::windows_sys::core::IUnknown, riid: *const ::windows_sys::core::GUID, lplpobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleCreateEmbeddingHelper = unsafe extern "system" fn(clsid: *const ::windows_sys::core::GUID, punkouter: ::windows_sys::core::IUnknown, flags: u32, pcf: super::Com::IClassFactory, riid: *const ::windows_sys::core::GUID, lplpobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateEx = unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleCreateFontIndirect = unsafe extern "system" fn(lpfontdesc: *mut FONTDESC, riid: *const ::windows_sys::core::GUID, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateFromData = unsafe extern "system" fn(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateFromDataEx = unsafe extern "system" fn(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateFromFile = unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, renderopt: u32, lpformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateFromFileEx =
+    unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateLink = unsafe extern "system" fn(pmklinksrc: super::Com::IMoniker, riid: *const ::windows_sys::core::GUID, renderopt: u32, lpformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateLinkEx = unsafe extern "system" fn(pmklinksrc: super::Com::IMoniker, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateLinkFromData = unsafe extern "system" fn(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateLinkFromDataEx = unsafe extern "system" fn(psrcdataobj: super::Com::IDataObject, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateLinkToFile = unsafe extern "system" fn(lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, renderopt: u32, lpformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateLinkToFileEx = unsafe extern "system" fn(lpszfilename: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, dwflags: u32, renderopt: u32, cformats: u32, rgadvf: *mut u32, rgformatetc: *mut super::Com::FORMATETC, lpadvisesink: super::Com::IAdviseSink, rgdwconnection: *mut u32, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_UI_WindowsAndMessaging")]
+pub type OleCreateMenuDescriptor = unsafe extern "system" fn(hmenucombined: super::super::UI::WindowsAndMessaging::HMENU, lpmenuwidths: *mut OleMenuGroupWidths) -> isize;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleCreatePictureIndirect = unsafe extern "system" fn(lppictdesc: *mut PICTDESC, riid: *const ::windows_sys::core::GUID, fown: super::super::Foundation::BOOL, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleCreatePropertyFrame = unsafe extern "system" fn(hwndowner: super::super::Foundation::HWND, x: u32, y: u32, lpszcaption: super::super::Foundation::PWSTR, cobjects: u32, ppunk: *mut ::windows_sys::core::IUnknown, cpages: u32, ppageclsid: *mut ::windows_sys::core::GUID, lcid: u32, dwreserved: u32, pvreserved: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleCreatePropertyFrameIndirect = unsafe extern "system" fn(lpparams: *mut OCPFIPARAMS) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleCreateStaticFromData = unsafe extern "system" fn(psrcdataobj: super::Com::IDataObject, iid: *const ::windows_sys::core::GUID, renderopt: u32, pformatetc: *mut super::Com::FORMATETC, pclientsite: IOleClientSite, pstg: super::Com::StructuredStorage::IStorage, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type OleDestroyMenuDescriptor = unsafe extern "system" fn(holemenu: isize) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com_StructuredStorage")]
+pub type OleDoAutoConvert = unsafe extern "system" fn(pstg: super::Com::StructuredStorage::IStorage, pclsidnew: *mut ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type OleDraw = unsafe extern "system" fn(punknown: ::windows_sys::core::IUnknown, dwaspect: u32, hdcdraw: super::super::Graphics::Gdi::HDC, lprcbounds: *mut super::super::Foundation::RECT) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleDuplicateData = unsafe extern "system" fn(hsrc: super::super::Foundation::HANDLE, cfformat: u16, uiflags: u32) -> super::super::Foundation::HANDLE;
+pub type OleFlushClipboard = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
+pub type OleGetAutoConvert = unsafe extern "system" fn(clsidold: *const ::windows_sys::core::GUID, pclsidnew: *mut ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleGetClipboard = unsafe extern "system" fn(ppdataobj: *mut super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleGetClipboardWithEnterpriseInfo = unsafe extern "system" fn(dataobject: *mut super::Com::IDataObject, dataenterpriseid: *mut super::super::Foundation::PWSTR, sourcedescription: *mut super::super::Foundation::PWSTR, targetdescription: *mut super::super::Foundation::PWSTR, datadescription: *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleGetIconOfClass = unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, lpszlabel: super::super::Foundation::PWSTR, fusetypeaslabel: super::super::Foundation::BOOL) -> isize;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleGetIconOfFile = unsafe extern "system" fn(lpszpath: super::super::Foundation::PWSTR, fusefileaslabel: super::super::Foundation::BOOL) -> isize;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleIconToCursor = unsafe extern "system" fn(hinstexe: super::super::Foundation::HINSTANCE, hicon: super::super::UI::WindowsAndMessaging::HICON) -> super::super::UI::WindowsAndMessaging::HCURSOR;
+pub type OleInitialize = unsafe extern "system" fn(pvreserved: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleIsCurrentClipboard = unsafe extern "system" fn(pdataobj: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleIsRunning = unsafe extern "system" fn(pobject: IOleObject) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_System_Com_StructuredStorage")]
+pub type OleLoad = unsafe extern "system" fn(pstg: super::Com::StructuredStorage::IStorage, riid: *const ::windows_sys::core::GUID, pclientsite: IOleClientSite, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleLoadFromStream = unsafe extern "system" fn(pstm: super::Com::IStream, iidinterface: *const ::windows_sys::core::GUID, ppvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleLoadPicture = unsafe extern "system" fn(lpstream: super::Com::IStream, lsize: i32, frunmode: super::super::Foundation::BOOL, riid: *const ::windows_sys::core::GUID, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleLoadPictureEx = unsafe extern "system" fn(lpstream: super::Com::IStream, lsize: i32, frunmode: super::super::Foundation::BOOL, riid: *const ::windows_sys::core::GUID, xsizedesired: u32, ysizedesired: u32, dwflags: u32, lplpvobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleLoadPictureFile = unsafe extern "system" fn(varfilename: super::Com::VARIANT, lplpdisppicture: *mut super::Com::IDispatch) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleLoadPictureFileEx = unsafe extern "system" fn(varfilename: super::Com::VARIANT, xsizedesired: u32, ysizedesired: u32, dwflags: u32, lplpdisppicture: *mut super::Com::IDispatch) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleLoadPicturePath = unsafe extern "system" fn(szurlorpath: super::super::Foundation::PWSTR, punkcaller: ::windows_sys::core::IUnknown, dwreserved: u32, clrreserved: u32, riid: *const ::windows_sys::core::GUID, ppvret: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleLockRunning = unsafe extern "system" fn(punknown: ::windows_sys::core::IUnknown, flock: super::super::Foundation::BOOL, flastunlockcloses: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleMetafilePictFromIconAndLabel = unsafe extern "system" fn(hicon: super::super::UI::WindowsAndMessaging::HICON, lpszlabel: super::super::Foundation::PWSTR, lpszsourcefile: super::super::Foundation::PWSTR, iiconindex: u32) -> isize;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleNoteObjectVisible = unsafe extern "system" fn(punknown: ::windows_sys::core::IUnknown, fvisible: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleQueryCreateFromData = unsafe extern "system" fn(psrcdataobject: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleQueryLinkFromData = unsafe extern "system" fn(psrcdataobject: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleRegEnumFormatEtc = unsafe extern "system" fn(clsid: *const ::windows_sys::core::GUID, dwdirection: u32, ppenum: *mut super::Com::IEnumFORMATETC) -> ::windows_sys::core::HRESULT;
+pub type OleRegEnumVerbs = unsafe extern "system" fn(clsid: *const ::windows_sys::core::GUID, ppenum: *mut IEnumOLEVERB) -> ::windows_sys::core::HRESULT;
+pub type OleRegGetMiscStatus = unsafe extern "system" fn(clsid: *const ::windows_sys::core::GUID, dwaspect: u32, pdwstatus: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleRegGetUserType = unsafe extern "system" fn(clsid: *const ::windows_sys::core::GUID, dwformoftype: u32, pszusertype: *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+pub type OleRun = unsafe extern "system" fn(punknown: ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleSave = unsafe extern "system" fn(pps: super::Com::StructuredStorage::IPersistStorage, pstg: super::Com::StructuredStorage::IStorage, fsameasload: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleSavePictureFile = unsafe extern "system" fn(lpdisppicture: super::Com::IDispatch, bstrfilename: super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleSaveToStream = unsafe extern "system" fn(ppstm: super::Com::IPersistStream, pstm: super::Com::IStream) -> ::windows_sys::core::HRESULT;
+pub type OleSetAutoConvert = unsafe extern "system" fn(clsidold: *const ::windows_sys::core::GUID, clsidnew: *const ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type OleSetClipboard = unsafe extern "system" fn(pdataobj: super::Com::IDataObject) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleSetContainedObject = unsafe extern "system" fn(punknown: ::windows_sys::core::IUnknown, fcontained: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleSetMenuDescriptor = unsafe extern "system" fn(holemenu: isize, hwndframe: super::super::Foundation::HWND, hwndactiveobject: super::super::Foundation::HWND, lpframe: IOleInPlaceFrame, lpactiveobj: IOleInPlaceActiveObject) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleTranslateAccelerator = unsafe extern "system" fn(lpframe: IOleInPlaceFrame, lpframeinfo: *mut OIFI, lpmsg: *mut super::super::UI::WindowsAndMessaging::MSG) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type OleTranslateColor = unsafe extern "system" fn(clr: u32, hpal: super::super::Graphics::Gdi::HPALETTE, lpcolorref: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleUIAddVerbMenuA = unsafe extern "system" fn(lpoleobj: IOleObject, lpszshorttype: super::super::Foundation::PSTR, hmenu: super::super::UI::WindowsAndMessaging::HMENU, upos: u32, uidverbmin: u32, uidverbmax: u32, baddconvert: super::super::Foundation::BOOL, idconvert: u32, lphmenu: *mut super::super::UI::WindowsAndMessaging::HMENU) -> super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleUIAddVerbMenuW = unsafe extern "system" fn(lpoleobj: IOleObject, lpszshorttype: super::super::Foundation::PWSTR, hmenu: super::super::UI::WindowsAndMessaging::HMENU, upos: u32, uidverbmin: u32, uidverbmax: u32, baddconvert: super::super::Foundation::BOOL, idconvert: u32, lphmenu: *mut super::super::UI::WindowsAndMessaging::HMENU) -> super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Media"))]
+pub type OleUIBusyA = unsafe extern "system" fn(param0: *const OLEUIBUSYA) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Media"))]
+pub type OleUIBusyW = unsafe extern "system" fn(param0: *const OLEUIBUSYW) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUICanConvertOrActivateAs = unsafe extern "system" fn(rclsid: *const ::windows_sys::core::GUID, fislinkedobject: super::super::Foundation::BOOL, wformat: u16) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIChangeIconA = unsafe extern "system" fn(param0: *const OLEUICHANGEICONA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIChangeIconW = unsafe extern "system" fn(param0: *const OLEUICHANGEICONW) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_Controls_Dialogs"))]
+pub type OleUIChangeSourceA = unsafe extern "system" fn(param0: *const OLEUICHANGESOURCEA) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_Controls_Dialogs"))]
+pub type OleUIChangeSourceW = unsafe extern "system" fn(param0: *const OLEUICHANGESOURCEW) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIConvertA = unsafe extern "system" fn(param0: *const OLEUICONVERTA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIConvertW = unsafe extern "system" fn(param0: *const OLEUICONVERTW) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIEditLinksA = unsafe extern "system" fn(param0: *const OLEUIEDITLINKSA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIEditLinksW = unsafe extern "system" fn(param0: *const OLEUIEDITLINKSW) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleUIInsertObjectA = unsafe extern "system" fn(param0: *const OLEUIINSERTOBJECTA) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OleUIInsertObjectW = unsafe extern "system" fn(param0: *const OLEUIINSERTOBJECTW) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_UI_Controls", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleUIObjectPropertiesA = unsafe extern "system" fn(param0: *const OLEUIOBJECTPROPSA) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_UI_Controls", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type OleUIObjectPropertiesW = unsafe extern "system" fn(param0: *const OLEUIOBJECTPROPSW) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleUIPasteSpecialA = unsafe extern "system" fn(param0: *const OLEUIPASTESPECIALA) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type OleUIPasteSpecialW = unsafe extern "system" fn(param0: *const OLEUIPASTESPECIALW) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIPromptUserA = unsafe extern "system" fn(ntemplate: i32, hwndparent: super::super::Foundation::HWND) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIPromptUserW = unsafe extern "system" fn(ntemplate: i32, hwndparent: super::super::Foundation::HWND) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIUpdateLinksA = unsafe extern "system" fn(lpoleuilinkcntr: IOleUILinkContainerA, hwndparent: super::super::Foundation::HWND, lpsztitle: super::super::Foundation::PSTR, clinks: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type OleUIUpdateLinksW = unsafe extern "system" fn(lpoleuilinkcntr: IOleUILinkContainerW, hwndparent: super::super::Foundation::HWND, lpsztitle: super::super::Foundation::PWSTR, clinks: i32) -> super::super::Foundation::BOOL;
+pub type OleUninitialize = unsafe extern "system" fn();
+pub type QueryPathOfRegTypeLib = unsafe extern "system" fn(guid: *const ::windows_sys::core::GUID, wmaj: u16, wmin: u16, lcid: u32, lpbstrpathname: *mut *mut u16) -> ::windows_sys::core::HRESULT;
+pub type RegisterActiveObject = unsafe extern "system" fn(punk: ::windows_sys::core::IUnknown, rclsid: *const ::windows_sys::core::GUID, dwflags: u32, pdwregister: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegisterDragDrop = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, pdroptarget: IDropTarget) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type RegisterTypeLib = unsafe extern "system" fn(ptlib: super::Com::ITypeLib, szfullpath: super::super::Foundation::PWSTR, szhelpdir: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type RegisterTypeLibForUser = unsafe extern "system" fn(ptlib: super::Com::ITypeLib, szfullpath: super::super::Foundation::PWSTR, szhelpdir: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type ReleaseStgMedium = unsafe extern "system" fn(param0: *mut super::Com::STGMEDIUM);
+pub type RevokeActiveObject = unsafe extern "system" fn(dwregister: u32, pvreserved: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RevokeDragDrop = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayAccessData = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, ppvdata: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayAddRef = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, ppdatatorelease: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayAllocData = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayAllocDescriptor = unsafe extern "system" fn(cdims: u32, ppsaout: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayAllocDescriptorEx = unsafe extern "system" fn(vt: u16, cdims: u32, ppsaout: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayCopy = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, ppsaout: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayCopyData = unsafe extern "system" fn(psasource: *const super::Com::SAFEARRAY, psatarget: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayCreate = unsafe extern "system" fn(vt: u16, cdims: u32, rgsabound: *const super::Com::SAFEARRAYBOUND) -> *mut super::Com::SAFEARRAY;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayCreateEx = unsafe extern "system" fn(vt: u16, cdims: u32, rgsabound: *const super::Com::SAFEARRAYBOUND, pvextra: *const ::core::ffi::c_void) -> *mut super::Com::SAFEARRAY;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayCreateVector = unsafe extern "system" fn(vt: u16, llbound: i32, celements: u32) -> *mut super::Com::SAFEARRAY;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayCreateVectorEx = unsafe extern "system" fn(vt: u16, llbound: i32, celements: u32, pvextra: *const ::core::ffi::c_void) -> *mut super::Com::SAFEARRAY;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayDestroy = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayDestroyData = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayDestroyDescriptor = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetDim = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> u32;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetElement = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, rgindices: *const i32, pv: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetElemsize = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> u32;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetIID = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, pguid: *mut ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetLBound = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, ndim: u32, pllbound: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetRecordInfo = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, prinfo: *mut IRecordInfo) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetUBound = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, ndim: u32, plubound: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayGetVartype = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, pvt: *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayLock = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayPtrOfIndex = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, rgindices: *const i32, ppvdata: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayPutElement = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, rgindices: *const i32, pv: *const ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayRedim = unsafe extern "system" fn(psa: *mut super::Com::SAFEARRAY, psaboundnew: *const super::Com::SAFEARRAYBOUND) -> ::windows_sys::core::HRESULT;
+pub type SafeArrayReleaseData = unsafe extern "system" fn(pdata: *const ::core::ffi::c_void);
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayReleaseDescriptor = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY);
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArraySetIID = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, guid: *const ::windows_sys::core::GUID) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArraySetRecordInfo = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY, prinfo: IRecordInfo) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayUnaccessData = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SafeArrayUnlock = unsafe extern "system" fn(psa: *const super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type SystemTimeToVariantTime = unsafe extern "system" fn(lpsystemtime: *const super::super::Foundation::SYSTEMTIME, pvtime: *mut f64) -> i32;
+#[cfg(feature = "Win32_System_Com")]
+pub type UnRegisterTypeLib = unsafe extern "system" fn(libid: *const ::windows_sys::core::GUID, wvermajor: u16, wverminor: u16, lcid: u32, syskind: super::Com::SYSKIND) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type UnRegisterTypeLibForUser = unsafe extern "system" fn(libid: *const ::windows_sys::core::GUID, wmajorvernum: u16, wminorvernum: u16, lcid: u32, syskind: super::Com::SYSKIND) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarAbs = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarAdd = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarAnd = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarBoolFromCy = unsafe extern "system" fn(cyin: super::Com::CY, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromDate = unsafe extern "system" fn(datein: f64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBoolFromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarBoolFromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBoolFromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromI2 = unsafe extern "system" fn(sin: i16, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromI4 = unsafe extern "system" fn(lin: i32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromI8 = unsafe extern "system" fn(i64in: i64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromR4 = unsafe extern "system" fn(fltin: f32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromR8 = unsafe extern "system" fn(dblin: f64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBoolFromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromUI1 = unsafe extern "system" fn(bin: u8, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromUI2 = unsafe extern "system" fn(uiin: u16, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromUI4 = unsafe extern "system" fn(ulin: u32, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarBoolFromUI8 = unsafe extern "system" fn(i64in: u64, pboolout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrCat = unsafe extern "system" fn(bstrleft: super::super::Foundation::BSTR, bstrright: super::super::Foundation::BSTR, pbstrresult: *mut *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrCmp = unsafe extern "system" fn(bstrleft: super::super::Foundation::BSTR, bstrright: super::super::Foundation::BSTR, lcid: u32, dwflags: u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromBool = unsafe extern "system" fn(boolin: i16, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarBstrFromCy = unsafe extern "system" fn(cyin: super::Com::CY, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromDate = unsafe extern "system" fn(datein: f64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarBstrFromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromI2 = unsafe extern "system" fn(ival: i16, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromI4 = unsafe extern "system" fn(lin: i32, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromI8 = unsafe extern "system" fn(i64in: i64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromR4 = unsafe extern "system" fn(fltin: f32, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromR8 = unsafe extern "system" fn(dblin: f64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromUI1 = unsafe extern "system" fn(bval: u8, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromUI2 = unsafe extern "system" fn(uiin: u16, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromUI4 = unsafe extern "system" fn(ulin: u32, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarBstrFromUI8 = unsafe extern "system" fn(ui64in: u64, lcid: u32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarCat = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarCmp = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, lcid: u32, dwflags: u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyAbs = unsafe extern "system" fn(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyAdd = unsafe extern "system" fn(cyleft: super::Com::CY, cyright: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyCmp = unsafe extern "system" fn(cyleft: super::Com::CY, cyright: super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyCmpR8 = unsafe extern "system" fn(cyleft: super::Com::CY, dblright: f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFix = unsafe extern "system" fn(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromBool = unsafe extern "system" fn(boolin: i16, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromDate = unsafe extern "system" fn(datein: f64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarCyFromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarCyFromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromI2 = unsafe extern "system" fn(sin: i16, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromI4 = unsafe extern "system" fn(lin: i32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromI8 = unsafe extern "system" fn(i64in: i64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromR4 = unsafe extern "system" fn(fltin: f32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromR8 = unsafe extern "system" fn(dblin: f64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarCyFromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromUI1 = unsafe extern "system" fn(bin: u8, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromUI2 = unsafe extern "system" fn(uiin: u16, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromUI4 = unsafe extern "system" fn(ulin: u32, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyFromUI8 = unsafe extern "system" fn(ui64in: u64, pcyout: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyInt = unsafe extern "system" fn(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyMul = unsafe extern "system" fn(cyleft: super::Com::CY, cyright: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyMulI4 = unsafe extern "system" fn(cyleft: super::Com::CY, lright: i32, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyMulI8 = unsafe extern "system" fn(cyleft: super::Com::CY, lright: i64, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyNeg = unsafe extern "system" fn(cyin: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCyRound = unsafe extern "system" fn(cyin: super::Com::CY, cdecimals: i32, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarCySub = unsafe extern "system" fn(cyleft: super::Com::CY, cyright: super::Com::CY, pcyresult: *mut super::Com::CY) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromBool = unsafe extern "system" fn(boolin: i16, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarDateFromCy = unsafe extern "system" fn(cyin: super::Com::CY, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDateFromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarDateFromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDateFromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromI2 = unsafe extern "system" fn(sin: i16, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromI4 = unsafe extern "system" fn(lin: i32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromI8 = unsafe extern "system" fn(i64in: i64, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromR4 = unsafe extern "system" fn(fltin: f32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromR8 = unsafe extern "system" fn(dblin: f64, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDateFromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromUI1 = unsafe extern "system" fn(bin: u8, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromUI2 = unsafe extern "system" fn(uiin: u16, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromUI4 = unsafe extern "system" fn(ulin: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarDateFromUI8 = unsafe extern "system" fn(ui64in: u64, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDateFromUdate = unsafe extern "system" fn(pudatein: *const UDATE, dwflags: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDateFromUdateEx = unsafe extern "system" fn(pudatein: *const UDATE, lcid: u32, dwflags: u32, pdateout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecAbs = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecAdd = unsafe extern "system" fn(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecCmp = unsafe extern "system" fn(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecCmpR8 = unsafe extern "system" fn(pdecleft: *const super::super::Foundation::DECIMAL, dblright: f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecDiv = unsafe extern "system" fn(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFix = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromBool = unsafe extern "system" fn(boolin: i16, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarDecFromCy = unsafe extern "system" fn(cyin: super::Com::CY, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromDate = unsafe extern "system" fn(datein: f64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarDecFromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromI2 = unsafe extern "system" fn(uiin: i16, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromI4 = unsafe extern "system" fn(lin: i32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromI8 = unsafe extern "system" fn(i64in: i64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromR4 = unsafe extern "system" fn(fltin: f32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromR8 = unsafe extern "system" fn(dblin: f64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromUI1 = unsafe extern "system" fn(bin: u8, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromUI2 = unsafe extern "system" fn(uiin: u16, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromUI4 = unsafe extern "system" fn(ulin: u32, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecFromUI8 = unsafe extern "system" fn(ui64in: u64, pdecout: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecInt = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecMul = unsafe extern "system" fn(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecNeg = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecRound = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, cdecimals: i32, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarDecSub = unsafe extern "system" fn(pdecleft: *const super::super::Foundation::DECIMAL, pdecright: *const super::super::Foundation::DECIMAL, pdecresult: *mut super::super::Foundation::DECIMAL) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarDiv = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarEqv = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFix = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFormat = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pstrformat: super::super::Foundation::PWSTR, ifirstday: i32, ifirstweek: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFormatCurrency = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, inumdig: i32, iinclead: i32, iuseparens: i32, igroup: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFormatDateTime = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, inamedformat: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFormatFromTokens = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pstrformat: super::super::Foundation::PWSTR, pbtokcur: *const u8, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR, lcid: u32) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFormatNumber = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, inumdig: i32, iinclead: i32, iuseparens: i32, igroup: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarFormatPercent = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, inumdig: i32, iinclead: i32, iuseparens: i32, igroup: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromBool = unsafe extern "system" fn(boolin: i16, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarI1FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromDate = unsafe extern "system" fn(datein: f64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarI1FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromI2 = unsafe extern "system" fn(uiin: i16, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromI4 = unsafe extern "system" fn(lin: i32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromI8 = unsafe extern "system" fn(i64in: i64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromR4 = unsafe extern "system" fn(fltin: f32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromR8 = unsafe extern "system" fn(dblin: f64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromUI1 = unsafe extern "system" fn(bin: u8, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromUI2 = unsafe extern "system" fn(uiin: u16, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromUI4 = unsafe extern "system" fn(ulin: u32, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI1FromUI8 = unsafe extern "system" fn(i64in: u64, pcout: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromBool = unsafe extern "system" fn(boolin: i16, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarI2FromCy = unsafe extern "system" fn(cyin: super::Com::CY, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromDate = unsafe extern "system" fn(datein: f64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI2FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarI2FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI2FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromI4 = unsafe extern "system" fn(lin: i32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromI8 = unsafe extern "system" fn(i64in: i64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromR4 = unsafe extern "system" fn(fltin: f32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromR8 = unsafe extern "system" fn(dblin: f64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI2FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromUI1 = unsafe extern "system" fn(bin: u8, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromUI2 = unsafe extern "system" fn(uiin: u16, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromUI4 = unsafe extern "system" fn(ulin: u32, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI2FromUI8 = unsafe extern "system" fn(ui64in: u64, psout: *mut i16) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromBool = unsafe extern "system" fn(boolin: i16, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarI4FromCy = unsafe extern "system" fn(cyin: super::Com::CY, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromDate = unsafe extern "system" fn(datein: f64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI4FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarI4FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI4FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromI2 = unsafe extern "system" fn(sin: i16, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromI8 = unsafe extern "system" fn(i64in: i64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromR4 = unsafe extern "system" fn(fltin: f32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromR8 = unsafe extern "system" fn(dblin: f64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI4FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromUI1 = unsafe extern "system" fn(bin: u8, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromUI2 = unsafe extern "system" fn(uiin: u16, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromUI4 = unsafe extern "system" fn(ulin: u32, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI4FromUI8 = unsafe extern "system" fn(ui64in: u64, plout: *mut i32) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromBool = unsafe extern "system" fn(boolin: i16, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarI8FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromDate = unsafe extern "system" fn(datein: f64, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI8FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarI8FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI8FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromI2 = unsafe extern "system" fn(sin: i16, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromR4 = unsafe extern "system" fn(fltin: f32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromR8 = unsafe extern "system" fn(dblin: f64, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarI8FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromUI1 = unsafe extern "system" fn(bin: u8, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromUI2 = unsafe extern "system" fn(uiin: u16, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromUI4 = unsafe extern "system" fn(ulin: u32, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+pub type VarI8FromUI8 = unsafe extern "system" fn(ui64in: u64, pi64out: *mut i64) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarIdiv = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarImp = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarInt = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarMod = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarMonthName = unsafe extern "system" fn(imonth: i32, fabbrev: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarMul = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarNeg = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarNot = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarNumFromParseNum = unsafe extern "system" fn(pnumprs: *const NUMPARSE, rgbdig: *const u8, dwvtbits: u32, pvar: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarOr = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarParseNumFromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pnumprs: *mut NUMPARSE, rgbdig: *mut u8) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarPow = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+pub type VarR4CmpR8 = unsafe extern "system" fn(fltleft: f32, dblright: f64) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromBool = unsafe extern "system" fn(boolin: i16, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarR4FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromDate = unsafe extern "system" fn(datein: f64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarR4FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarR4FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarR4FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromI2 = unsafe extern "system" fn(sin: i16, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromI4 = unsafe extern "system" fn(lin: i32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromI8 = unsafe extern "system" fn(i64in: i64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromR8 = unsafe extern "system" fn(dblin: f64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarR4FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromUI1 = unsafe extern "system" fn(bin: u8, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromUI2 = unsafe extern "system" fn(uiin: u16, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromUI4 = unsafe extern "system" fn(ulin: u32, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR4FromUI8 = unsafe extern "system" fn(ui64in: u64, pfltout: *mut f32) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromBool = unsafe extern "system" fn(boolin: i16, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarR8FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromDate = unsafe extern "system" fn(datein: f64, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarR8FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarR8FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarR8FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromI2 = unsafe extern "system" fn(sin: i16, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromI4 = unsafe extern "system" fn(lin: i32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromI8 = unsafe extern "system" fn(i64in: i64, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromR4 = unsafe extern "system" fn(fltin: f32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarR8FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromUI1 = unsafe extern "system" fn(bin: u8, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromUI2 = unsafe extern "system" fn(uiin: u16, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromUI4 = unsafe extern "system" fn(ulin: u32, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8FromUI8 = unsafe extern "system" fn(ui64in: u64, pdblout: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8Pow = unsafe extern "system" fn(dblleft: f64, dblright: f64, pdblresult: *mut f64) -> ::windows_sys::core::HRESULT;
+pub type VarR8Round = unsafe extern "system" fn(dblin: f64, cdecimals: i32, pdblresult: *mut f64) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarRound = unsafe extern "system" fn(pvarin: *const super::Com::VARIANT, cdecimals: i32, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarSub = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarTokenizeFormatString = unsafe extern "system" fn(pstrformat: super::super::Foundation::PWSTR, rgbtok: *mut u8, cbtok: i32, ifirstday: i32, ifirstweek: i32, lcid: u32, pcbactual: *const i32) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromBool = unsafe extern "system" fn(boolin: i16, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI1FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromDate = unsafe extern "system" fn(datein: f64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI1FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI1FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI1FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromI2 = unsafe extern "system" fn(sin: i16, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromI4 = unsafe extern "system" fn(lin: i32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromI8 = unsafe extern "system" fn(i64in: i64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromR4 = unsafe extern "system" fn(fltin: f32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromR8 = unsafe extern "system" fn(dblin: f64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI1FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromUI2 = unsafe extern "system" fn(uiin: u16, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromUI4 = unsafe extern "system" fn(ulin: u32, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI1FromUI8 = unsafe extern "system" fn(ui64in: u64, pbout: *mut u8) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromBool = unsafe extern "system" fn(boolin: i16, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI2FromCy = unsafe extern "system" fn(cyin: super::Com::CY, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromDate = unsafe extern "system" fn(datein: f64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI2FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI2FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI2FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromI2 = unsafe extern "system" fn(uiin: i16, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromI4 = unsafe extern "system" fn(lin: i32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromI8 = unsafe extern "system" fn(i64in: i64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromR4 = unsafe extern "system" fn(fltin: f32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromR8 = unsafe extern "system" fn(dblin: f64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI2FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromUI1 = unsafe extern "system" fn(bin: u8, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromUI4 = unsafe extern "system" fn(ulin: u32, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI2FromUI8 = unsafe extern "system" fn(i64in: u64, puiout: *mut u16) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromBool = unsafe extern "system" fn(boolin: i16, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI4FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromDate = unsafe extern "system" fn(datein: f64, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI4FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI4FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI4FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromI2 = unsafe extern "system" fn(uiin: i16, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromI4 = unsafe extern "system" fn(lin: i32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromI8 = unsafe extern "system" fn(i64in: i64, plout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromR4 = unsafe extern "system" fn(fltin: f32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromR8 = unsafe extern "system" fn(dblin: f64, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI4FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromUI1 = unsafe extern "system" fn(bin: u8, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromUI2 = unsafe extern "system" fn(uiin: u16, pulout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI4FromUI8 = unsafe extern "system" fn(ui64in: u64, plout: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromBool = unsafe extern "system" fn(boolin: i16, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI8FromCy = unsafe extern "system" fn(cyin: super::Com::CY, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromDate = unsafe extern "system" fn(datein: f64, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI8FromDec = unsafe extern "system" fn(pdecin: *const super::super::Foundation::DECIMAL, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type VarUI8FromDisp = unsafe extern "system" fn(pdispin: super::Com::IDispatch, lcid: u32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI8FromI1 = unsafe extern "system" fn(cin: super::super::Foundation::CHAR, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromI2 = unsafe extern "system" fn(sin: i16, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromI8 = unsafe extern "system" fn(ui64in: i64, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromR4 = unsafe extern "system" fn(fltin: f32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromR8 = unsafe extern "system" fn(dblin: f64, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUI8FromStr = unsafe extern "system" fn(strin: super::super::Foundation::PWSTR, lcid: u32, dwflags: u32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromUI1 = unsafe extern "system" fn(bin: u8, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromUI2 = unsafe extern "system" fn(uiin: u16, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+pub type VarUI8FromUI4 = unsafe extern "system" fn(ulin: u32, pi64out: *mut u64) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarUdateFromDate = unsafe extern "system" fn(datein: f64, dwflags: u32, pudateout: *mut UDATE) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type VarWeekdayName = unsafe extern "system" fn(iweekday: i32, fabbrev: i32, ifirstday: i32, dwflags: u32, pbstrout: *mut super::super::Foundation::BSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VarXor = unsafe extern "system" fn(pvarleft: *const super::Com::VARIANT, pvarright: *const super::Com::VARIANT, pvarresult: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VariantChangeType = unsafe extern "system" fn(pvargdest: *mut super::Com::VARIANT, pvarsrc: *const super::Com::VARIANT, wflags: u16, vt: u16) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VariantChangeTypeEx = unsafe extern "system" fn(pvargdest: *mut super::Com::VARIANT, pvarsrc: *const super::Com::VARIANT, lcid: u32, wflags: u16, vt: u16) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VariantClear = unsafe extern "system" fn(pvarg: *mut super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VariantCopy = unsafe extern "system" fn(pvargdest: *mut super::Com::VARIANT, pvargsrc: *const super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VariantCopyInd = unsafe extern "system" fn(pvardest: *mut super::Com::VARIANT, pvargsrc: *const super::Com::VARIANT) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VariantInit = unsafe extern "system" fn(pvarg: *mut super::Com::VARIANT);
+pub type VariantTimeToDosDateTime = unsafe extern "system" fn(vtime: f64, pwdosdate: *mut u16, pwdostime: *mut u16) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type VariantTimeToSystemTime = unsafe extern "system" fn(vtime: f64, lpsystemtime: *mut super::super::Foundation::SYSTEMTIME) -> i32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type VectorFromBstr = unsafe extern "system" fn(bstr: super::super::Foundation::BSTR, ppsa: *mut *mut super::Com::SAFEARRAY) -> ::windows_sys::core::HRESULT;
 pub type ACTIVATEFLAGS = i32;
 pub const ACTIVATE_WINDOWLESS: ACTIVATEFLAGS = 1i32;
 pub const ACTIVEOBJECT_STRONG: u32 = 0u32;

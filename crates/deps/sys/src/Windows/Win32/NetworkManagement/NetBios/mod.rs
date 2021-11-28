@@ -1,9 +1,6 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Netbios(pncb: *mut NCB) -> u8;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type Netbios = unsafe extern "system" fn(pncb: *mut NCB) -> u8;
 #[repr(C)]
 pub struct ACTION_HEADER {
     pub transport_id: u32,

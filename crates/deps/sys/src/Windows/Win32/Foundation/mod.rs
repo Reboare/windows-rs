@@ -1,26 +1,23 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn CloseHandle(hobject: HANDLE) -> BOOL;
-    pub fn CompareObjectHandles(hfirstobjecthandle: HANDLE, hsecondobjecthandle: HANDLE) -> BOOL;
-    pub fn DuplicateHandle(hsourceprocesshandle: HANDLE, hsourcehandle: HANDLE, htargetprocesshandle: HANDLE, lptargethandle: *mut HANDLE, dwdesiredaccess: u32, binherithandle: BOOL, dwoptions: DUPLICATE_HANDLE_OPTIONS) -> BOOL;
-    pub fn GetHandleInformation(hobject: HANDLE, lpdwflags: *mut u32) -> BOOL;
-    pub fn GetLastError() -> WIN32_ERROR;
-    pub fn RtlNtStatusToDosError(status: NTSTATUS) -> u32;
-    pub fn SetHandleInformation(hobject: HANDLE, dwmask: u32, dwflags: HANDLE_FLAGS) -> BOOL;
-    pub fn SetLastError(dwerrcode: WIN32_ERROR);
-    pub fn SetLastErrorEx(dwerrcode: WIN32_ERROR, dwtype: u32);
-    pub fn SysAddRefString(bstrstring: BSTR) -> ::windows_sys::core::HRESULT;
-    pub fn SysAllocString(psz: PWSTR) -> BSTR;
-    pub fn SysAllocStringByteLen(psz: PSTR, len: u32) -> BSTR;
-    pub fn SysAllocStringLen(strin: PWSTR, ui: u32) -> BSTR;
-    pub fn SysFreeString(bstrstring: BSTR);
-    pub fn SysReAllocString(pbstr: *mut BSTR, psz: PWSTR) -> i32;
-    pub fn SysReAllocStringLen(pbstr: *mut BSTR, psz: PWSTR, len: u32) -> i32;
-    pub fn SysReleaseString(bstrstring: BSTR);
-    pub fn SysStringByteLen(bstr: BSTR) -> u32;
-    pub fn SysStringLen(pbstr: BSTR) -> u32;
-}
+pub type CloseHandle = unsafe extern "system" fn(hobject: HANDLE) -> BOOL;
+pub type CompareObjectHandles = unsafe extern "system" fn(hfirstobjecthandle: HANDLE, hsecondobjecthandle: HANDLE) -> BOOL;
+pub type DuplicateHandle = unsafe extern "system" fn(hsourceprocesshandle: HANDLE, hsourcehandle: HANDLE, htargetprocesshandle: HANDLE, lptargethandle: *mut HANDLE, dwdesiredaccess: u32, binherithandle: BOOL, dwoptions: DUPLICATE_HANDLE_OPTIONS) -> BOOL;
+pub type GetHandleInformation = unsafe extern "system" fn(hobject: HANDLE, lpdwflags: *mut u32) -> BOOL;
+pub type GetLastError = unsafe extern "system" fn() -> WIN32_ERROR;
+pub type RtlNtStatusToDosError = unsafe extern "system" fn(status: NTSTATUS) -> u32;
+pub type SetHandleInformation = unsafe extern "system" fn(hobject: HANDLE, dwmask: u32, dwflags: HANDLE_FLAGS) -> BOOL;
+pub type SetLastError = unsafe extern "system" fn(dwerrcode: WIN32_ERROR);
+pub type SetLastErrorEx = unsafe extern "system" fn(dwerrcode: WIN32_ERROR, dwtype: u32);
+pub type SysAddRefString = unsafe extern "system" fn(bstrstring: BSTR) -> ::windows_sys::core::HRESULT;
+pub type SysAllocString = unsafe extern "system" fn(psz: PWSTR) -> BSTR;
+pub type SysAllocStringByteLen = unsafe extern "system" fn(psz: PSTR, len: u32) -> BSTR;
+pub type SysAllocStringLen = unsafe extern "system" fn(strin: PWSTR, ui: u32) -> BSTR;
+pub type SysFreeString = unsafe extern "system" fn(bstrstring: BSTR);
+pub type SysReAllocString = unsafe extern "system" fn(pbstr: *mut BSTR, psz: PWSTR) -> i32;
+pub type SysReAllocStringLen = unsafe extern "system" fn(pbstr: *mut BSTR, psz: PWSTR, len: u32) -> i32;
+pub type SysReleaseString = unsafe extern "system" fn(bstrstring: BSTR);
+pub type SysStringByteLen = unsafe extern "system" fn(bstr: BSTR) -> u32;
+pub type SysStringLen = unsafe extern "system" fn(pbstr: BSTR) -> u32;
 pub const APPMODEL_ERROR_DYNAMIC_PROPERTY_INVALID: i32 = 15705i32;
 pub const APPMODEL_ERROR_DYNAMIC_PROPERTY_READ_FAILED: i32 = 15704i32;
 pub const APPMODEL_ERROR_NO_APPLICATION: i32 = 15703i32;

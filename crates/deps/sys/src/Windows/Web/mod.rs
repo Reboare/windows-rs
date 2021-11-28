@@ -7,8 +7,6 @@ pub mod Http;
 pub mod Syndication;
 #[cfg(feature = "Web_UI")]
 pub mod UI;
-#[link(name = "windows")]
-extern "system" {}
 pub type IUriToStreamResolver = *mut ::core::ffi::c_void;
 #[repr(transparent)]
 pub struct WebErrorStatus(pub i32);

@@ -1,97 +1,94 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn ActivateKeyboardLayout(hkl: super::super::TextServices::HKL, flags: ACTIVATE_KEYBOARD_LAYOUT_FLAGS) -> super::super::TextServices::HKL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn BlockInput(fblockit: super::super::super::Foundation::BOOL) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DragDetect(hwnd: super::super::super::Foundation::HWND, pt: super::super::super::Foundation::POINT) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnableWindow(hwnd: super::super::super::Foundation::HWND, benable: super::super::super::Foundation::BOOL) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetActiveWindow() -> super::super::super::Foundation::HWND;
-    pub fn GetAsyncKeyState(vkey: i32) -> i16;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCapture() -> super::super::super::Foundation::HWND;
-    pub fn GetDoubleClickTime() -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetFocus() -> super::super::super::Foundation::HWND;
-    pub fn GetKBCodePage() -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetKeyNameTextA(lparam: i32, lpstring: super::super::super::Foundation::PSTR, cchsize: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetKeyNameTextW(lparam: i32, lpstring: super::super::super::Foundation::PWSTR, cchsize: i32) -> i32;
-    pub fn GetKeyState(nvirtkey: i32) -> i16;
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn GetKeyboardLayout(idthread: u32) -> super::super::TextServices::HKL;
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn GetKeyboardLayoutList(nbuff: i32, lplist: *mut super::super::TextServices::HKL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetKeyboardLayoutNameA(pwszklid: super::super::super::Foundation::PSTR) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetKeyboardLayoutNameW(pwszklid: super::super::super::Foundation::PWSTR) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetKeyboardState(lpkeystate: *mut u8) -> super::super::super::Foundation::BOOL;
-    pub fn GetKeyboardType(ntypeflag: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetLastInputInfo(plii: *mut LASTINPUTINFO) -> super::super::super::Foundation::BOOL;
-    pub fn GetMouseMovePointsEx(cbsize: u32, lppt: *const MOUSEMOVEPOINT, lpptbuf: *mut MOUSEMOVEPOINT, nbufpoints: i32, resolution: GET_MOUSE_MOVE_POINTS_EX_RESOLUTION) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn IsWindowEnabled(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
-    pub fn LoadKeyboardLayoutA(pwszklid: super::super::super::Foundation::PSTR, flags: ACTIVATE_KEYBOARD_LAYOUT_FLAGS) -> super::super::TextServices::HKL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
-    pub fn LoadKeyboardLayoutW(pwszklid: super::super::super::Foundation::PWSTR, flags: ACTIVATE_KEYBOARD_LAYOUT_FLAGS) -> super::super::TextServices::HKL;
-    pub fn MapVirtualKeyA(ucode: u32, umaptype: u32) -> u32;
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn MapVirtualKeyExA(ucode: u32, umaptype: u32, dwhkl: super::super::TextServices::HKL) -> u32;
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn MapVirtualKeyExW(ucode: u32, umaptype: u32, dwhkl: super::super::TextServices::HKL) -> u32;
-    pub fn MapVirtualKeyW(ucode: u32, umaptype: u32) -> u32;
-    pub fn OemKeyScan(woemchar: u16) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegisterHotKey(hwnd: super::super::super::Foundation::HWND, id: i32, fsmodifiers: HOT_KEY_MODIFIERS, vk: u32) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ReleaseCapture() -> super::super::super::Foundation::BOOL;
-    pub fn SendInput(cinputs: u32, pinputs: *const INPUT, cbsize: i32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetActiveWindow(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::HWND;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetCapture(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::HWND;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetDoubleClickTime(param0: u32) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetFocus(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::HWND;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetKeyboardState(lpkeystate: *const u8) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SwapMouseButton(fswap: super::super::super::Foundation::BOOL) -> super::super::super::Foundation::BOOL;
-    pub fn ToAscii(uvirtkey: u32, uscancode: u32, lpkeystate: *const u8, lpchar: *mut u16, uflags: u32) -> i32;
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn ToAsciiEx(uvirtkey: u32, uscancode: u32, lpkeystate: *const u8, lpchar: *mut u16, uflags: u32, dwhkl: super::super::TextServices::HKL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ToUnicode(wvirtkey: u32, wscancode: u32, lpkeystate: *const u8, pwszbuff: super::super::super::Foundation::PWSTR, cchbuff: i32, wflags: u32) -> i32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
-    pub fn ToUnicodeEx(wvirtkey: u32, wscancode: u32, lpkeystate: *const u8, pwszbuff: super::super::super::Foundation::PWSTR, cchbuff: i32, wflags: u32, dwhkl: super::super::TextServices::HKL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TrackMouseEvent(lpeventtrack: *mut TRACKMOUSEEVENT) -> super::super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
-    pub fn UnloadKeyboardLayout(hkl: super::super::TextServices::HKL) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn UnregisterHotKey(hwnd: super::super::super::Foundation::HWND, id: i32) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn VkKeyScanA(ch: super::super::super::Foundation::CHAR) -> i16;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
-    pub fn VkKeyScanExA(ch: super::super::super::Foundation::CHAR, dwhkl: super::super::TextServices::HKL) -> i16;
-    #[cfg(feature = "Win32_UI_TextServices")]
-    pub fn VkKeyScanExW(ch: u16, dwhkl: super::super::TextServices::HKL) -> i16;
-    pub fn VkKeyScanW(ch: u16) -> i16;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn _TrackMouseEvent(lpeventtrack: *mut TRACKMOUSEEVENT) -> super::super::super::Foundation::BOOL;
-    pub fn keybd_event(bvk: u8, bscan: u8, dwflags: KEYBD_EVENT_FLAGS, dwextrainfo: usize);
-    pub fn mouse_event(dwflags: MOUSE_EVENT_FLAGS, dx: i32, dy: i32, dwdata: u32, dwextrainfo: usize);
-}
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type ActivateKeyboardLayout = unsafe extern "system" fn(hkl: super::super::TextServices::HKL, flags: ACTIVATE_KEYBOARD_LAYOUT_FLAGS) -> super::super::TextServices::HKL;
+#[cfg(feature = "Win32_Foundation")]
+pub type BlockInput = unsafe extern "system" fn(fblockit: super::super::super::Foundation::BOOL) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DragDetect = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND, pt: super::super::super::Foundation::POINT) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnableWindow = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND, benable: super::super::super::Foundation::BOOL) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetActiveWindow = unsafe extern "system" fn() -> super::super::super::Foundation::HWND;
+pub type GetAsyncKeyState = unsafe extern "system" fn(vkey: i32) -> i16;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCapture = unsafe extern "system" fn() -> super::super::super::Foundation::HWND;
+pub type GetDoubleClickTime = unsafe extern "system" fn() -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetFocus = unsafe extern "system" fn() -> super::super::super::Foundation::HWND;
+pub type GetKBCodePage = unsafe extern "system" fn() -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetKeyNameTextA = unsafe extern "system" fn(lparam: i32, lpstring: super::super::super::Foundation::PSTR, cchsize: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetKeyNameTextW = unsafe extern "system" fn(lparam: i32, lpstring: super::super::super::Foundation::PWSTR, cchsize: i32) -> i32;
+pub type GetKeyState = unsafe extern "system" fn(nvirtkey: i32) -> i16;
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type GetKeyboardLayout = unsafe extern "system" fn(idthread: u32) -> super::super::TextServices::HKL;
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type GetKeyboardLayoutList = unsafe extern "system" fn(nbuff: i32, lplist: *mut super::super::TextServices::HKL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetKeyboardLayoutNameA = unsafe extern "system" fn(pwszklid: super::super::super::Foundation::PSTR) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetKeyboardLayoutNameW = unsafe extern "system" fn(pwszklid: super::super::super::Foundation::PWSTR) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetKeyboardState = unsafe extern "system" fn(lpkeystate: *mut u8) -> super::super::super::Foundation::BOOL;
+pub type GetKeyboardType = unsafe extern "system" fn(ntypeflag: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetLastInputInfo = unsafe extern "system" fn(plii: *mut LASTINPUTINFO) -> super::super::super::Foundation::BOOL;
+pub type GetMouseMovePointsEx = unsafe extern "system" fn(cbsize: u32, lppt: *const MOUSEMOVEPOINT, lpptbuf: *mut MOUSEMOVEPOINT, nbufpoints: i32, resolution: GET_MOUSE_MOVE_POINTS_EX_RESOLUTION) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type IsWindowEnabled = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
+pub type LoadKeyboardLayoutA = unsafe extern "system" fn(pwszklid: super::super::super::Foundation::PSTR, flags: ACTIVATE_KEYBOARD_LAYOUT_FLAGS) -> super::super::TextServices::HKL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
+pub type LoadKeyboardLayoutW = unsafe extern "system" fn(pwszklid: super::super::super::Foundation::PWSTR, flags: ACTIVATE_KEYBOARD_LAYOUT_FLAGS) -> super::super::TextServices::HKL;
+pub type MapVirtualKeyA = unsafe extern "system" fn(ucode: u32, umaptype: u32) -> u32;
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type MapVirtualKeyExA = unsafe extern "system" fn(ucode: u32, umaptype: u32, dwhkl: super::super::TextServices::HKL) -> u32;
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type MapVirtualKeyExW = unsafe extern "system" fn(ucode: u32, umaptype: u32, dwhkl: super::super::TextServices::HKL) -> u32;
+pub type MapVirtualKeyW = unsafe extern "system" fn(ucode: u32, umaptype: u32) -> u32;
+pub type OemKeyScan = unsafe extern "system" fn(woemchar: u16) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegisterHotKey = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND, id: i32, fsmodifiers: HOT_KEY_MODIFIERS, vk: u32) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ReleaseCapture = unsafe extern "system" fn() -> super::super::super::Foundation::BOOL;
+pub type SendInput = unsafe extern "system" fn(cinputs: u32, pinputs: *const INPUT, cbsize: i32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetActiveWindow = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::HWND;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetCapture = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::HWND;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetDoubleClickTime = unsafe extern "system" fn(param0: u32) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetFocus = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND) -> super::super::super::Foundation::HWND;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetKeyboardState = unsafe extern "system" fn(lpkeystate: *const u8) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SwapMouseButton = unsafe extern "system" fn(fswap: super::super::super::Foundation::BOOL) -> super::super::super::Foundation::BOOL;
+pub type ToAscii = unsafe extern "system" fn(uvirtkey: u32, uscancode: u32, lpkeystate: *const u8, lpchar: *mut u16, uflags: u32) -> i32;
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type ToAsciiEx = unsafe extern "system" fn(uvirtkey: u32, uscancode: u32, lpkeystate: *const u8, lpchar: *mut u16, uflags: u32, dwhkl: super::super::TextServices::HKL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type ToUnicode = unsafe extern "system" fn(wvirtkey: u32, wscancode: u32, lpkeystate: *const u8, pwszbuff: super::super::super::Foundation::PWSTR, cchbuff: i32, wflags: u32) -> i32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
+pub type ToUnicodeEx = unsafe extern "system" fn(wvirtkey: u32, wscancode: u32, lpkeystate: *const u8, pwszbuff: super::super::super::Foundation::PWSTR, cchbuff: i32, wflags: u32, dwhkl: super::super::TextServices::HKL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TrackMouseEvent = unsafe extern "system" fn(lpeventtrack: *mut TRACKMOUSEEVENT) -> super::super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
+pub type UnloadKeyboardLayout = unsafe extern "system" fn(hkl: super::super::TextServices::HKL) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type UnregisterHotKey = unsafe extern "system" fn(hwnd: super::super::super::Foundation::HWND, id: i32) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type VkKeyScanA = unsafe extern "system" fn(ch: super::super::super::Foundation::CHAR) -> i16;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_TextServices"))]
+pub type VkKeyScanExA = unsafe extern "system" fn(ch: super::super::super::Foundation::CHAR, dwhkl: super::super::TextServices::HKL) -> i16;
+#[cfg(feature = "Win32_UI_TextServices")]
+pub type VkKeyScanExW = unsafe extern "system" fn(ch: u16, dwhkl: super::super::TextServices::HKL) -> i16;
+pub type VkKeyScanW = unsafe extern "system" fn(ch: u16) -> i16;
+#[cfg(feature = "Win32_Foundation")]
+pub type _TrackMouseEvent = unsafe extern "system" fn(lpeventtrack: *mut TRACKMOUSEEVENT) -> super::super::super::Foundation::BOOL;
+pub type keybd_event = unsafe extern "system" fn(bvk: u8, bscan: u8, dwflags: KEYBD_EVENT_FLAGS, dwextrainfo: usize);
+pub type mouse_event = unsafe extern "system" fn(dwflags: MOUSE_EVENT_FLAGS, dx: i32, dy: i32, dwdata: u32, dwextrainfo: usize);
 pub type ACTIVATE_KEYBOARD_LAYOUT_FLAGS = u32;
 pub const KLF_REORDER: ACTIVATE_KEYBOARD_LAYOUT_FLAGS = 8u32;
 pub const KLF_RESET: ACTIVATE_KEYBOARD_LAYOUT_FLAGS = 1073741824u32;

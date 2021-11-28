@@ -1,371 +1,368 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn GetTnefStreamCodepage(lpstream: super::super::System::Com::IStream, lpulcodepage: *mut u32, lpulsubcodepage: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_AddressBook", feature = "Win32_System_Com"))]
-    pub fn OpenTnefStream(lpvsupport: *mut ::core::ffi::c_void, lpstream: super::super::System::Com::IStream, lpszstreamname: *const i8, ulflags: u32, lpmessage: super::super::System::AddressBook::IMessage, wkeyval: u16, lpptnef: *mut ITnef) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_System_AddressBook", feature = "Win32_System_Com"))]
-    pub fn OpenTnefStreamEx(lpvsupport: *mut ::core::ffi::c_void, lpstream: super::super::System::Com::IStream, lpszstreamname: *const i8, ulflags: u32, lpmessage: super::super::System::AddressBook::IMessage, wkeyval: u16, lpadressbook: super::super::System::AddressBook::IAddrBook, lpptnef: *mut ITnef) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineAccept(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineAddProvider(lpszproviderfilename: super::super::Foundation::PSTR, hwndowner: super::super::Foundation::HWND, lpdwpermanentproviderid: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineAddProviderA(lpszproviderfilename: super::super::Foundation::PSTR, hwndowner: super::super::Foundation::HWND, lpdwpermanentproviderid: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineAddProviderW(lpszproviderfilename: super::super::Foundation::PWSTR, hwndowner: super::super::Foundation::HWND, lpdwpermanentproviderid: *mut u32) -> i32;
-    pub fn lineAddToConference(hconfcall: u32, hconsultcall: u32) -> i32;
-    pub fn lineAgentSpecific(hline: u32, dwaddressid: u32, dwagentextensionidindex: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineAnswer(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineBlindTransfer(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineBlindTransferA(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineBlindTransferW(hcall: u32, lpszdestaddressw: super::super::Foundation::PWSTR, dwcountrycode: u32) -> i32;
-    pub fn lineClose(hline: u32) -> i32;
-    pub fn lineCompleteCall(hcall: u32, lpdwcompletionid: *mut u32, dwcompletionmode: u32, dwmessageid: u32) -> i32;
-    pub fn lineCompleteTransfer(hcall: u32, hconsultcall: u32, lphconfcall: *mut u32, dwtransfermode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigDialog(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigDialogA(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigDialogEdit(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceconfigin: *const ::core::ffi::c_void, dwsize: u32, lpdeviceconfigout: *mut VARSTRING) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigDialogEditA(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceconfigin: *const ::core::ffi::c_void, dwsize: u32, lpdeviceconfigout: *mut VARSTRING) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigDialogEditW(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PWSTR, lpdeviceconfigin: *const ::core::ffi::c_void, dwsize: u32, lpdeviceconfigout: *mut VARSTRING) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigDialogW(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineConfigProvider(hwndowner: super::super::Foundation::HWND, dwpermanentproviderid: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineCreateAgentA(hline: u32, lpszagentid: super::super::Foundation::PSTR, lpszagentpin: super::super::Foundation::PSTR, lphagent: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineCreateAgentSessionA(hline: u32, hagent: u32, lpszagentpin: super::super::Foundation::PSTR, dwworkingaddressid: u32, lpgroupid: *mut ::windows_sys::core::GUID, lphagentsession: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineCreateAgentSessionW(hline: u32, hagent: u32, lpszagentpin: super::super::Foundation::PWSTR, dwworkingaddressid: u32, lpgroupid: *mut ::windows_sys::core::GUID, lphagentsession: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineCreateAgentW(hline: u32, lpszagentid: super::super::Foundation::PWSTR, lpszagentpin: super::super::Foundation::PWSTR, lphagent: *mut u32) -> i32;
-    pub fn lineDeallocateCall(hcall: u32) -> i32;
-    pub fn lineDevSpecific(hline: u32, dwaddressid: u32, hcall: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
-    pub fn lineDevSpecificFeature(hline: u32, dwfeature: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineDial(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineDialA(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineDialW(hcall: u32, lpszdestaddress: super::super::Foundation::PWSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineDrop(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    pub fn lineForward(hline: u32, balladdresses: u32, dwaddressid: u32, lpforwardlist: *const LINEFORWARDLIST, dwnumringsnoanswer: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineForwardA(hline: u32, balladdresses: u32, dwaddressid: u32, lpforwardlist: *const LINEFORWARDLIST, dwnumringsnoanswer: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineForwardW(hline: u32, balladdresses: u32, dwaddressid: u32, lpforwardlist: *const LINEFORWARDLIST, dwnumringsnoanswer: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGatherDigits(hcall: u32, dwdigitmodes: u32, lpsdigits: super::super::Foundation::PSTR, dwnumdigits: u32, lpszterminationdigits: super::super::Foundation::PSTR, dwfirstdigittimeout: u32, dwinterdigittimeout: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGatherDigitsA(hcall: u32, dwdigitmodes: u32, lpsdigits: super::super::Foundation::PSTR, dwnumdigits: u32, lpszterminationdigits: super::super::Foundation::PSTR, dwfirstdigittimeout: u32, dwinterdigittimeout: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGatherDigitsW(hcall: u32, dwdigitmodes: u32, lpsdigits: super::super::Foundation::PWSTR, dwnumdigits: u32, lpszterminationdigits: super::super::Foundation::PWSTR, dwfirstdigittimeout: u32, dwinterdigittimeout: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGenerateDigits(hcall: u32, dwdigitmode: u32, lpszdigits: super::super::Foundation::PSTR, dwduration: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGenerateDigitsA(hcall: u32, dwdigitmode: u32, lpszdigits: super::super::Foundation::PSTR, dwduration: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGenerateDigitsW(hcall: u32, dwdigitmode: u32, lpszdigits: super::super::Foundation::PWSTR, dwduration: u32) -> i32;
-    pub fn lineGenerateTone(hcall: u32, dwtonemode: u32, dwduration: u32, dwnumtones: u32, lptones: *const LINEGENERATETONE) -> i32;
-    pub fn lineGetAddressCaps(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwapiversion: u32, dwextversion: u32, lpaddresscaps: *mut LINEADDRESSCAPS) -> i32;
-    pub fn lineGetAddressCapsA(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwapiversion: u32, dwextversion: u32, lpaddresscaps: *mut LINEADDRESSCAPS) -> i32;
-    pub fn lineGetAddressCapsW(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwapiversion: u32, dwextversion: u32, lpaddresscaps: *mut LINEADDRESSCAPS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetAddressID(hline: u32, lpdwaddressid: *mut u32, dwaddressmode: u32, lpsaddress: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetAddressIDA(hline: u32, lpdwaddressid: *mut u32, dwaddressmode: u32, lpsaddress: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetAddressIDW(hline: u32, lpdwaddressid: *mut u32, dwaddressmode: u32, lpsaddress: super::super::Foundation::PWSTR, dwsize: u32) -> i32;
-    pub fn lineGetAddressStatus(hline: u32, dwaddressid: u32, lpaddressstatus: *mut LINEADDRESSSTATUS) -> i32;
-    pub fn lineGetAddressStatusA(hline: u32, dwaddressid: u32, lpaddressstatus: *mut LINEADDRESSSTATUS) -> i32;
-    pub fn lineGetAddressStatusW(hline: u32, dwaddressid: u32, lpaddressstatus: *mut LINEADDRESSSTATUS) -> i32;
-    pub fn lineGetAgentActivityListA(hline: u32, dwaddressid: u32, lpagentactivitylist: *mut LINEAGENTACTIVITYLIST) -> i32;
-    pub fn lineGetAgentActivityListW(hline: u32, dwaddressid: u32, lpagentactivitylist: *mut LINEAGENTACTIVITYLIST) -> i32;
-    pub fn lineGetAgentCapsA(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwappapiversion: u32, lpagentcaps: *mut LINEAGENTCAPS) -> i32;
-    pub fn lineGetAgentCapsW(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwappapiversion: u32, lpagentcaps: *mut LINEAGENTCAPS) -> i32;
-    pub fn lineGetAgentGroupListA(hline: u32, dwaddressid: u32, lpagentgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
-    pub fn lineGetAgentGroupListW(hline: u32, dwaddressid: u32, lpagentgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn lineGetAgentInfo(hline: u32, hagent: u32, lpagentinfo: *mut LINEAGENTINFO) -> i32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn lineGetAgentSessionInfo(hline: u32, hagentsession: u32, lpagentsessioninfo: *mut LINEAGENTSESSIONINFO) -> i32;
-    pub fn lineGetAgentSessionList(hline: u32, hagent: u32, lpagentsessionlist: *mut LINEAGENTSESSIONLIST) -> i32;
-    pub fn lineGetAgentStatusA(hline: u32, dwaddressid: u32, lpagentstatus: *mut LINEAGENTSTATUS) -> i32;
-    pub fn lineGetAgentStatusW(hline: u32, dwaddressid: u32, lpagentstatus: *mut LINEAGENTSTATUS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetAppPriority(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpextensionname: *mut VARSTRING, lpdwpriority: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetAppPriorityA(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpextensionname: *mut VARSTRING, lpdwpriority: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetAppPriorityW(lpszappfilename: super::super::Foundation::PWSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpextensionname: *mut VARSTRING, lpdwpriority: *mut u32) -> i32;
-    pub fn lineGetCallInfo(hcall: u32, lpcallinfo: *mut LINECALLINFO) -> i32;
-    pub fn lineGetCallInfoA(hcall: u32, lpcallinfo: *mut LINECALLINFO) -> i32;
-    pub fn lineGetCallInfoW(hcall: u32, lpcallinfo: *mut LINECALLINFO) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetCallStatus(hcall: u32, lpcallstatus: *mut LINECALLSTATUS) -> i32;
-    pub fn lineGetConfRelatedCalls(hcall: u32, lpcalllist: *mut LINECALLLIST) -> i32;
-    pub fn lineGetCountry(dwcountryid: u32, dwapiversion: u32, lplinecountrylist: *mut LINECOUNTRYLIST) -> i32;
-    pub fn lineGetCountryA(dwcountryid: u32, dwapiversion: u32, lplinecountrylist: *mut LINECOUNTRYLIST) -> i32;
-    pub fn lineGetCountryW(dwcountryid: u32, dwapiversion: u32, lplinecountrylist: *mut LINECOUNTRYLIST) -> i32;
-    pub fn lineGetDevCaps(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lplinedevcaps: *mut LINEDEVCAPS) -> i32;
-    pub fn lineGetDevCapsA(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lplinedevcaps: *mut LINEDEVCAPS) -> i32;
-    pub fn lineGetDevCapsW(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lplinedevcaps: *mut LINEDEVCAPS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetDevConfig(dwdeviceid: u32, lpdeviceconfig: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetDevConfigA(dwdeviceid: u32, lpdeviceconfig: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetDevConfigW(dwdeviceid: u32, lpdeviceconfig: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
-    pub fn lineGetGroupListA(hline: u32, lpgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
-    pub fn lineGetGroupListW(hline: u32, lpgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetID(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetIDA(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetIDW(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetIcon(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetIconA(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineGetIconW(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PWSTR, lphicon: *mut isize) -> i32;
-    pub fn lineGetLineDevStatus(hline: u32, lplinedevstatus: *mut LINEDEVSTATUS) -> i32;
-    pub fn lineGetLineDevStatusA(hline: u32, lplinedevstatus: *mut LINEDEVSTATUS) -> i32;
-    pub fn lineGetLineDevStatusW(hline: u32, lplinedevstatus: *mut LINEDEVSTATUS) -> i32;
-    pub fn lineGetMessage(hlineapp: u32, lpmessage: *mut LINEMESSAGE, dwtimeout: u32) -> i32;
-    pub fn lineGetNewCalls(hline: u32, dwaddressid: u32, dwselect: u32, lpcalllist: *mut LINECALLLIST) -> i32;
-    pub fn lineGetNumRings(hline: u32, dwaddressid: u32, lpdwnumrings: *mut u32) -> i32;
-    pub fn lineGetProviderList(dwapiversion: u32, lpproviderlist: *mut LINEPROVIDERLIST) -> i32;
-    pub fn lineGetProviderListA(dwapiversion: u32, lpproviderlist: *mut LINEPROVIDERLIST) -> i32;
-    pub fn lineGetProviderListW(dwapiversion: u32, lpproviderlist: *mut LINEPROVIDERLIST) -> i32;
-    pub fn lineGetProxyStatus(hlineapp: u32, dwdeviceid: u32, dwappapiversion: u32, lplineproxyreqestlist: *mut LINEPROXYREQUESTLIST) -> i32;
-    pub fn lineGetQueueInfo(hline: u32, dwqueueid: u32, lplinequeueinfo: *mut LINEQUEUEINFO) -> i32;
-    pub fn lineGetQueueListA(hline: u32, lpgroupid: *mut ::windows_sys::core::GUID, lpqueuelist: *mut LINEQUEUELIST) -> i32;
-    pub fn lineGetQueueListW(hline: u32, lpgroupid: *mut ::windows_sys::core::GUID, lpqueuelist: *mut LINEQUEUELIST) -> i32;
-    pub fn lineGetRequest(hlineapp: u32, dwrequestmode: u32, lprequestbuffer: *mut ::core::ffi::c_void) -> i32;
-    pub fn lineGetRequestA(hlineapp: u32, dwrequestmode: u32, lprequestbuffer: *mut ::core::ffi::c_void) -> i32;
-    pub fn lineGetRequestW(hlineapp: u32, dwrequestmode: u32, lprequestbuffer: *mut ::core::ffi::c_void) -> i32;
-    pub fn lineGetStatusMessages(hline: u32, lpdwlinestates: *mut u32, lpdwaddressstates: *mut u32) -> i32;
-    pub fn lineGetTranslateCaps(hlineapp: u32, dwapiversion: u32, lptranslatecaps: *mut LINETRANSLATECAPS) -> i32;
-    pub fn lineGetTranslateCapsA(hlineapp: u32, dwapiversion: u32, lptranslatecaps: *mut LINETRANSLATECAPS) -> i32;
-    pub fn lineGetTranslateCapsW(hlineapp: u32, dwapiversion: u32, lptranslatecaps: *mut LINETRANSLATECAPS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineHandoff(hcall: u32, lpszfilename: super::super::Foundation::PSTR, dwmediamode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineHandoffA(hcall: u32, lpszfilename: super::super::Foundation::PSTR, dwmediamode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineHandoffW(hcall: u32, lpszfilename: super::super::Foundation::PWSTR, dwmediamode: u32) -> i32;
-    pub fn lineHold(hcall: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineInitialize(lphlineapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: LINECALLBACK, lpszappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineInitializeExA(lphlineapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: LINECALLBACK, lpszfriendlyappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lplineinitializeexparams: *mut LINEINITIALIZEEXPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineInitializeExW(lphlineapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: LINECALLBACK, lpszfriendlyappname: super::super::Foundation::PWSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lplineinitializeexparams: *mut LINEINITIALIZEEXPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineMakeCall(hline: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineMakeCallA(hline: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineMakeCallW(hline: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PWSTR, dwcountrycode: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineMonitorDigits(hcall: u32, dwdigitmodes: u32) -> i32;
-    pub fn lineMonitorMedia(hcall: u32, dwmediamodes: u32) -> i32;
-    pub fn lineMonitorTones(hcall: u32, lptonelist: *const LINEMONITORTONE, dwnumentries: u32) -> i32;
-    pub fn lineNegotiateAPIVersion(hlineapp: u32, dwdeviceid: u32, dwapilowversion: u32, dwapihighversion: u32, lpdwapiversion: *mut u32, lpextensionid: *mut LINEEXTENSIONID) -> i32;
-    pub fn lineNegotiateExtVersion(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextlowversion: u32, dwexthighversion: u32, lpdwextversion: *mut u32) -> i32;
-    pub fn lineOpen(hlineapp: u32, dwdeviceid: u32, lphline: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivileges: u32, dwmediamodes: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineOpenA(hlineapp: u32, dwdeviceid: u32, lphline: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivileges: u32, dwmediamodes: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineOpenW(hlineapp: u32, dwdeviceid: u32, lphline: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivileges: u32, dwmediamodes: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn linePark(hcall: u32, dwparkmode: u32, lpszdiraddress: super::super::Foundation::PSTR, lpnondiraddress: *mut VARSTRING) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineParkA(hcall: u32, dwparkmode: u32, lpszdiraddress: super::super::Foundation::PSTR, lpnondiraddress: *mut VARSTRING) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineParkW(hcall: u32, dwparkmode: u32, lpszdiraddress: super::super::Foundation::PWSTR, lpnondiraddress: *mut VARSTRING) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn linePickup(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, lpszgroupid: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn linePickupA(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, lpszgroupid: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn linePickupW(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PWSTR, lpszgroupid: super::super::Foundation::PWSTR) -> i32;
-    pub fn linePrepareAddToConference(hconfcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn linePrepareAddToConferenceA(hconfcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn linePrepareAddToConferenceW(hconfcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineProxyMessage(hline: u32, hcall: u32, dwmsg: u32, dwparam1: u32, dwparam2: u32, dwparam3: u32) -> i32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn lineProxyResponse(hline: u32, lpproxyrequest: *mut LINEPROXYREQUEST, dwresult: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineRedirect(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineRedirectA(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineRedirectW(hcall: u32, lpszdestaddress: super::super::Foundation::PWSTR, dwcountrycode: u32) -> i32;
-    pub fn lineRegisterRequestRecipient(hlineapp: u32, dwregistrationinstance: u32, dwrequestmode: u32, benable: u32) -> i32;
-    pub fn lineReleaseUserUserInfo(hcall: u32) -> i32;
-    pub fn lineRemoveFromConference(hcall: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineRemoveProvider(dwpermanentproviderid: u32, hwndowner: super::super::Foundation::HWND) -> i32;
-    pub fn lineSecureCall(hcall: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSendUserUserInfo(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    pub fn lineSetAgentActivity(hline: u32, dwaddressid: u32, dwactivityid: u32) -> i32;
-    pub fn lineSetAgentGroup(hline: u32, dwaddressid: u32, lpagentgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
-    pub fn lineSetAgentMeasurementPeriod(hline: u32, hagent: u32, dwmeasurementperiod: u32) -> i32;
-    pub fn lineSetAgentSessionState(hline: u32, hagentsession: u32, dwagentsessionstate: u32, dwnextagentsessionstate: u32) -> i32;
-    pub fn lineSetAgentState(hline: u32, dwaddressid: u32, dwagentstate: u32, dwnextagentstate: u32) -> i32;
-    pub fn lineSetAgentStateEx(hline: u32, hagent: u32, dwagentstate: u32, dwnextagentstate: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetAppPriority(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpszextensionname: super::super::Foundation::PSTR, dwpriority: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetAppPriorityA(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpszextensionname: super::super::Foundation::PSTR, dwpriority: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetAppPriorityW(lpszappfilename: super::super::Foundation::PWSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpszextensionname: super::super::Foundation::PWSTR, dwpriority: u32) -> i32;
-    pub fn lineSetAppSpecific(hcall: u32, dwappspecific: u32) -> i32;
-    pub fn lineSetCallData(hcall: u32, lpcalldata: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
-    pub fn lineSetCallParams(hcall: u32, dwbearermode: u32, dwminrate: u32, dwmaxrate: u32, lpdialparams: *const LINEDIALPARAMS) -> i32;
-    pub fn lineSetCallPrivilege(hcall: u32, dwcallprivilege: u32) -> i32;
-    pub fn lineSetCallQualityOfService(hcall: u32, lpsendingflowspec: *mut ::core::ffi::c_void, dwsendingflowspecsize: u32, lpreceivingflowspec: *mut ::core::ffi::c_void, dwreceivingflowspecsize: u32) -> i32;
-    pub fn lineSetCallTreatment(hcall: u32, dwtreatment: u32) -> i32;
-    pub fn lineSetCurrentLocation(hlineapp: u32, dwlocation: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetDevConfig(dwdeviceid: u32, lpdeviceconfig: *const ::core::ffi::c_void, dwsize: u32, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetDevConfigA(dwdeviceid: u32, lpdeviceconfig: *const ::core::ffi::c_void, dwsize: u32, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetDevConfigW(dwdeviceid: u32, lpdeviceconfig: *const ::core::ffi::c_void, dwsize: u32, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
-    pub fn lineSetLineDevStatus(hline: u32, dwstatustochange: u32, fstatus: u32) -> i32;
-    pub fn lineSetMediaControl(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdigitlist: *const LINEMEDIACONTROLDIGIT, dwdigitnumentries: u32, lpmedialist: *const LINEMEDIACONTROLMEDIA, dwmedianumentries: u32, lptonelist: *const LINEMEDIACONTROLTONE, dwtonenumentries: u32, lpcallstatelist: *const LINEMEDIACONTROLCALLSTATE, dwcallstatenumentries: u32) -> i32;
-    pub fn lineSetMediaMode(hcall: u32, dwmediamodes: u32) -> i32;
-    pub fn lineSetNumRings(hline: u32, dwaddressid: u32, dwnumrings: u32) -> i32;
-    pub fn lineSetQueueMeasurementPeriod(hline: u32, dwqueueid: u32, dwmeasurementperiod: u32) -> i32;
-    pub fn lineSetStatusMessages(hline: u32, dwlinestates: u32, dwaddressstates: u32) -> i32;
-    pub fn lineSetTerminal(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, dwterminalmodes: u32, dwterminalid: u32, benable: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetTollList(hlineapp: u32, dwdeviceid: u32, lpszaddressin: super::super::Foundation::PSTR, dwtolllistoption: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetTollListA(hlineapp: u32, dwdeviceid: u32, lpszaddressin: super::super::Foundation::PSTR, dwtolllistoption: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineSetTollListW(hlineapp: u32, dwdeviceid: u32, lpszaddressinw: super::super::Foundation::PWSTR, dwtolllistoption: u32) -> i32;
-    pub fn lineSetupConference(hcall: u32, hline: u32, lphconfcall: *mut u32, lphconsultcall: *mut u32, dwnumparties: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineSetupConferenceA(hcall: u32, hline: u32, lphconfcall: *mut u32, lphconsultcall: *mut u32, dwnumparties: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineSetupConferenceW(hcall: u32, hline: u32, lphconfcall: *mut u32, lphconsultcall: *mut u32, dwnumparties: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineSetupTransfer(hcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineSetupTransferA(hcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineSetupTransferW(hcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
-    pub fn lineShutdown(hlineapp: u32) -> i32;
-    pub fn lineSwapHold(hactivecall: u32, hheldcall: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineTranslateAddress(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, lpszaddressin: super::super::Foundation::PSTR, dwcard: u32, dwtranslateoptions: u32, lptranslateoutput: *mut LINETRANSLATEOUTPUT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineTranslateAddressA(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, lpszaddressin: super::super::Foundation::PSTR, dwcard: u32, dwtranslateoptions: u32, lptranslateoutput: *mut LINETRANSLATEOUTPUT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineTranslateAddressW(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, lpszaddressin: super::super::Foundation::PWSTR, dwcard: u32, dwtranslateoptions: u32, lptranslateoutput: *mut LINETRANSLATEOUTPUT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineTranslateDialog(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, hwndowner: super::super::Foundation::HWND, lpszaddressin: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineTranslateDialogA(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, hwndowner: super::super::Foundation::HWND, lpszaddressin: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineTranslateDialogW(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, hwndowner: super::super::Foundation::HWND, lpszaddressin: super::super::Foundation::PWSTR) -> i32;
-    pub fn lineUncompleteCall(hline: u32, dwcompletionid: u32) -> i32;
-    pub fn lineUnhold(hcall: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineUnpark(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineUnparkA(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn lineUnparkW(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PWSTR) -> i32;
-    pub fn phoneClose(hphone: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneConfigDialog(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneConfigDialogA(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneConfigDialogW(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
-    pub fn phoneDevSpecific(hphone: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
-    pub fn phoneGetButtonInfo(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *mut PHONEBUTTONINFO) -> i32;
-    pub fn phoneGetButtonInfoA(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *mut PHONEBUTTONINFO) -> i32;
-    pub fn phoneGetButtonInfoW(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *mut PHONEBUTTONINFO) -> i32;
-    pub fn phoneGetData(hphone: u32, dwdataid: u32, lpdata: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
-    pub fn phoneGetDevCaps(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lpphonecaps: *mut PHONECAPS) -> i32;
-    pub fn phoneGetDevCapsA(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lpphonecaps: *mut PHONECAPS) -> i32;
-    pub fn phoneGetDevCapsW(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lpphonecaps: *mut PHONECAPS) -> i32;
-    pub fn phoneGetDisplay(hphone: u32, lpdisplay: *mut VARSTRING) -> i32;
-    pub fn phoneGetGain(hphone: u32, dwhookswitchdev: u32, lpdwgain: *mut u32) -> i32;
-    pub fn phoneGetHookSwitch(hphone: u32, lpdwhookswitchdevs: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneGetID(hphone: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneGetIDA(hphone: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneGetIDW(hphone: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneGetIcon(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneGetIconA(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneGetIconW(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PWSTR, lphicon: *mut isize) -> i32;
-    pub fn phoneGetLamp(hphone: u32, dwbuttonlampid: u32, lpdwlampmode: *mut u32) -> i32;
-    pub fn phoneGetMessage(hphoneapp: u32, lpmessage: *mut PHONEMESSAGE, dwtimeout: u32) -> i32;
-    pub fn phoneGetRing(hphone: u32, lpdwringmode: *mut u32, lpdwvolume: *mut u32) -> i32;
-    pub fn phoneGetStatus(hphone: u32, lpphonestatus: *mut PHONESTATUS) -> i32;
-    pub fn phoneGetStatusA(hphone: u32, lpphonestatus: *mut PHONESTATUS) -> i32;
-    pub fn phoneGetStatusMessages(hphone: u32, lpdwphonestates: *mut u32, lpdwbuttonmodes: *mut u32, lpdwbuttonstates: *mut u32) -> i32;
-    pub fn phoneGetStatusW(hphone: u32, lpphonestatus: *mut PHONESTATUS) -> i32;
-    pub fn phoneGetVolume(hphone: u32, dwhookswitchdev: u32, lpdwvolume: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneInitialize(lphphoneapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: PHONECALLBACK, lpszappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneInitializeExA(lphphoneapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: PHONECALLBACK, lpszfriendlyappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lpphoneinitializeexparams: *mut PHONEINITIALIZEEXPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneInitializeExW(lphphoneapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: PHONECALLBACK, lpszfriendlyappname: super::super::Foundation::PWSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lpphoneinitializeexparams: *mut PHONEINITIALIZEEXPARAMS) -> i32;
-    pub fn phoneNegotiateAPIVersion(hphoneapp: u32, dwdeviceid: u32, dwapilowversion: u32, dwapihighversion: u32, lpdwapiversion: *mut u32, lpextensionid: *mut PHONEEXTENSIONID) -> i32;
-    pub fn phoneNegotiateExtVersion(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextlowversion: u32, dwexthighversion: u32, lpdwextversion: *mut u32) -> i32;
-    pub fn phoneOpen(hphoneapp: u32, dwdeviceid: u32, lphphone: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivilege: u32) -> i32;
-    pub fn phoneSetButtonInfo(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *const PHONEBUTTONINFO) -> i32;
-    pub fn phoneSetButtonInfoA(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *const PHONEBUTTONINFO) -> i32;
-    pub fn phoneSetButtonInfoW(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *const PHONEBUTTONINFO) -> i32;
-    pub fn phoneSetData(hphone: u32, dwdataid: u32, lpdata: *const ::core::ffi::c_void, dwsize: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn phoneSetDisplay(hphone: u32, dwrow: u32, dwcolumn: u32, lpsdisplay: super::super::Foundation::PSTR, dwsize: u32) -> i32;
-    pub fn phoneSetGain(hphone: u32, dwhookswitchdev: u32, dwgain: u32) -> i32;
-    pub fn phoneSetHookSwitch(hphone: u32, dwhookswitchdevs: u32, dwhookswitchmode: u32) -> i32;
-    pub fn phoneSetLamp(hphone: u32, dwbuttonlampid: u32, dwlampmode: u32) -> i32;
-    pub fn phoneSetRing(hphone: u32, dwringmode: u32, dwvolume: u32) -> i32;
-    pub fn phoneSetStatusMessages(hphone: u32, dwphonestates: u32, dwbuttonmodes: u32, dwbuttonstates: u32) -> i32;
-    pub fn phoneSetVolume(hphone: u32, dwhookswitchdev: u32, dwvolume: u32) -> i32;
-    pub fn phoneShutdown(hphoneapp: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiGetLocationInfo(lpszcountrycode: super::super::Foundation::PSTR, lpszcitycode: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiGetLocationInfoA(lpszcountrycode: super::super::Foundation::PSTR, lpszcitycode: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiGetLocationInfoW(lpszcountrycodew: super::super::Foundation::PWSTR, lpszcitycodew: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestDrop(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestMakeCall(lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestMakeCallA(lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestMakeCallW(lpszdestaddress: super::super::Foundation::PWSTR, lpszappname: super::super::Foundation::PWSTR, lpszcalledparty: super::super::Foundation::PWSTR, lpszcomment: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestMediaCall(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceid: super::super::Foundation::PSTR, dwsize: u32, dwsecure: u32, lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestMediaCallA(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceid: super::super::Foundation::PSTR, dwsize: u32, dwsecure: u32, lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn tapiRequestMediaCallW(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM, lpszdeviceclass: super::super::Foundation::PWSTR, lpdeviceid: super::super::Foundation::PWSTR, dwsize: u32, dwsecure: u32, lpszdestaddress: super::super::Foundation::PWSTR, lpszappname: super::super::Foundation::PWSTR, lpszcalledparty: super::super::Foundation::PWSTR, lpszcomment: super::super::Foundation::PWSTR) -> i32;
-}
+#[cfg(feature = "Win32_System_Com")]
+pub type GetTnefStreamCodepage = unsafe extern "system" fn(lpstream: super::super::System::Com::IStream, lpulcodepage: *mut u32, lpulsubcodepage: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_AddressBook", feature = "Win32_System_Com"))]
+pub type OpenTnefStream = unsafe extern "system" fn(lpvsupport: *mut ::core::ffi::c_void, lpstream: super::super::System::Com::IStream, lpszstreamname: *const i8, ulflags: u32, lpmessage: super::super::System::AddressBook::IMessage, wkeyval: u16, lpptnef: *mut ITnef) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_System_AddressBook", feature = "Win32_System_Com"))]
+pub type OpenTnefStreamEx = unsafe extern "system" fn(lpvsupport: *mut ::core::ffi::c_void, lpstream: super::super::System::Com::IStream, lpszstreamname: *const i8, ulflags: u32, lpmessage: super::super::System::AddressBook::IMessage, wkeyval: u16, lpadressbook: super::super::System::AddressBook::IAddrBook, lpptnef: *mut ITnef) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineAccept = unsafe extern "system" fn(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineAddProvider = unsafe extern "system" fn(lpszproviderfilename: super::super::Foundation::PSTR, hwndowner: super::super::Foundation::HWND, lpdwpermanentproviderid: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineAddProviderA = unsafe extern "system" fn(lpszproviderfilename: super::super::Foundation::PSTR, hwndowner: super::super::Foundation::HWND, lpdwpermanentproviderid: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineAddProviderW = unsafe extern "system" fn(lpszproviderfilename: super::super::Foundation::PWSTR, hwndowner: super::super::Foundation::HWND, lpdwpermanentproviderid: *mut u32) -> i32;
+pub type lineAddToConference = unsafe extern "system" fn(hconfcall: u32, hconsultcall: u32) -> i32;
+pub type lineAgentSpecific = unsafe extern "system" fn(hline: u32, dwaddressid: u32, dwagentextensionidindex: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineAnswer = unsafe extern "system" fn(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineBlindTransfer = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineBlindTransferA = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineBlindTransferW = unsafe extern "system" fn(hcall: u32, lpszdestaddressw: super::super::Foundation::PWSTR, dwcountrycode: u32) -> i32;
+pub type lineClose = unsafe extern "system" fn(hline: u32) -> i32;
+pub type lineCompleteCall = unsafe extern "system" fn(hcall: u32, lpdwcompletionid: *mut u32, dwcompletionmode: u32, dwmessageid: u32) -> i32;
+pub type lineCompleteTransfer = unsafe extern "system" fn(hcall: u32, hconsultcall: u32, lphconfcall: *mut u32, dwtransfermode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigDialog = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigDialogA = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigDialogEdit = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceconfigin: *const ::core::ffi::c_void, dwsize: u32, lpdeviceconfigout: *mut VARSTRING) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigDialogEditA = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceconfigin: *const ::core::ffi::c_void, dwsize: u32, lpdeviceconfigout: *mut VARSTRING) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigDialogEditW = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PWSTR, lpdeviceconfigin: *const ::core::ffi::c_void, dwsize: u32, lpdeviceconfigout: *mut VARSTRING) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigDialogW = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineConfigProvider = unsafe extern "system" fn(hwndowner: super::super::Foundation::HWND, dwpermanentproviderid: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineCreateAgentA = unsafe extern "system" fn(hline: u32, lpszagentid: super::super::Foundation::PSTR, lpszagentpin: super::super::Foundation::PSTR, lphagent: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineCreateAgentSessionA = unsafe extern "system" fn(hline: u32, hagent: u32, lpszagentpin: super::super::Foundation::PSTR, dwworkingaddressid: u32, lpgroupid: *mut ::windows_sys::core::GUID, lphagentsession: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineCreateAgentSessionW = unsafe extern "system" fn(hline: u32, hagent: u32, lpszagentpin: super::super::Foundation::PWSTR, dwworkingaddressid: u32, lpgroupid: *mut ::windows_sys::core::GUID, lphagentsession: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineCreateAgentW = unsafe extern "system" fn(hline: u32, lpszagentid: super::super::Foundation::PWSTR, lpszagentpin: super::super::Foundation::PWSTR, lphagent: *mut u32) -> i32;
+pub type lineDeallocateCall = unsafe extern "system" fn(hcall: u32) -> i32;
+pub type lineDevSpecific = unsafe extern "system" fn(hline: u32, dwaddressid: u32, hcall: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
+pub type lineDevSpecificFeature = unsafe extern "system" fn(hline: u32, dwfeature: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineDial = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineDialA = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineDialW = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PWSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineDrop = unsafe extern "system" fn(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+pub type lineForward = unsafe extern "system" fn(hline: u32, balladdresses: u32, dwaddressid: u32, lpforwardlist: *const LINEFORWARDLIST, dwnumringsnoanswer: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineForwardA = unsafe extern "system" fn(hline: u32, balladdresses: u32, dwaddressid: u32, lpforwardlist: *const LINEFORWARDLIST, dwnumringsnoanswer: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineForwardW = unsafe extern "system" fn(hline: u32, balladdresses: u32, dwaddressid: u32, lpforwardlist: *const LINEFORWARDLIST, dwnumringsnoanswer: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGatherDigits = unsafe extern "system" fn(hcall: u32, dwdigitmodes: u32, lpsdigits: super::super::Foundation::PSTR, dwnumdigits: u32, lpszterminationdigits: super::super::Foundation::PSTR, dwfirstdigittimeout: u32, dwinterdigittimeout: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGatherDigitsA = unsafe extern "system" fn(hcall: u32, dwdigitmodes: u32, lpsdigits: super::super::Foundation::PSTR, dwnumdigits: u32, lpszterminationdigits: super::super::Foundation::PSTR, dwfirstdigittimeout: u32, dwinterdigittimeout: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGatherDigitsW = unsafe extern "system" fn(hcall: u32, dwdigitmodes: u32, lpsdigits: super::super::Foundation::PWSTR, dwnumdigits: u32, lpszterminationdigits: super::super::Foundation::PWSTR, dwfirstdigittimeout: u32, dwinterdigittimeout: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGenerateDigits = unsafe extern "system" fn(hcall: u32, dwdigitmode: u32, lpszdigits: super::super::Foundation::PSTR, dwduration: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGenerateDigitsA = unsafe extern "system" fn(hcall: u32, dwdigitmode: u32, lpszdigits: super::super::Foundation::PSTR, dwduration: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGenerateDigitsW = unsafe extern "system" fn(hcall: u32, dwdigitmode: u32, lpszdigits: super::super::Foundation::PWSTR, dwduration: u32) -> i32;
+pub type lineGenerateTone = unsafe extern "system" fn(hcall: u32, dwtonemode: u32, dwduration: u32, dwnumtones: u32, lptones: *const LINEGENERATETONE) -> i32;
+pub type lineGetAddressCaps = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwapiversion: u32, dwextversion: u32, lpaddresscaps: *mut LINEADDRESSCAPS) -> i32;
+pub type lineGetAddressCapsA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwapiversion: u32, dwextversion: u32, lpaddresscaps: *mut LINEADDRESSCAPS) -> i32;
+pub type lineGetAddressCapsW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwapiversion: u32, dwextversion: u32, lpaddresscaps: *mut LINEADDRESSCAPS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetAddressID = unsafe extern "system" fn(hline: u32, lpdwaddressid: *mut u32, dwaddressmode: u32, lpsaddress: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetAddressIDA = unsafe extern "system" fn(hline: u32, lpdwaddressid: *mut u32, dwaddressmode: u32, lpsaddress: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetAddressIDW = unsafe extern "system" fn(hline: u32, lpdwaddressid: *mut u32, dwaddressmode: u32, lpsaddress: super::super::Foundation::PWSTR, dwsize: u32) -> i32;
+pub type lineGetAddressStatus = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpaddressstatus: *mut LINEADDRESSSTATUS) -> i32;
+pub type lineGetAddressStatusA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpaddressstatus: *mut LINEADDRESSSTATUS) -> i32;
+pub type lineGetAddressStatusW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpaddressstatus: *mut LINEADDRESSSTATUS) -> i32;
+pub type lineGetAgentActivityListA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentactivitylist: *mut LINEAGENTACTIVITYLIST) -> i32;
+pub type lineGetAgentActivityListW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentactivitylist: *mut LINEAGENTACTIVITYLIST) -> i32;
+pub type lineGetAgentCapsA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwappapiversion: u32, lpagentcaps: *mut LINEAGENTCAPS) -> i32;
+pub type lineGetAgentCapsW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwaddressid: u32, dwappapiversion: u32, lpagentcaps: *mut LINEAGENTCAPS) -> i32;
+pub type lineGetAgentGroupListA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
+pub type lineGetAgentGroupListW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
+#[cfg(feature = "Win32_System_Com")]
+pub type lineGetAgentInfo = unsafe extern "system" fn(hline: u32, hagent: u32, lpagentinfo: *mut LINEAGENTINFO) -> i32;
+#[cfg(feature = "Win32_System_Com")]
+pub type lineGetAgentSessionInfo = unsafe extern "system" fn(hline: u32, hagentsession: u32, lpagentsessioninfo: *mut LINEAGENTSESSIONINFO) -> i32;
+pub type lineGetAgentSessionList = unsafe extern "system" fn(hline: u32, hagent: u32, lpagentsessionlist: *mut LINEAGENTSESSIONLIST) -> i32;
+pub type lineGetAgentStatusA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentstatus: *mut LINEAGENTSTATUS) -> i32;
+pub type lineGetAgentStatusW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentstatus: *mut LINEAGENTSTATUS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetAppPriority = unsafe extern "system" fn(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpextensionname: *mut VARSTRING, lpdwpriority: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetAppPriorityA = unsafe extern "system" fn(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpextensionname: *mut VARSTRING, lpdwpriority: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetAppPriorityW = unsafe extern "system" fn(lpszappfilename: super::super::Foundation::PWSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpextensionname: *mut VARSTRING, lpdwpriority: *mut u32) -> i32;
+pub type lineGetCallInfo = unsafe extern "system" fn(hcall: u32, lpcallinfo: *mut LINECALLINFO) -> i32;
+pub type lineGetCallInfoA = unsafe extern "system" fn(hcall: u32, lpcallinfo: *mut LINECALLINFO) -> i32;
+pub type lineGetCallInfoW = unsafe extern "system" fn(hcall: u32, lpcallinfo: *mut LINECALLINFO) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetCallStatus = unsafe extern "system" fn(hcall: u32, lpcallstatus: *mut LINECALLSTATUS) -> i32;
+pub type lineGetConfRelatedCalls = unsafe extern "system" fn(hcall: u32, lpcalllist: *mut LINECALLLIST) -> i32;
+pub type lineGetCountry = unsafe extern "system" fn(dwcountryid: u32, dwapiversion: u32, lplinecountrylist: *mut LINECOUNTRYLIST) -> i32;
+pub type lineGetCountryA = unsafe extern "system" fn(dwcountryid: u32, dwapiversion: u32, lplinecountrylist: *mut LINECOUNTRYLIST) -> i32;
+pub type lineGetCountryW = unsafe extern "system" fn(dwcountryid: u32, dwapiversion: u32, lplinecountrylist: *mut LINECOUNTRYLIST) -> i32;
+pub type lineGetDevCaps = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lplinedevcaps: *mut LINEDEVCAPS) -> i32;
+pub type lineGetDevCapsA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lplinedevcaps: *mut LINEDEVCAPS) -> i32;
+pub type lineGetDevCapsW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lplinedevcaps: *mut LINEDEVCAPS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetDevConfig = unsafe extern "system" fn(dwdeviceid: u32, lpdeviceconfig: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetDevConfigA = unsafe extern "system" fn(dwdeviceid: u32, lpdeviceconfig: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetDevConfigW = unsafe extern "system" fn(dwdeviceid: u32, lpdeviceconfig: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
+pub type lineGetGroupListA = unsafe extern "system" fn(hline: u32, lpgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
+pub type lineGetGroupListW = unsafe extern "system" fn(hline: u32, lpgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetID = unsafe extern "system" fn(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetIDA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetIDW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetIcon = unsafe extern "system" fn(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetIconA = unsafe extern "system" fn(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineGetIconW = unsafe extern "system" fn(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PWSTR, lphicon: *mut isize) -> i32;
+pub type lineGetLineDevStatus = unsafe extern "system" fn(hline: u32, lplinedevstatus: *mut LINEDEVSTATUS) -> i32;
+pub type lineGetLineDevStatusA = unsafe extern "system" fn(hline: u32, lplinedevstatus: *mut LINEDEVSTATUS) -> i32;
+pub type lineGetLineDevStatusW = unsafe extern "system" fn(hline: u32, lplinedevstatus: *mut LINEDEVSTATUS) -> i32;
+pub type lineGetMessage = unsafe extern "system" fn(hlineapp: u32, lpmessage: *mut LINEMESSAGE, dwtimeout: u32) -> i32;
+pub type lineGetNewCalls = unsafe extern "system" fn(hline: u32, dwaddressid: u32, dwselect: u32, lpcalllist: *mut LINECALLLIST) -> i32;
+pub type lineGetNumRings = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpdwnumrings: *mut u32) -> i32;
+pub type lineGetProviderList = unsafe extern "system" fn(dwapiversion: u32, lpproviderlist: *mut LINEPROVIDERLIST) -> i32;
+pub type lineGetProviderListA = unsafe extern "system" fn(dwapiversion: u32, lpproviderlist: *mut LINEPROVIDERLIST) -> i32;
+pub type lineGetProviderListW = unsafe extern "system" fn(dwapiversion: u32, lpproviderlist: *mut LINEPROVIDERLIST) -> i32;
+pub type lineGetProxyStatus = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwappapiversion: u32, lplineproxyreqestlist: *mut LINEPROXYREQUESTLIST) -> i32;
+pub type lineGetQueueInfo = unsafe extern "system" fn(hline: u32, dwqueueid: u32, lplinequeueinfo: *mut LINEQUEUEINFO) -> i32;
+pub type lineGetQueueListA = unsafe extern "system" fn(hline: u32, lpgroupid: *mut ::windows_sys::core::GUID, lpqueuelist: *mut LINEQUEUELIST) -> i32;
+pub type lineGetQueueListW = unsafe extern "system" fn(hline: u32, lpgroupid: *mut ::windows_sys::core::GUID, lpqueuelist: *mut LINEQUEUELIST) -> i32;
+pub type lineGetRequest = unsafe extern "system" fn(hlineapp: u32, dwrequestmode: u32, lprequestbuffer: *mut ::core::ffi::c_void) -> i32;
+pub type lineGetRequestA = unsafe extern "system" fn(hlineapp: u32, dwrequestmode: u32, lprequestbuffer: *mut ::core::ffi::c_void) -> i32;
+pub type lineGetRequestW = unsafe extern "system" fn(hlineapp: u32, dwrequestmode: u32, lprequestbuffer: *mut ::core::ffi::c_void) -> i32;
+pub type lineGetStatusMessages = unsafe extern "system" fn(hline: u32, lpdwlinestates: *mut u32, lpdwaddressstates: *mut u32) -> i32;
+pub type lineGetTranslateCaps = unsafe extern "system" fn(hlineapp: u32, dwapiversion: u32, lptranslatecaps: *mut LINETRANSLATECAPS) -> i32;
+pub type lineGetTranslateCapsA = unsafe extern "system" fn(hlineapp: u32, dwapiversion: u32, lptranslatecaps: *mut LINETRANSLATECAPS) -> i32;
+pub type lineGetTranslateCapsW = unsafe extern "system" fn(hlineapp: u32, dwapiversion: u32, lptranslatecaps: *mut LINETRANSLATECAPS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineHandoff = unsafe extern "system" fn(hcall: u32, lpszfilename: super::super::Foundation::PSTR, dwmediamode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineHandoffA = unsafe extern "system" fn(hcall: u32, lpszfilename: super::super::Foundation::PSTR, dwmediamode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineHandoffW = unsafe extern "system" fn(hcall: u32, lpszfilename: super::super::Foundation::PWSTR, dwmediamode: u32) -> i32;
+pub type lineHold = unsafe extern "system" fn(hcall: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineInitialize = unsafe extern "system" fn(lphlineapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: LINECALLBACK, lpszappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineInitializeExA = unsafe extern "system" fn(lphlineapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: LINECALLBACK, lpszfriendlyappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lplineinitializeexparams: *mut LINEINITIALIZEEXPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineInitializeExW = unsafe extern "system" fn(lphlineapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: LINECALLBACK, lpszfriendlyappname: super::super::Foundation::PWSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lplineinitializeexparams: *mut LINEINITIALIZEEXPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineMakeCall = unsafe extern "system" fn(hline: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineMakeCallA = unsafe extern "system" fn(hline: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineMakeCallW = unsafe extern "system" fn(hline: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PWSTR, dwcountrycode: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineMonitorDigits = unsafe extern "system" fn(hcall: u32, dwdigitmodes: u32) -> i32;
+pub type lineMonitorMedia = unsafe extern "system" fn(hcall: u32, dwmediamodes: u32) -> i32;
+pub type lineMonitorTones = unsafe extern "system" fn(hcall: u32, lptonelist: *const LINEMONITORTONE, dwnumentries: u32) -> i32;
+pub type lineNegotiateAPIVersion = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapilowversion: u32, dwapihighversion: u32, lpdwapiversion: *mut u32, lpextensionid: *mut LINEEXTENSIONID) -> i32;
+pub type lineNegotiateExtVersion = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextlowversion: u32, dwexthighversion: u32, lpdwextversion: *mut u32) -> i32;
+pub type lineOpen = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, lphline: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivileges: u32, dwmediamodes: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineOpenA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, lphline: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivileges: u32, dwmediamodes: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineOpenW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, lphline: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivileges: u32, dwmediamodes: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type linePark = unsafe extern "system" fn(hcall: u32, dwparkmode: u32, lpszdiraddress: super::super::Foundation::PSTR, lpnondiraddress: *mut VARSTRING) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineParkA = unsafe extern "system" fn(hcall: u32, dwparkmode: u32, lpszdiraddress: super::super::Foundation::PSTR, lpnondiraddress: *mut VARSTRING) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineParkW = unsafe extern "system" fn(hcall: u32, dwparkmode: u32, lpszdiraddress: super::super::Foundation::PWSTR, lpnondiraddress: *mut VARSTRING) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type linePickup = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, lpszgroupid: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type linePickupA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR, lpszgroupid: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type linePickupW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PWSTR, lpszgroupid: super::super::Foundation::PWSTR) -> i32;
+pub type linePrepareAddToConference = unsafe extern "system" fn(hconfcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type linePrepareAddToConferenceA = unsafe extern "system" fn(hconfcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type linePrepareAddToConferenceW = unsafe extern "system" fn(hconfcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineProxyMessage = unsafe extern "system" fn(hline: u32, hcall: u32, dwmsg: u32, dwparam1: u32, dwparam2: u32, dwparam3: u32) -> i32;
+#[cfg(feature = "Win32_System_Com")]
+pub type lineProxyResponse = unsafe extern "system" fn(hline: u32, lpproxyrequest: *mut LINEPROXYREQUEST, dwresult: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineRedirect = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineRedirectA = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PSTR, dwcountrycode: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineRedirectW = unsafe extern "system" fn(hcall: u32, lpszdestaddress: super::super::Foundation::PWSTR, dwcountrycode: u32) -> i32;
+pub type lineRegisterRequestRecipient = unsafe extern "system" fn(hlineapp: u32, dwregistrationinstance: u32, dwrequestmode: u32, benable: u32) -> i32;
+pub type lineReleaseUserUserInfo = unsafe extern "system" fn(hcall: u32) -> i32;
+pub type lineRemoveFromConference = unsafe extern "system" fn(hcall: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineRemoveProvider = unsafe extern "system" fn(dwpermanentproviderid: u32, hwndowner: super::super::Foundation::HWND) -> i32;
+pub type lineSecureCall = unsafe extern "system" fn(hcall: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSendUserUserInfo = unsafe extern "system" fn(hcall: u32, lpsuseruserinfo: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+pub type lineSetAgentActivity = unsafe extern "system" fn(hline: u32, dwaddressid: u32, dwactivityid: u32) -> i32;
+pub type lineSetAgentGroup = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lpagentgrouplist: *mut LINEAGENTGROUPLIST) -> i32;
+pub type lineSetAgentMeasurementPeriod = unsafe extern "system" fn(hline: u32, hagent: u32, dwmeasurementperiod: u32) -> i32;
+pub type lineSetAgentSessionState = unsafe extern "system" fn(hline: u32, hagentsession: u32, dwagentsessionstate: u32, dwnextagentsessionstate: u32) -> i32;
+pub type lineSetAgentState = unsafe extern "system" fn(hline: u32, dwaddressid: u32, dwagentstate: u32, dwnextagentstate: u32) -> i32;
+pub type lineSetAgentStateEx = unsafe extern "system" fn(hline: u32, hagent: u32, dwagentstate: u32, dwnextagentstate: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetAppPriority = unsafe extern "system" fn(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpszextensionname: super::super::Foundation::PSTR, dwpriority: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetAppPriorityA = unsafe extern "system" fn(lpszappfilename: super::super::Foundation::PSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpszextensionname: super::super::Foundation::PSTR, dwpriority: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetAppPriorityW = unsafe extern "system" fn(lpszappfilename: super::super::Foundation::PWSTR, dwmediamode: u32, lpextensionid: *mut LINEEXTENSIONID, dwrequestmode: u32, lpszextensionname: super::super::Foundation::PWSTR, dwpriority: u32) -> i32;
+pub type lineSetAppSpecific = unsafe extern "system" fn(hcall: u32, dwappspecific: u32) -> i32;
+pub type lineSetCallData = unsafe extern "system" fn(hcall: u32, lpcalldata: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
+pub type lineSetCallParams = unsafe extern "system" fn(hcall: u32, dwbearermode: u32, dwminrate: u32, dwmaxrate: u32, lpdialparams: *const LINEDIALPARAMS) -> i32;
+pub type lineSetCallPrivilege = unsafe extern "system" fn(hcall: u32, dwcallprivilege: u32) -> i32;
+pub type lineSetCallQualityOfService = unsafe extern "system" fn(hcall: u32, lpsendingflowspec: *mut ::core::ffi::c_void, dwsendingflowspecsize: u32, lpreceivingflowspec: *mut ::core::ffi::c_void, dwreceivingflowspecsize: u32) -> i32;
+pub type lineSetCallTreatment = unsafe extern "system" fn(hcall: u32, dwtreatment: u32) -> i32;
+pub type lineSetCurrentLocation = unsafe extern "system" fn(hlineapp: u32, dwlocation: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetDevConfig = unsafe extern "system" fn(dwdeviceid: u32, lpdeviceconfig: *const ::core::ffi::c_void, dwsize: u32, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetDevConfigA = unsafe extern "system" fn(dwdeviceid: u32, lpdeviceconfig: *const ::core::ffi::c_void, dwsize: u32, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetDevConfigW = unsafe extern "system" fn(dwdeviceid: u32, lpdeviceconfig: *const ::core::ffi::c_void, dwsize: u32, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
+pub type lineSetLineDevStatus = unsafe extern "system" fn(hline: u32, dwstatustochange: u32, fstatus: u32) -> i32;
+pub type lineSetMediaControl = unsafe extern "system" fn(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, lpdigitlist: *const LINEMEDIACONTROLDIGIT, dwdigitnumentries: u32, lpmedialist: *const LINEMEDIACONTROLMEDIA, dwmedianumentries: u32, lptonelist: *const LINEMEDIACONTROLTONE, dwtonenumentries: u32, lpcallstatelist: *const LINEMEDIACONTROLCALLSTATE, dwcallstatenumentries: u32) -> i32;
+pub type lineSetMediaMode = unsafe extern "system" fn(hcall: u32, dwmediamodes: u32) -> i32;
+pub type lineSetNumRings = unsafe extern "system" fn(hline: u32, dwaddressid: u32, dwnumrings: u32) -> i32;
+pub type lineSetQueueMeasurementPeriod = unsafe extern "system" fn(hline: u32, dwqueueid: u32, dwmeasurementperiod: u32) -> i32;
+pub type lineSetStatusMessages = unsafe extern "system" fn(hline: u32, dwlinestates: u32, dwaddressstates: u32) -> i32;
+pub type lineSetTerminal = unsafe extern "system" fn(hline: u32, dwaddressid: u32, hcall: u32, dwselect: u32, dwterminalmodes: u32, dwterminalid: u32, benable: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetTollList = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, lpszaddressin: super::super::Foundation::PSTR, dwtolllistoption: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetTollListA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, lpszaddressin: super::super::Foundation::PSTR, dwtolllistoption: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineSetTollListW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, lpszaddressinw: super::super::Foundation::PWSTR, dwtolllistoption: u32) -> i32;
+pub type lineSetupConference = unsafe extern "system" fn(hcall: u32, hline: u32, lphconfcall: *mut u32, lphconsultcall: *mut u32, dwnumparties: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineSetupConferenceA = unsafe extern "system" fn(hcall: u32, hline: u32, lphconfcall: *mut u32, lphconsultcall: *mut u32, dwnumparties: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineSetupConferenceW = unsafe extern "system" fn(hcall: u32, hline: u32, lphconfcall: *mut u32, lphconsultcall: *mut u32, dwnumparties: u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineSetupTransfer = unsafe extern "system" fn(hcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineSetupTransferA = unsafe extern "system" fn(hcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineSetupTransferW = unsafe extern "system" fn(hcall: u32, lphconsultcall: *mut u32, lpcallparams: *const LINECALLPARAMS) -> i32;
+pub type lineShutdown = unsafe extern "system" fn(hlineapp: u32) -> i32;
+pub type lineSwapHold = unsafe extern "system" fn(hactivecall: u32, hheldcall: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineTranslateAddress = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, lpszaddressin: super::super::Foundation::PSTR, dwcard: u32, dwtranslateoptions: u32, lptranslateoutput: *mut LINETRANSLATEOUTPUT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineTranslateAddressA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, lpszaddressin: super::super::Foundation::PSTR, dwcard: u32, dwtranslateoptions: u32, lptranslateoutput: *mut LINETRANSLATEOUTPUT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineTranslateAddressW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, lpszaddressin: super::super::Foundation::PWSTR, dwcard: u32, dwtranslateoptions: u32, lptranslateoutput: *mut LINETRANSLATEOUTPUT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineTranslateDialog = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, hwndowner: super::super::Foundation::HWND, lpszaddressin: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineTranslateDialogA = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, hwndowner: super::super::Foundation::HWND, lpszaddressin: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineTranslateDialogW = unsafe extern "system" fn(hlineapp: u32, dwdeviceid: u32, dwapiversion: u32, hwndowner: super::super::Foundation::HWND, lpszaddressin: super::super::Foundation::PWSTR) -> i32;
+pub type lineUncompleteCall = unsafe extern "system" fn(hline: u32, dwcompletionid: u32) -> i32;
+pub type lineUnhold = unsafe extern "system" fn(hcall: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineUnpark = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineUnparkA = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type lineUnparkW = unsafe extern "system" fn(hline: u32, dwaddressid: u32, lphcall: *mut u32, lpszdestaddress: super::super::Foundation::PWSTR) -> i32;
+pub type phoneClose = unsafe extern "system" fn(hphone: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneConfigDialog = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneConfigDialogA = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneConfigDialogW = unsafe extern "system" fn(dwdeviceid: u32, hwndowner: super::super::Foundation::HWND, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
+pub type phoneDevSpecific = unsafe extern "system" fn(hphone: u32, lpparams: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
+pub type phoneGetButtonInfo = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *mut PHONEBUTTONINFO) -> i32;
+pub type phoneGetButtonInfoA = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *mut PHONEBUTTONINFO) -> i32;
+pub type phoneGetButtonInfoW = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *mut PHONEBUTTONINFO) -> i32;
+pub type phoneGetData = unsafe extern "system" fn(hphone: u32, dwdataid: u32, lpdata: *mut ::core::ffi::c_void, dwsize: u32) -> i32;
+pub type phoneGetDevCaps = unsafe extern "system" fn(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lpphonecaps: *mut PHONECAPS) -> i32;
+pub type phoneGetDevCapsA = unsafe extern "system" fn(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lpphonecaps: *mut PHONECAPS) -> i32;
+pub type phoneGetDevCapsW = unsafe extern "system" fn(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextversion: u32, lpphonecaps: *mut PHONECAPS) -> i32;
+pub type phoneGetDisplay = unsafe extern "system" fn(hphone: u32, lpdisplay: *mut VARSTRING) -> i32;
+pub type phoneGetGain = unsafe extern "system" fn(hphone: u32, dwhookswitchdev: u32, lpdwgain: *mut u32) -> i32;
+pub type phoneGetHookSwitch = unsafe extern "system" fn(hphone: u32, lpdwhookswitchdevs: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneGetID = unsafe extern "system" fn(hphone: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneGetIDA = unsafe extern "system" fn(hphone: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneGetIDW = unsafe extern "system" fn(hphone: u32, lpdeviceid: *mut VARSTRING, lpszdeviceclass: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneGetIcon = unsafe extern "system" fn(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneGetIconA = unsafe extern "system" fn(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PSTR, lphicon: *mut isize) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneGetIconW = unsafe extern "system" fn(dwdeviceid: u32, lpszdeviceclass: super::super::Foundation::PWSTR, lphicon: *mut isize) -> i32;
+pub type phoneGetLamp = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpdwlampmode: *mut u32) -> i32;
+pub type phoneGetMessage = unsafe extern "system" fn(hphoneapp: u32, lpmessage: *mut PHONEMESSAGE, dwtimeout: u32) -> i32;
+pub type phoneGetRing = unsafe extern "system" fn(hphone: u32, lpdwringmode: *mut u32, lpdwvolume: *mut u32) -> i32;
+pub type phoneGetStatus = unsafe extern "system" fn(hphone: u32, lpphonestatus: *mut PHONESTATUS) -> i32;
+pub type phoneGetStatusA = unsafe extern "system" fn(hphone: u32, lpphonestatus: *mut PHONESTATUS) -> i32;
+pub type phoneGetStatusMessages = unsafe extern "system" fn(hphone: u32, lpdwphonestates: *mut u32, lpdwbuttonmodes: *mut u32, lpdwbuttonstates: *mut u32) -> i32;
+pub type phoneGetStatusW = unsafe extern "system" fn(hphone: u32, lpphonestatus: *mut PHONESTATUS) -> i32;
+pub type phoneGetVolume = unsafe extern "system" fn(hphone: u32, dwhookswitchdev: u32, lpdwvolume: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneInitialize = unsafe extern "system" fn(lphphoneapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: PHONECALLBACK, lpszappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneInitializeExA = unsafe extern "system" fn(lphphoneapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: PHONECALLBACK, lpszfriendlyappname: super::super::Foundation::PSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lpphoneinitializeexparams: *mut PHONEINITIALIZEEXPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneInitializeExW = unsafe extern "system" fn(lphphoneapp: *mut u32, hinstance: super::super::Foundation::HINSTANCE, lpfncallback: PHONECALLBACK, lpszfriendlyappname: super::super::Foundation::PWSTR, lpdwnumdevs: *mut u32, lpdwapiversion: *mut u32, lpphoneinitializeexparams: *mut PHONEINITIALIZEEXPARAMS) -> i32;
+pub type phoneNegotiateAPIVersion = unsafe extern "system" fn(hphoneapp: u32, dwdeviceid: u32, dwapilowversion: u32, dwapihighversion: u32, lpdwapiversion: *mut u32, lpextensionid: *mut PHONEEXTENSIONID) -> i32;
+pub type phoneNegotiateExtVersion = unsafe extern "system" fn(hphoneapp: u32, dwdeviceid: u32, dwapiversion: u32, dwextlowversion: u32, dwexthighversion: u32, lpdwextversion: *mut u32) -> i32;
+pub type phoneOpen = unsafe extern "system" fn(hphoneapp: u32, dwdeviceid: u32, lphphone: *mut u32, dwapiversion: u32, dwextversion: u32, dwcallbackinstance: usize, dwprivilege: u32) -> i32;
+pub type phoneSetButtonInfo = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *const PHONEBUTTONINFO) -> i32;
+pub type phoneSetButtonInfoA = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *const PHONEBUTTONINFO) -> i32;
+pub type phoneSetButtonInfoW = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, lpbuttoninfo: *const PHONEBUTTONINFO) -> i32;
+pub type phoneSetData = unsafe extern "system" fn(hphone: u32, dwdataid: u32, lpdata: *const ::core::ffi::c_void, dwsize: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type phoneSetDisplay = unsafe extern "system" fn(hphone: u32, dwrow: u32, dwcolumn: u32, lpsdisplay: super::super::Foundation::PSTR, dwsize: u32) -> i32;
+pub type phoneSetGain = unsafe extern "system" fn(hphone: u32, dwhookswitchdev: u32, dwgain: u32) -> i32;
+pub type phoneSetHookSwitch = unsafe extern "system" fn(hphone: u32, dwhookswitchdevs: u32, dwhookswitchmode: u32) -> i32;
+pub type phoneSetLamp = unsafe extern "system" fn(hphone: u32, dwbuttonlampid: u32, dwlampmode: u32) -> i32;
+pub type phoneSetRing = unsafe extern "system" fn(hphone: u32, dwringmode: u32, dwvolume: u32) -> i32;
+pub type phoneSetStatusMessages = unsafe extern "system" fn(hphone: u32, dwphonestates: u32, dwbuttonmodes: u32, dwbuttonstates: u32) -> i32;
+pub type phoneSetVolume = unsafe extern "system" fn(hphone: u32, dwhookswitchdev: u32, dwvolume: u32) -> i32;
+pub type phoneShutdown = unsafe extern "system" fn(hphoneapp: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiGetLocationInfo = unsafe extern "system" fn(lpszcountrycode: super::super::Foundation::PSTR, lpszcitycode: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiGetLocationInfoA = unsafe extern "system" fn(lpszcountrycode: super::super::Foundation::PSTR, lpszcitycode: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiGetLocationInfoW = unsafe extern "system" fn(lpszcountrycodew: super::super::Foundation::PWSTR, lpszcitycodew: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestDrop = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestMakeCall = unsafe extern "system" fn(lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestMakeCallA = unsafe extern "system" fn(lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestMakeCallW = unsafe extern "system" fn(lpszdestaddress: super::super::Foundation::PWSTR, lpszappname: super::super::Foundation::PWSTR, lpszcalledparty: super::super::Foundation::PWSTR, lpszcomment: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestMediaCall = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceid: super::super::Foundation::PSTR, dwsize: u32, dwsecure: u32, lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestMediaCallA = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM, lpszdeviceclass: super::super::Foundation::PSTR, lpdeviceid: super::super::Foundation::PSTR, dwsize: u32, dwsecure: u32, lpszdestaddress: super::super::Foundation::PSTR, lpszappname: super::super::Foundation::PSTR, lpszcalledparty: super::super::Foundation::PSTR, lpszcomment: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type tapiRequestMediaCallW = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, wrequestid: super::super::Foundation::WPARAM, lpszdeviceclass: super::super::Foundation::PWSTR, lpdeviceid: super::super::Foundation::PWSTR, dwsize: u32, dwsecure: u32, lpszdestaddress: super::super::Foundation::PWSTR, lpszappname: super::super::Foundation::PWSTR, lpszcalledparty: super::super::Foundation::PWSTR, lpszcomment: super::super::Foundation::PWSTR) -> i32;
 pub type ACDGROUP_EVENT = i32;
 pub const ACDGE_NEW_GROUP: ACDGROUP_EVENT = 0i32;
 pub const ACDGE_GROUP_REMOVED: ACDGROUP_EVENT = 1i32;

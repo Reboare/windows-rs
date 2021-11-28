@@ -1,11 +1,8 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DoMsCtfMonitor(dwflags: u32, heventforservicestop: super::super::Foundation::HANDLE) -> super::super::Foundation::BOOL;
-    pub fn InitLocalMsCtfMonitor(dwflags: u32) -> ::windows_sys::core::HRESULT;
-    pub fn UninitLocalMsCtfMonitor() -> ::windows_sys::core::HRESULT;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type DoMsCtfMonitor = unsafe extern "system" fn(dwflags: u32, heventforservicestop: super::super::Foundation::HANDLE) -> super::super::Foundation::BOOL;
+pub type InitLocalMsCtfMonitor = unsafe extern "system" fn(dwflags: u32) -> ::windows_sys::core::HRESULT;
+pub type UninitLocalMsCtfMonitor = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
 pub type ANCHOR_CHANGE_HISTORY_FLAGS = u32;
 pub const TS_CH_PRECEDING_DEL: ANCHOR_CHANGE_HISTORY_FLAGS = 1u32;
 pub const TS_CH_FOLLOWING_DEL: ANCHOR_CHANGE_HISTORY_FLAGS = 2u32;

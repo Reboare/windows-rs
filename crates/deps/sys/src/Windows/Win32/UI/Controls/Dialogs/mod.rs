@@ -1,48 +1,45 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ChooseColorA(param0: *mut CHOOSECOLORA) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ChooseColorW(param0: *mut CHOOSECOLORW) -> super::super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn ChooseFontA(param0: *mut CHOOSEFONTA) -> super::super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn ChooseFontW(param0: *mut CHOOSEFONTW) -> super::super::super::Foundation::BOOL;
-    pub fn CommDlgExtendedError() -> COMMON_DLG_ERRORS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FindTextA(param0: *mut FINDREPLACEA) -> super::super::super::Foundation::HWND;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FindTextW(param0: *mut FINDREPLACEW) -> super::super::super::Foundation::HWND;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetFileTitleA(param0: super::super::super::Foundation::PSTR, buf: super::super::super::Foundation::PSTR, cchsize: u16) -> i16;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetFileTitleW(param0: super::super::super::Foundation::PWSTR, buf: super::super::super::Foundation::PWSTR, cchsize: u16) -> i16;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetOpenFileNameA(param0: *mut OPENFILENAMEA) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetOpenFileNameW(param0: *mut OPENFILENAMEW) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetSaveFileNameA(param0: *mut OPENFILENAMEA) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetSaveFileNameW(param0: *mut OPENFILENAMEW) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PageSetupDlgA(param0: *mut PAGESETUPDLGA) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PageSetupDlgW(param0: *mut PAGESETUPDLGW) -> super::super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn PrintDlgA(ppd: *mut PRINTDLGA) -> super::super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn PrintDlgExA(ppd: *mut PRINTDLGEXA) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn PrintDlgExW(ppd: *mut PRINTDLGEXW) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
-    pub fn PrintDlgW(ppd: *mut PRINTDLGW) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ReplaceTextA(param0: *mut FINDREPLACEA) -> super::super::super::Foundation::HWND;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ReplaceTextW(param0: *mut FINDREPLACEW) -> super::super::super::Foundation::HWND;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type ChooseColorA = unsafe extern "system" fn(param0: *mut CHOOSECOLORA) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ChooseColorW = unsafe extern "system" fn(param0: *mut CHOOSECOLORW) -> super::super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type ChooseFontA = unsafe extern "system" fn(param0: *mut CHOOSEFONTA) -> super::super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type ChooseFontW = unsafe extern "system" fn(param0: *mut CHOOSEFONTW) -> super::super::super::Foundation::BOOL;
+pub type CommDlgExtendedError = unsafe extern "system" fn() -> COMMON_DLG_ERRORS;
+#[cfg(feature = "Win32_Foundation")]
+pub type FindTextA = unsafe extern "system" fn(param0: *mut FINDREPLACEA) -> super::super::super::Foundation::HWND;
+#[cfg(feature = "Win32_Foundation")]
+pub type FindTextW = unsafe extern "system" fn(param0: *mut FINDREPLACEW) -> super::super::super::Foundation::HWND;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetFileTitleA = unsafe extern "system" fn(param0: super::super::super::Foundation::PSTR, buf: super::super::super::Foundation::PSTR, cchsize: u16) -> i16;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetFileTitleW = unsafe extern "system" fn(param0: super::super::super::Foundation::PWSTR, buf: super::super::super::Foundation::PWSTR, cchsize: u16) -> i16;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetOpenFileNameA = unsafe extern "system" fn(param0: *mut OPENFILENAMEA) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetOpenFileNameW = unsafe extern "system" fn(param0: *mut OPENFILENAMEW) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetSaveFileNameA = unsafe extern "system" fn(param0: *mut OPENFILENAMEA) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetSaveFileNameW = unsafe extern "system" fn(param0: *mut OPENFILENAMEW) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PageSetupDlgA = unsafe extern "system" fn(param0: *mut PAGESETUPDLGA) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PageSetupDlgW = unsafe extern "system" fn(param0: *mut PAGESETUPDLGW) -> super::super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type PrintDlgA = unsafe extern "system" fn(ppd: *mut PRINTDLGA) -> super::super::super::Foundation::BOOL;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type PrintDlgExA = unsafe extern "system" fn(ppd: *mut PRINTDLGEXA) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type PrintDlgExW = unsafe extern "system" fn(ppd: *mut PRINTDLGEXW) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
+pub type PrintDlgW = unsafe extern "system" fn(ppd: *mut PRINTDLGW) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ReplaceTextA = unsafe extern "system" fn(param0: *mut FINDREPLACEA) -> super::super::super::Foundation::HWND;
+#[cfg(feature = "Win32_Foundation")]
+pub type ReplaceTextW = unsafe extern "system" fn(param0: *mut FINDREPLACEW) -> super::super::super::Foundation::HWND;
 pub const CDM_FIRST: u32 = 1124u32;
 pub const CDM_GETFILEPATH: u32 = 1125u32;
 pub const CDM_GETFOLDERIDLIST: u32 = 1127u32;

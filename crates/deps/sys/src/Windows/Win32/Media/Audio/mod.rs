@@ -9,229 +9,226 @@ pub mod DirectSound;
 pub mod Endpoints;
 #[cfg(feature = "Win32_Media_Audio_XAudio2")]
 pub mod XAudio2;
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn ActivateAudioInterfaceAsync(deviceinterfacepath: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, activationparams: *const super::super::System::Com::StructuredStorage::PROPVARIANT, completionhandler: IActivateAudioInterfaceCompletionHandler, activationoperation: *mut IActivateAudioInterfaceAsyncOperation) -> ::windows_sys::core::HRESULT;
-    pub fn CoRegisterMessageFilter(lpmessagefilter: IMessageFilter, lplpmessagefilter: *mut IMessageFilter) -> ::windows_sys::core::HRESULT;
-    pub fn CreateCaptureAudioStateMonitor(audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    pub fn CreateCaptureAudioStateMonitorForCategory(category: AUDIO_STREAM_CATEGORY, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateCaptureAudioStateMonitorForCategoryAndDeviceId(category: AUDIO_STREAM_CATEGORY, deviceid: super::super::Foundation::PWSTR, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    pub fn CreateCaptureAudioStateMonitorForCategoryAndDeviceRole(category: AUDIO_STREAM_CATEGORY, role: ERole, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    pub fn CreateRenderAudioStateMonitor(audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    pub fn CreateRenderAudioStateMonitorForCategory(category: AUDIO_STREAM_CATEGORY, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateRenderAudioStateMonitorForCategoryAndDeviceId(category: AUDIO_STREAM_CATEGORY, deviceid: super::super::Foundation::PWSTR, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    pub fn CreateRenderAudioStateMonitorForCategoryAndDeviceRole(category: AUDIO_STREAM_CATEGORY, role: ERole, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlaySoundA(pszsound: super::super::Foundation::PSTR, hmod: super::super::Foundation::HINSTANCE, fdwsound: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlaySoundW(pszsound: super::super::Foundation::PWSTR, hmod: super::super::Foundation::HINSTANCE, fdwsound: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmDriverAddA(phadid: *mut isize, hinstmodule: super::super::Foundation::HINSTANCE, lparam: super::super::Foundation::LPARAM, dwpriority: u32, fdwadd: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmDriverAddW(phadid: *mut isize, hinstmodule: super::super::Foundation::HINSTANCE, lparam: super::super::Foundation::LPARAM, dwpriority: u32, fdwadd: u32) -> u32;
-    pub fn acmDriverClose(had: HACMDRIVER, fdwclose: u32) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
-    pub fn acmDriverDetailsA(hadid: HACMDRIVERID, padd: *mut ACMDRIVERDETAILSA, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_UI_WindowsAndMessaging")]
-    pub fn acmDriverDetailsW(hadid: HACMDRIVERID, padd: *mut ACMDRIVERDETAILSW, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmDriverEnum(fncallback: ACMDRIVERENUMCB, dwinstance: usize, fdwenum: u32) -> u32;
-    pub fn acmDriverID(hao: HACMOBJ, phadid: *mut isize, fdwdriverid: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmDriverMessage(had: HACMDRIVER, umsg: u32, lparam1: super::super::Foundation::LPARAM, lparam2: super::super::Foundation::LPARAM) -> super::super::Foundation::LRESULT;
-    pub fn acmDriverOpen(phad: *mut isize, hadid: HACMDRIVERID, fdwopen: u32) -> u32;
-    pub fn acmDriverPriority(hadid: HACMDRIVERID, dwpriority: u32, fdwpriority: u32) -> u32;
-    pub fn acmDriverRemove(hadid: HACMDRIVERID, fdwremove: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterChooseA(pafltrc: *mut ACMFILTERCHOOSEA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterChooseW(pafltrc: *mut ACMFILTERCHOOSEW) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterDetailsA(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSA, fdwdetails: u32) -> u32;
-    pub fn acmFilterDetailsW(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSW, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterEnumA(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSA, fncallback: ACMFILTERENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterEnumW(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSW, fncallback: ACMFILTERENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterTagDetailsA(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSA, fdwdetails: u32) -> u32;
-    pub fn acmFilterTagDetailsW(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSW, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterTagEnumA(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSA, fncallback: ACMFILTERTAGENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFilterTagEnumW(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSW, fncallback: ACMFILTERTAGENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatChooseA(pafmtc: *mut ACMFORMATCHOOSEA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatChooseW(pafmtc: *mut ACMFORMATCHOOSEW) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatDetailsA(had: HACMDRIVER, pafd: *mut ACMFORMATDETAILSA, fdwdetails: u32) -> u32;
-    pub fn acmFormatDetailsW(had: HACMDRIVER, pafd: *mut tACMFORMATDETAILSW, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatEnumA(had: HACMDRIVER, pafd: *mut ACMFORMATDETAILSA, fncallback: ACMFORMATENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatEnumW(had: HACMDRIVER, pafd: *mut tACMFORMATDETAILSW, fncallback: ACMFORMATENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
-    pub fn acmFormatSuggest(had: HACMDRIVER, pwfxsrc: *mut WAVEFORMATEX, pwfxdst: *mut WAVEFORMATEX, cbwfxdst: u32, fdwsuggest: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatTagDetailsA(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSA, fdwdetails: u32) -> u32;
-    pub fn acmFormatTagDetailsW(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSW, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatTagEnumA(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSA, fncallback: ACMFORMATTAGENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmFormatTagEnumW(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSW, fncallback: ACMFORMATTAGENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
-    pub fn acmGetVersion() -> u32;
-    pub fn acmMetrics(hao: HACMOBJ, umetric: u32, pmetric: *mut ::core::ffi::c_void) -> u32;
-    pub fn acmStreamClose(has: HACMSTREAM, fdwclose: u32) -> u32;
-    pub fn acmStreamConvert(has: HACMSTREAM, pash: *mut ACMSTREAMHEADER, fdwconvert: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn acmStreamMessage(has: HACMSTREAM, umsg: u32, lparam1: super::super::Foundation::LPARAM, lparam2: super::super::Foundation::LPARAM) -> u32;
-    pub fn acmStreamOpen(phas: *mut isize, had: HACMDRIVER, pwfxsrc: *mut WAVEFORMATEX, pwfxdst: *mut WAVEFORMATEX, pwfltr: *mut WAVEFILTER, dwcallback: usize, dwinstance: usize, fdwopen: u32) -> u32;
-    pub fn acmStreamPrepareHeader(has: HACMSTREAM, pash: *mut ACMSTREAMHEADER, fdwprepare: u32) -> u32;
-    pub fn acmStreamReset(has: HACMSTREAM, fdwreset: u32) -> u32;
-    pub fn acmStreamSize(has: HACMSTREAM, cbinput: u32, pdwoutputbytes: *mut u32, fdwsize: u32) -> u32;
-    pub fn acmStreamUnprepareHeader(has: HACMSTREAM, pash: *mut ACMSTREAMHEADER, fdwunprepare: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn auxGetDevCapsA(udeviceid: usize, pac: *mut AUXCAPSA, cbac: u32) -> u32;
-    pub fn auxGetDevCapsW(udeviceid: usize, pac: *mut AUXCAPSW, cbac: u32) -> u32;
-    pub fn auxGetNumDevs() -> u32;
-    pub fn auxGetVolume(udeviceid: u32, pdwvolume: *mut u32) -> u32;
-    pub fn auxOutMessage(udeviceid: u32, umsg: u32, dw1: usize, dw2: usize) -> u32;
-    pub fn auxSetVolume(udeviceid: u32, dwvolume: u32) -> u32;
-    pub fn midiConnect(hmi: HMIDI, hmo: HMIDIOUT, preserved: *const ::core::ffi::c_void) -> u32;
-    pub fn midiDisconnect(hmi: HMIDI, hmo: HMIDIOUT, preserved: *const ::core::ffi::c_void) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiInAddBuffer(hmi: HMIDIIN, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiInClose(hmi: HMIDIIN) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiInGetDevCapsA(udeviceid: usize, pmic: *mut MIDIINCAPSA, cbmic: u32) -> u32;
-    pub fn midiInGetDevCapsW(udeviceid: usize, pmic: *mut MIDIINCAPSW, cbmic: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiInGetErrorTextA(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiInGetErrorTextW(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
-    pub fn midiInGetID(hmi: HMIDIIN, pudeviceid: *mut u32) -> u32;
-    pub fn midiInGetNumDevs() -> u32;
-    pub fn midiInMessage(hmi: HMIDIIN, umsg: u32, dw1: usize, dw2: usize) -> u32;
-    pub fn midiInOpen(phmi: *mut HMIDIIN, udeviceid: u32, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiInPrepareHeader(hmi: HMIDIIN, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiInReset(hmi: HMIDIIN) -> u32;
-    pub fn midiInStart(hmi: HMIDIIN) -> u32;
-    pub fn midiInStop(hmi: HMIDIIN) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiInUnprepareHeader(hmi: HMIDIIN, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiOutCacheDrumPatches(hmo: HMIDIOUT, upatch: u32, pwkya: *const u16, fucache: u32) -> u32;
-    pub fn midiOutCachePatches(hmo: HMIDIOUT, ubank: u32, pwpa: *const u16, fucache: u32) -> u32;
-    pub fn midiOutClose(hmo: HMIDIOUT) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiOutGetDevCapsA(udeviceid: usize, pmoc: *mut MIDIOUTCAPSA, cbmoc: u32) -> u32;
-    pub fn midiOutGetDevCapsW(udeviceid: usize, pmoc: *mut MIDIOUTCAPSW, cbmoc: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiOutGetErrorTextA(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiOutGetErrorTextW(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
-    pub fn midiOutGetID(hmo: HMIDIOUT, pudeviceid: *mut u32) -> u32;
-    pub fn midiOutGetNumDevs() -> u32;
-    pub fn midiOutGetVolume(hmo: HMIDIOUT, pdwvolume: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiOutLongMsg(hmo: HMIDIOUT, pmh: *const MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiOutMessage(hmo: HMIDIOUT, umsg: u32, dw1: usize, dw2: usize) -> u32;
-    pub fn midiOutOpen(phmo: *mut HMIDIOUT, udeviceid: u32, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiOutPrepareHeader(hmo: HMIDIOUT, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiOutReset(hmo: HMIDIOUT) -> u32;
-    pub fn midiOutSetVolume(hmo: HMIDIOUT, dwvolume: u32) -> u32;
-    pub fn midiOutShortMsg(hmo: HMIDIOUT, dwmsg: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiOutUnprepareHeader(hmo: HMIDIOUT, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiStreamClose(hms: HMIDISTRM) -> u32;
-    pub fn midiStreamOpen(phms: *mut HMIDISTRM, pudeviceid: *mut u32, cmidi: u32, dwcallback: usize, dwinstance: usize, fdwopen: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn midiStreamOut(hms: HMIDISTRM, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
-    pub fn midiStreamPause(hms: HMIDISTRM) -> u32;
-    pub fn midiStreamPosition(hms: HMIDISTRM, lpmmt: *mut super::MMTIME, cbmmt: u32) -> u32;
-    pub fn midiStreamProperty(hms: HMIDISTRM, lppropdata: *mut u8, dwproperty: u32) -> u32;
-    pub fn midiStreamRestart(hms: HMIDISTRM) -> u32;
-    pub fn midiStreamStop(hms: HMIDISTRM) -> u32;
-    pub fn mixerClose(hmx: HMIXER) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn mixerGetControlDetailsA(hmxobj: HMIXEROBJ, pmxcd: *mut MIXERCONTROLDETAILS, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn mixerGetControlDetailsW(hmxobj: HMIXEROBJ, pmxcd: *mut MIXERCONTROLDETAILS, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn mixerGetDevCapsA(umxid: usize, pmxcaps: *mut MIXERCAPSA, cbmxcaps: u32) -> u32;
-    pub fn mixerGetDevCapsW(umxid: usize, pmxcaps: *mut MIXERCAPSW, cbmxcaps: u32) -> u32;
-    pub fn mixerGetID(hmxobj: HMIXEROBJ, pumxid: *mut u32, fdwid: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn mixerGetLineControlsA(hmxobj: HMIXEROBJ, pmxlc: *mut MIXERLINECONTROLSA, fdwcontrols: u32) -> u32;
-    pub fn mixerGetLineControlsW(hmxobj: HMIXEROBJ, pmxlc: *mut MIXERLINECONTROLSW, fdwcontrols: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn mixerGetLineInfoA(hmxobj: HMIXEROBJ, pmxl: *mut MIXERLINEA, fdwinfo: u32) -> u32;
-    pub fn mixerGetLineInfoW(hmxobj: HMIXEROBJ, pmxl: *mut MIXERLINEW, fdwinfo: u32) -> u32;
-    pub fn mixerGetNumDevs() -> u32;
-    pub fn mixerMessage(hmx: HMIXER, umsg: u32, dwparam1: usize, dwparam2: usize) -> u32;
-    pub fn mixerOpen(phmx: *mut isize, umxid: u32, dwcallback: usize, dwinstance: usize, fdwopen: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn mixerSetControlDetails(hmxobj: HMIXEROBJ, pmxcd: *const MIXERCONTROLDETAILS, fdwdetails: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn sndPlaySoundA(pszsound: super::super::Foundation::PSTR, fusound: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn sndPlaySoundW(pszsound: super::super::Foundation::PWSTR, fusound: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveInAddBuffer(hwi: HWAVEIN, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
-    pub fn waveInClose(hwi: HWAVEIN) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveInGetDevCapsA(udeviceid: usize, pwic: *mut WAVEINCAPSA, cbwic: u32) -> u32;
-    pub fn waveInGetDevCapsW(udeviceid: usize, pwic: *mut WAVEINCAPSW, cbwic: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveInGetErrorTextA(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveInGetErrorTextW(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
-    pub fn waveInGetID(hwi: HWAVEIN, pudeviceid: *const u32) -> u32;
-    pub fn waveInGetNumDevs() -> u32;
-    pub fn waveInGetPosition(hwi: HWAVEIN, pmmt: *mut super::MMTIME, cbmmt: u32) -> u32;
-    pub fn waveInMessage(hwi: HWAVEIN, umsg: u32, dw1: usize, dw2: usize) -> u32;
-    pub fn waveInOpen(phwi: *mut HWAVEIN, udeviceid: u32, pwfx: *const WAVEFORMATEX, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveInPrepareHeader(hwi: HWAVEIN, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
-    pub fn waveInReset(hwi: HWAVEIN) -> u32;
-    pub fn waveInStart(hwi: HWAVEIN) -> u32;
-    pub fn waveInStop(hwi: HWAVEIN) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveInUnprepareHeader(hwi: HWAVEIN, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
-    pub fn waveOutBreakLoop(hwo: HWAVEOUT) -> u32;
-    pub fn waveOutClose(hwo: HWAVEOUT) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveOutGetDevCapsA(udeviceid: usize, pwoc: *mut WAVEOUTCAPSA, cbwoc: u32) -> u32;
-    pub fn waveOutGetDevCapsW(udeviceid: usize, pwoc: *mut WAVEOUTCAPSW, cbwoc: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveOutGetErrorTextA(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveOutGetErrorTextW(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
-    pub fn waveOutGetID(hwo: HWAVEOUT, pudeviceid: *mut u32) -> u32;
-    pub fn waveOutGetNumDevs() -> u32;
-    pub fn waveOutGetPitch(hwo: HWAVEOUT, pdwpitch: *mut u32) -> u32;
-    pub fn waveOutGetPlaybackRate(hwo: HWAVEOUT, pdwrate: *mut u32) -> u32;
-    pub fn waveOutGetPosition(hwo: HWAVEOUT, pmmt: *mut super::MMTIME, cbmmt: u32) -> u32;
-    pub fn waveOutGetVolume(hwo: HWAVEOUT, pdwvolume: *mut u32) -> u32;
-    pub fn waveOutMessage(hwo: HWAVEOUT, umsg: u32, dw1: usize, dw2: usize) -> u32;
-    pub fn waveOutOpen(phwo: *mut HWAVEOUT, udeviceid: u32, pwfx: *const WAVEFORMATEX, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
-    pub fn waveOutPause(hwo: HWAVEOUT) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveOutPrepareHeader(hwo: HWAVEOUT, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
-    pub fn waveOutReset(hwo: HWAVEOUT) -> u32;
-    pub fn waveOutRestart(hwo: HWAVEOUT) -> u32;
-    pub fn waveOutSetPitch(hwo: HWAVEOUT, dwpitch: u32) -> u32;
-    pub fn waveOutSetPlaybackRate(hwo: HWAVEOUT, dwrate: u32) -> u32;
-    pub fn waveOutSetVolume(hwo: HWAVEOUT, dwvolume: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveOutUnprepareHeader(hwo: HWAVEOUT, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn waveOutWrite(hwo: HWAVEOUT, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
-}
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type ActivateAudioInterfaceAsync = unsafe extern "system" fn(deviceinterfacepath: super::super::Foundation::PWSTR, riid: *const ::windows_sys::core::GUID, activationparams: *const super::super::System::Com::StructuredStorage::PROPVARIANT, completionhandler: IActivateAudioInterfaceCompletionHandler, activationoperation: *mut IActivateAudioInterfaceAsyncOperation) -> ::windows_sys::core::HRESULT;
+pub type CoRegisterMessageFilter = unsafe extern "system" fn(lpmessagefilter: IMessageFilter, lplpmessagefilter: *mut IMessageFilter) -> ::windows_sys::core::HRESULT;
+pub type CreateCaptureAudioStateMonitor = unsafe extern "system" fn(audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+pub type CreateCaptureAudioStateMonitorForCategory = unsafe extern "system" fn(category: AUDIO_STREAM_CATEGORY, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateCaptureAudioStateMonitorForCategoryAndDeviceId = unsafe extern "system" fn(category: AUDIO_STREAM_CATEGORY, deviceid: super::super::Foundation::PWSTR, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+pub type CreateCaptureAudioStateMonitorForCategoryAndDeviceRole = unsafe extern "system" fn(category: AUDIO_STREAM_CATEGORY, role: ERole, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+pub type CreateRenderAudioStateMonitor = unsafe extern "system" fn(audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+pub type CreateRenderAudioStateMonitorForCategory = unsafe extern "system" fn(category: AUDIO_STREAM_CATEGORY, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateRenderAudioStateMonitorForCategoryAndDeviceId = unsafe extern "system" fn(category: AUDIO_STREAM_CATEGORY, deviceid: super::super::Foundation::PWSTR, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+pub type CreateRenderAudioStateMonitorForCategoryAndDeviceRole = unsafe extern "system" fn(category: AUDIO_STREAM_CATEGORY, role: ERole, audiostatemonitor: *mut IAudioStateMonitor) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlaySoundA = unsafe extern "system" fn(pszsound: super::super::Foundation::PSTR, hmod: super::super::Foundation::HINSTANCE, fdwsound: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlaySoundW = unsafe extern "system" fn(pszsound: super::super::Foundation::PWSTR, hmod: super::super::Foundation::HINSTANCE, fdwsound: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmDriverAddA = unsafe extern "system" fn(phadid: *mut isize, hinstmodule: super::super::Foundation::HINSTANCE, lparam: super::super::Foundation::LPARAM, dwpriority: u32, fdwadd: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmDriverAddW = unsafe extern "system" fn(phadid: *mut isize, hinstmodule: super::super::Foundation::HINSTANCE, lparam: super::super::Foundation::LPARAM, dwpriority: u32, fdwadd: u32) -> u32;
+pub type acmDriverClose = unsafe extern "system" fn(had: HACMDRIVER, fdwclose: u32) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_UI_WindowsAndMessaging"))]
+pub type acmDriverDetailsA = unsafe extern "system" fn(hadid: HACMDRIVERID, padd: *mut ACMDRIVERDETAILSA, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_UI_WindowsAndMessaging")]
+pub type acmDriverDetailsW = unsafe extern "system" fn(hadid: HACMDRIVERID, padd: *mut ACMDRIVERDETAILSW, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmDriverEnum = unsafe extern "system" fn(fncallback: ACMDRIVERENUMCB, dwinstance: usize, fdwenum: u32) -> u32;
+pub type acmDriverID = unsafe extern "system" fn(hao: HACMOBJ, phadid: *mut isize, fdwdriverid: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmDriverMessage = unsafe extern "system" fn(had: HACMDRIVER, umsg: u32, lparam1: super::super::Foundation::LPARAM, lparam2: super::super::Foundation::LPARAM) -> super::super::Foundation::LRESULT;
+pub type acmDriverOpen = unsafe extern "system" fn(phad: *mut isize, hadid: HACMDRIVERID, fdwopen: u32) -> u32;
+pub type acmDriverPriority = unsafe extern "system" fn(hadid: HACMDRIVERID, dwpriority: u32, fdwpriority: u32) -> u32;
+pub type acmDriverRemove = unsafe extern "system" fn(hadid: HACMDRIVERID, fdwremove: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterChooseA = unsafe extern "system" fn(pafltrc: *mut ACMFILTERCHOOSEA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterChooseW = unsafe extern "system" fn(pafltrc: *mut ACMFILTERCHOOSEW) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterDetailsA = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSA, fdwdetails: u32) -> u32;
+pub type acmFilterDetailsW = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSW, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterEnumA = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSA, fncallback: ACMFILTERENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterEnumW = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut ACMFILTERDETAILSW, fncallback: ACMFILTERENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterTagDetailsA = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSA, fdwdetails: u32) -> u32;
+pub type acmFilterTagDetailsW = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSW, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterTagEnumA = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSA, fncallback: ACMFILTERTAGENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFilterTagEnumW = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFILTERTAGDETAILSW, fncallback: ACMFILTERTAGENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatChooseA = unsafe extern "system" fn(pafmtc: *mut ACMFORMATCHOOSEA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatChooseW = unsafe extern "system" fn(pafmtc: *mut ACMFORMATCHOOSEW) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatDetailsA = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut ACMFORMATDETAILSA, fdwdetails: u32) -> u32;
+pub type acmFormatDetailsW = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut tACMFORMATDETAILSW, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatEnumA = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut ACMFORMATDETAILSA, fncallback: ACMFORMATENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatEnumW = unsafe extern "system" fn(had: HACMDRIVER, pafd: *mut tACMFORMATDETAILSW, fncallback: ACMFORMATENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
+pub type acmFormatSuggest = unsafe extern "system" fn(had: HACMDRIVER, pwfxsrc: *mut WAVEFORMATEX, pwfxdst: *mut WAVEFORMATEX, cbwfxdst: u32, fdwsuggest: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatTagDetailsA = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSA, fdwdetails: u32) -> u32;
+pub type acmFormatTagDetailsW = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSW, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatTagEnumA = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSA, fncallback: ACMFORMATTAGENUMCBA, dwinstance: usize, fdwenum: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmFormatTagEnumW = unsafe extern "system" fn(had: HACMDRIVER, paftd: *mut ACMFORMATTAGDETAILSW, fncallback: ACMFORMATTAGENUMCBW, dwinstance: usize, fdwenum: u32) -> u32;
+pub type acmGetVersion = unsafe extern "system" fn() -> u32;
+pub type acmMetrics = unsafe extern "system" fn(hao: HACMOBJ, umetric: u32, pmetric: *mut ::core::ffi::c_void) -> u32;
+pub type acmStreamClose = unsafe extern "system" fn(has: HACMSTREAM, fdwclose: u32) -> u32;
+pub type acmStreamConvert = unsafe extern "system" fn(has: HACMSTREAM, pash: *mut ACMSTREAMHEADER, fdwconvert: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type acmStreamMessage = unsafe extern "system" fn(has: HACMSTREAM, umsg: u32, lparam1: super::super::Foundation::LPARAM, lparam2: super::super::Foundation::LPARAM) -> u32;
+pub type acmStreamOpen = unsafe extern "system" fn(phas: *mut isize, had: HACMDRIVER, pwfxsrc: *mut WAVEFORMATEX, pwfxdst: *mut WAVEFORMATEX, pwfltr: *mut WAVEFILTER, dwcallback: usize, dwinstance: usize, fdwopen: u32) -> u32;
+pub type acmStreamPrepareHeader = unsafe extern "system" fn(has: HACMSTREAM, pash: *mut ACMSTREAMHEADER, fdwprepare: u32) -> u32;
+pub type acmStreamReset = unsafe extern "system" fn(has: HACMSTREAM, fdwreset: u32) -> u32;
+pub type acmStreamSize = unsafe extern "system" fn(has: HACMSTREAM, cbinput: u32, pdwoutputbytes: *mut u32, fdwsize: u32) -> u32;
+pub type acmStreamUnprepareHeader = unsafe extern "system" fn(has: HACMSTREAM, pash: *mut ACMSTREAMHEADER, fdwunprepare: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type auxGetDevCapsA = unsafe extern "system" fn(udeviceid: usize, pac: *mut AUXCAPSA, cbac: u32) -> u32;
+pub type auxGetDevCapsW = unsafe extern "system" fn(udeviceid: usize, pac: *mut AUXCAPSW, cbac: u32) -> u32;
+pub type auxGetNumDevs = unsafe extern "system" fn() -> u32;
+pub type auxGetVolume = unsafe extern "system" fn(udeviceid: u32, pdwvolume: *mut u32) -> u32;
+pub type auxOutMessage = unsafe extern "system" fn(udeviceid: u32, umsg: u32, dw1: usize, dw2: usize) -> u32;
+pub type auxSetVolume = unsafe extern "system" fn(udeviceid: u32, dwvolume: u32) -> u32;
+pub type midiConnect = unsafe extern "system" fn(hmi: HMIDI, hmo: HMIDIOUT, preserved: *const ::core::ffi::c_void) -> u32;
+pub type midiDisconnect = unsafe extern "system" fn(hmi: HMIDI, hmo: HMIDIOUT, preserved: *const ::core::ffi::c_void) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiInAddBuffer = unsafe extern "system" fn(hmi: HMIDIIN, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
+pub type midiInClose = unsafe extern "system" fn(hmi: HMIDIIN) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiInGetDevCapsA = unsafe extern "system" fn(udeviceid: usize, pmic: *mut MIDIINCAPSA, cbmic: u32) -> u32;
+pub type midiInGetDevCapsW = unsafe extern "system" fn(udeviceid: usize, pmic: *mut MIDIINCAPSW, cbmic: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiInGetErrorTextA = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiInGetErrorTextW = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
+pub type midiInGetID = unsafe extern "system" fn(hmi: HMIDIIN, pudeviceid: *mut u32) -> u32;
+pub type midiInGetNumDevs = unsafe extern "system" fn() -> u32;
+pub type midiInMessage = unsafe extern "system" fn(hmi: HMIDIIN, umsg: u32, dw1: usize, dw2: usize) -> u32;
+pub type midiInOpen = unsafe extern "system" fn(phmi: *mut HMIDIIN, udeviceid: u32, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiInPrepareHeader = unsafe extern "system" fn(hmi: HMIDIIN, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
+pub type midiInReset = unsafe extern "system" fn(hmi: HMIDIIN) -> u32;
+pub type midiInStart = unsafe extern "system" fn(hmi: HMIDIIN) -> u32;
+pub type midiInStop = unsafe extern "system" fn(hmi: HMIDIIN) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiInUnprepareHeader = unsafe extern "system" fn(hmi: HMIDIIN, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
+pub type midiOutCacheDrumPatches = unsafe extern "system" fn(hmo: HMIDIOUT, upatch: u32, pwkya: *const u16, fucache: u32) -> u32;
+pub type midiOutCachePatches = unsafe extern "system" fn(hmo: HMIDIOUT, ubank: u32, pwpa: *const u16, fucache: u32) -> u32;
+pub type midiOutClose = unsafe extern "system" fn(hmo: HMIDIOUT) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiOutGetDevCapsA = unsafe extern "system" fn(udeviceid: usize, pmoc: *mut MIDIOUTCAPSA, cbmoc: u32) -> u32;
+pub type midiOutGetDevCapsW = unsafe extern "system" fn(udeviceid: usize, pmoc: *mut MIDIOUTCAPSW, cbmoc: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiOutGetErrorTextA = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiOutGetErrorTextW = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
+pub type midiOutGetID = unsafe extern "system" fn(hmo: HMIDIOUT, pudeviceid: *mut u32) -> u32;
+pub type midiOutGetNumDevs = unsafe extern "system" fn() -> u32;
+pub type midiOutGetVolume = unsafe extern "system" fn(hmo: HMIDIOUT, pdwvolume: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiOutLongMsg = unsafe extern "system" fn(hmo: HMIDIOUT, pmh: *const MIDIHDR, cbmh: u32) -> u32;
+pub type midiOutMessage = unsafe extern "system" fn(hmo: HMIDIOUT, umsg: u32, dw1: usize, dw2: usize) -> u32;
+pub type midiOutOpen = unsafe extern "system" fn(phmo: *mut HMIDIOUT, udeviceid: u32, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiOutPrepareHeader = unsafe extern "system" fn(hmo: HMIDIOUT, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
+pub type midiOutReset = unsafe extern "system" fn(hmo: HMIDIOUT) -> u32;
+pub type midiOutSetVolume = unsafe extern "system" fn(hmo: HMIDIOUT, dwvolume: u32) -> u32;
+pub type midiOutShortMsg = unsafe extern "system" fn(hmo: HMIDIOUT, dwmsg: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiOutUnprepareHeader = unsafe extern "system" fn(hmo: HMIDIOUT, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
+pub type midiStreamClose = unsafe extern "system" fn(hms: HMIDISTRM) -> u32;
+pub type midiStreamOpen = unsafe extern "system" fn(phms: *mut HMIDISTRM, pudeviceid: *mut u32, cmidi: u32, dwcallback: usize, dwinstance: usize, fdwopen: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type midiStreamOut = unsafe extern "system" fn(hms: HMIDISTRM, pmh: *mut MIDIHDR, cbmh: u32) -> u32;
+pub type midiStreamPause = unsafe extern "system" fn(hms: HMIDISTRM) -> u32;
+pub type midiStreamPosition = unsafe extern "system" fn(hms: HMIDISTRM, lpmmt: *mut super::MMTIME, cbmmt: u32) -> u32;
+pub type midiStreamProperty = unsafe extern "system" fn(hms: HMIDISTRM, lppropdata: *mut u8, dwproperty: u32) -> u32;
+pub type midiStreamRestart = unsafe extern "system" fn(hms: HMIDISTRM) -> u32;
+pub type midiStreamStop = unsafe extern "system" fn(hms: HMIDISTRM) -> u32;
+pub type mixerClose = unsafe extern "system" fn(hmx: HMIXER) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type mixerGetControlDetailsA = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxcd: *mut MIXERCONTROLDETAILS, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type mixerGetControlDetailsW = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxcd: *mut MIXERCONTROLDETAILS, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type mixerGetDevCapsA = unsafe extern "system" fn(umxid: usize, pmxcaps: *mut MIXERCAPSA, cbmxcaps: u32) -> u32;
+pub type mixerGetDevCapsW = unsafe extern "system" fn(umxid: usize, pmxcaps: *mut MIXERCAPSW, cbmxcaps: u32) -> u32;
+pub type mixerGetID = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pumxid: *mut u32, fdwid: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type mixerGetLineControlsA = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxlc: *mut MIXERLINECONTROLSA, fdwcontrols: u32) -> u32;
+pub type mixerGetLineControlsW = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxlc: *mut MIXERLINECONTROLSW, fdwcontrols: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type mixerGetLineInfoA = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxl: *mut MIXERLINEA, fdwinfo: u32) -> u32;
+pub type mixerGetLineInfoW = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxl: *mut MIXERLINEW, fdwinfo: u32) -> u32;
+pub type mixerGetNumDevs = unsafe extern "system" fn() -> u32;
+pub type mixerMessage = unsafe extern "system" fn(hmx: HMIXER, umsg: u32, dwparam1: usize, dwparam2: usize) -> u32;
+pub type mixerOpen = unsafe extern "system" fn(phmx: *mut isize, umxid: u32, dwcallback: usize, dwinstance: usize, fdwopen: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type mixerSetControlDetails = unsafe extern "system" fn(hmxobj: HMIXEROBJ, pmxcd: *const MIXERCONTROLDETAILS, fdwdetails: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type sndPlaySoundA = unsafe extern "system" fn(pszsound: super::super::Foundation::PSTR, fusound: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type sndPlaySoundW = unsafe extern "system" fn(pszsound: super::super::Foundation::PWSTR, fusound: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveInAddBuffer = unsafe extern "system" fn(hwi: HWAVEIN, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
+pub type waveInClose = unsafe extern "system" fn(hwi: HWAVEIN) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveInGetDevCapsA = unsafe extern "system" fn(udeviceid: usize, pwic: *mut WAVEINCAPSA, cbwic: u32) -> u32;
+pub type waveInGetDevCapsW = unsafe extern "system" fn(udeviceid: usize, pwic: *mut WAVEINCAPSW, cbwic: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveInGetErrorTextA = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveInGetErrorTextW = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
+pub type waveInGetID = unsafe extern "system" fn(hwi: HWAVEIN, pudeviceid: *const u32) -> u32;
+pub type waveInGetNumDevs = unsafe extern "system" fn() -> u32;
+pub type waveInGetPosition = unsafe extern "system" fn(hwi: HWAVEIN, pmmt: *mut super::MMTIME, cbmmt: u32) -> u32;
+pub type waveInMessage = unsafe extern "system" fn(hwi: HWAVEIN, umsg: u32, dw1: usize, dw2: usize) -> u32;
+pub type waveInOpen = unsafe extern "system" fn(phwi: *mut HWAVEIN, udeviceid: u32, pwfx: *const WAVEFORMATEX, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveInPrepareHeader = unsafe extern "system" fn(hwi: HWAVEIN, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
+pub type waveInReset = unsafe extern "system" fn(hwi: HWAVEIN) -> u32;
+pub type waveInStart = unsafe extern "system" fn(hwi: HWAVEIN) -> u32;
+pub type waveInStop = unsafe extern "system" fn(hwi: HWAVEIN) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveInUnprepareHeader = unsafe extern "system" fn(hwi: HWAVEIN, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
+pub type waveOutBreakLoop = unsafe extern "system" fn(hwo: HWAVEOUT) -> u32;
+pub type waveOutClose = unsafe extern "system" fn(hwo: HWAVEOUT) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveOutGetDevCapsA = unsafe extern "system" fn(udeviceid: usize, pwoc: *mut WAVEOUTCAPSA, cbwoc: u32) -> u32;
+pub type waveOutGetDevCapsW = unsafe extern "system" fn(udeviceid: usize, pwoc: *mut WAVEOUTCAPSW, cbwoc: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveOutGetErrorTextA = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PSTR, cchtext: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveOutGetErrorTextW = unsafe extern "system" fn(mmrerror: u32, psztext: super::super::Foundation::PWSTR, cchtext: u32) -> u32;
+pub type waveOutGetID = unsafe extern "system" fn(hwo: HWAVEOUT, pudeviceid: *mut u32) -> u32;
+pub type waveOutGetNumDevs = unsafe extern "system" fn() -> u32;
+pub type waveOutGetPitch = unsafe extern "system" fn(hwo: HWAVEOUT, pdwpitch: *mut u32) -> u32;
+pub type waveOutGetPlaybackRate = unsafe extern "system" fn(hwo: HWAVEOUT, pdwrate: *mut u32) -> u32;
+pub type waveOutGetPosition = unsafe extern "system" fn(hwo: HWAVEOUT, pmmt: *mut super::MMTIME, cbmmt: u32) -> u32;
+pub type waveOutGetVolume = unsafe extern "system" fn(hwo: HWAVEOUT, pdwvolume: *mut u32) -> u32;
+pub type waveOutMessage = unsafe extern "system" fn(hwo: HWAVEOUT, umsg: u32, dw1: usize, dw2: usize) -> u32;
+pub type waveOutOpen = unsafe extern "system" fn(phwo: *mut HWAVEOUT, udeviceid: u32, pwfx: *const WAVEFORMATEX, dwcallback: usize, dwinstance: usize, fdwopen: MIDI_WAVE_OPEN_TYPE) -> u32;
+pub type waveOutPause = unsafe extern "system" fn(hwo: HWAVEOUT) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveOutPrepareHeader = unsafe extern "system" fn(hwo: HWAVEOUT, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
+pub type waveOutReset = unsafe extern "system" fn(hwo: HWAVEOUT) -> u32;
+pub type waveOutRestart = unsafe extern "system" fn(hwo: HWAVEOUT) -> u32;
+pub type waveOutSetPitch = unsafe extern "system" fn(hwo: HWAVEOUT, dwpitch: u32) -> u32;
+pub type waveOutSetPlaybackRate = unsafe extern "system" fn(hwo: HWAVEOUT, dwrate: u32) -> u32;
+pub type waveOutSetVolume = unsafe extern "system" fn(hwo: HWAVEOUT, dwvolume: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveOutUnprepareHeader = unsafe extern "system" fn(hwo: HWAVEOUT, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type waveOutWrite = unsafe extern "system" fn(hwo: HWAVEOUT, pwh: *mut WAVEHDR, cbwh: u32) -> u32;
 pub const ACMDM_DRIVER_ABOUT: u32 = 24587u32;
 pub const ACMDM_DRIVER_DETAILS: u32 = 24586u32;
 pub const ACMDM_DRIVER_NOTIFY: u32 = 24577u32;

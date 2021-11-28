@@ -1,11 +1,8 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SRSetRestorePointA(prestoreptspec: *const RESTOREPOINTINFOA, psmgrstatus: *mut STATEMGRSTATUS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SRSetRestorePointW(prestoreptspec: *const RESTOREPOINTINFOW, psmgrstatus: *mut STATEMGRSTATUS) -> super::super::Foundation::BOOL;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type SRSetRestorePointA = unsafe extern "system" fn(prestoreptspec: *const RESTOREPOINTINFOA, psmgrstatus: *mut STATEMGRSTATUS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SRSetRestorePointW = unsafe extern "system" fn(prestoreptspec: *const RESTOREPOINTINFOW, psmgrstatus: *mut STATEMGRSTATUS) -> super::super::Foundation::BOOL;
 pub const ACCESSIBILITY_SETTING: u32 = 3u32;
 pub const APPLICATION_RUN: u32 = 5u32;
 pub const BACKUP: u32 = 15u32;

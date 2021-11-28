@@ -1,23 +1,20 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn NetworkIsolationDiagnoseConnectFailureAndGetInfo(wszservername: super::super::Foundation::PWSTR, netisoerror: *mut NETISO_ERROR_TYPE) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn NetworkIsolationEnumAppContainers(flags: u32, pdwnumpublicappcs: *mut u32, pppublicappcs: *mut *mut INET_FIREWALL_APP_CONTAINER) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn NetworkIsolationFreeAppContainers(ppublicappcs: *const INET_FIREWALL_APP_CONTAINER) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn NetworkIsolationGetAppContainerConfig(pdwnumpublicappcs: *mut u32, appcontainersids: *mut *mut super::super::Security::SID_AND_ATTRIBUTES) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn NetworkIsolationRegisterForAppContainerChanges(flags: u32, callback: PAC_CHANGES_CALLBACK_FN, context: *const ::core::ffi::c_void, registrationobject: *mut super::super::Foundation::HANDLE) -> u32;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn NetworkIsolationSetAppContainerConfig(dwnumpublicappcs: u32, appcontainersids: *const super::super::Security::SID_AND_ATTRIBUTES) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn NetworkIsolationSetupAppContainerBinaries(applicationcontainersid: super::super::Foundation::PSID, packagefullname: super::super::Foundation::PWSTR, packagefolder: super::super::Foundation::PWSTR, displayname: super::super::Foundation::PWSTR, bbinariesfullycomputed: super::super::Foundation::BOOL, binaries: *const super::super::Foundation::PWSTR, binariescount: u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn NetworkIsolationUnregisterForAppContainerChanges(registrationobject: super::super::Foundation::HANDLE) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type NetworkIsolationDiagnoseConnectFailureAndGetInfo = unsafe extern "system" fn(wszservername: super::super::Foundation::PWSTR, netisoerror: *mut NETISO_ERROR_TYPE) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type NetworkIsolationEnumAppContainers = unsafe extern "system" fn(flags: u32, pdwnumpublicappcs: *mut u32, pppublicappcs: *mut *mut INET_FIREWALL_APP_CONTAINER) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type NetworkIsolationFreeAppContainers = unsafe extern "system" fn(ppublicappcs: *const INET_FIREWALL_APP_CONTAINER) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type NetworkIsolationGetAppContainerConfig = unsafe extern "system" fn(pdwnumpublicappcs: *mut u32, appcontainersids: *mut *mut super::super::Security::SID_AND_ATTRIBUTES) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type NetworkIsolationRegisterForAppContainerChanges = unsafe extern "system" fn(flags: u32, callback: PAC_CHANGES_CALLBACK_FN, context: *const ::core::ffi::c_void, registrationobject: *mut super::super::Foundation::HANDLE) -> u32;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type NetworkIsolationSetAppContainerConfig = unsafe extern "system" fn(dwnumpublicappcs: u32, appcontainersids: *const super::super::Security::SID_AND_ATTRIBUTES) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type NetworkIsolationSetupAppContainerBinaries = unsafe extern "system" fn(applicationcontainersid: super::super::Foundation::PSID, packagefullname: super::super::Foundation::PWSTR, packagefolder: super::super::Foundation::PWSTR, displayname: super::super::Foundation::PWSTR, bbinariesfullycomputed: super::super::Foundation::BOOL, binaries: *const super::super::Foundation::PWSTR, binariescount: u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type NetworkIsolationUnregisterForAppContainerChanges = unsafe extern "system" fn(registrationobject: super::super::Foundation::HANDLE) -> u32;
 pub type ICS_TARGETTYPE = i32;
 pub const ICSTT_NAME: ICS_TARGETTYPE = 0i32;
 pub const ICSTT_IPADDRESS: ICS_TARGETTYPE = 1i32;

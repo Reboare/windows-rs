@@ -1,22 +1,19 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetDeviceID(pbwindowsaik: *mut u8, cbwindowsaik: u32, pcbresult: *mut u32, pfprotectedbytpm: *mut super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetDeviceIDString(pszwindowsaik: super::super::Foundation::PWSTR, cchwindowsaik: u32, pcchresult: *mut u32, pfprotectedbytpm: *mut super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    pub fn Tbsi_Context_Create(pcontextparams: *const TBS_CONTEXT_PARAMS, phcontext: *mut *mut ::core::ffi::c_void) -> u32;
-    pub fn Tbsi_Create_Windows_Key(keyhandle: u32) -> u32;
-    pub fn Tbsi_GetDeviceInfo(size: u32, info: *mut ::core::ffi::c_void) -> u32;
-    pub fn Tbsi_Get_OwnerAuth(hcontext: *const ::core::ffi::c_void, ownerauthtype: u32, poutputbuf: *mut u8, poutputbuflen: *mut u32) -> u32;
-    pub fn Tbsi_Get_TCG_Log(hcontext: *const ::core::ffi::c_void, poutputbuf: *mut u8, poutputbuflen: *mut u32) -> u32;
-    pub fn Tbsi_Get_TCG_Log_Ex(logtype: u32, pboutput: *mut u8, pcboutput: *mut u32) -> u32;
-    pub fn Tbsi_Physical_Presence_Command(hcontext: *const ::core::ffi::c_void, pabinput: *const u8, cbinput: u32, paboutput: *mut u8, pcboutput: *mut u32) -> u32;
-    pub fn Tbsi_Revoke_Attestation() -> u32;
-    pub fn Tbsip_Cancel_Commands(hcontext: *const ::core::ffi::c_void) -> u32;
-    pub fn Tbsip_Context_Close(hcontext: *const ::core::ffi::c_void) -> u32;
-    pub fn Tbsip_Submit_Command(hcontext: *const ::core::ffi::c_void, locality: TBS_COMMAND_LOCALITY, priority: TBS_COMMAND_PRIORITY, pabcommand: *const u8, cbcommand: u32, pabresult: *mut u8, pcbresult: *mut u32) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type GetDeviceID = unsafe extern "system" fn(pbwindowsaik: *mut u8, cbwindowsaik: u32, pcbresult: *mut u32, pfprotectedbytpm: *mut super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetDeviceIDString = unsafe extern "system" fn(pszwindowsaik: super::super::Foundation::PWSTR, cchwindowsaik: u32, pcchresult: *mut u32, pfprotectedbytpm: *mut super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+pub type Tbsi_Context_Create = unsafe extern "system" fn(pcontextparams: *const TBS_CONTEXT_PARAMS, phcontext: *mut *mut ::core::ffi::c_void) -> u32;
+pub type Tbsi_Create_Windows_Key = unsafe extern "system" fn(keyhandle: u32) -> u32;
+pub type Tbsi_GetDeviceInfo = unsafe extern "system" fn(size: u32, info: *mut ::core::ffi::c_void) -> u32;
+pub type Tbsi_Get_OwnerAuth = unsafe extern "system" fn(hcontext: *const ::core::ffi::c_void, ownerauthtype: u32, poutputbuf: *mut u8, poutputbuflen: *mut u32) -> u32;
+pub type Tbsi_Get_TCG_Log = unsafe extern "system" fn(hcontext: *const ::core::ffi::c_void, poutputbuf: *mut u8, poutputbuflen: *mut u32) -> u32;
+pub type Tbsi_Get_TCG_Log_Ex = unsafe extern "system" fn(logtype: u32, pboutput: *mut u8, pcboutput: *mut u32) -> u32;
+pub type Tbsi_Physical_Presence_Command = unsafe extern "system" fn(hcontext: *const ::core::ffi::c_void, pabinput: *const u8, cbinput: u32, paboutput: *mut u8, pcboutput: *mut u32) -> u32;
+pub type Tbsi_Revoke_Attestation = unsafe extern "system" fn() -> u32;
+pub type Tbsip_Cancel_Commands = unsafe extern "system" fn(hcontext: *const ::core::ffi::c_void) -> u32;
+pub type Tbsip_Context_Close = unsafe extern "system" fn(hcontext: *const ::core::ffi::c_void) -> u32;
+pub type Tbsip_Submit_Command = unsafe extern "system" fn(hcontext: *const ::core::ffi::c_void, locality: TBS_COMMAND_LOCALITY, priority: TBS_COMMAND_PRIORITY, pabcommand: *const u8, cbcommand: u32, pabresult: *mut u8, pcbresult: *mut u32) -> u32;
 pub type TBS_COMMAND_LOCALITY = u32;
 pub const TBS_COMMAND_LOCALITY_ZERO: TBS_COMMAND_LOCALITY = 0u32;
 pub const TBS_COMMAND_LOCALITY_ONE: TBS_COMMAND_LOCALITY = 1u32;

@@ -1,15 +1,12 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetExtensionVersion(pver: *mut HSE_VERSION_INFO) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetFilterVersion(pver: *mut HTTP_FILTER_VERSION) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn HttpExtensionProc(pecb: *const EXTENSION_CONTROL_BLOCK) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn HttpFilterProc(pfc: *mut HTTP_FILTER_CONTEXT, notificationtype: u32, pvnotification: *mut ::core::ffi::c_void) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type GetExtensionVersion = unsafe extern "system" fn(pver: *mut HSE_VERSION_INFO) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetFilterVersion = unsafe extern "system" fn(pver: *mut HTTP_FILTER_VERSION) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type HttpExtensionProc = unsafe extern "system" fn(pecb: *const EXTENSION_CONTROL_BLOCK) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type HttpFilterProc = unsafe extern "system" fn(pfc: *mut HTTP_FILTER_CONTEXT, notificationtype: u32, pvnotification: *mut ::core::ffi::c_void) -> u32;
 pub const ADMINDATA_MAX_NAME_LEN: u32 = 256u32;
 pub const APPCTR_MD_ID_BEGIN_RESERVED: u32 = 57344u32;
 pub const APPCTR_MD_ID_END_RESERVED: u32 = 61439u32;

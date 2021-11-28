@@ -1,8 +1,5 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn CreateVssExpressWriterInternal(ppwriter: *mut IVssExpressWriter) -> ::windows_sys::core::HRESULT;
-}
+pub type CreateVssExpressWriterInternal = unsafe extern "system" fn(ppwriter: *mut IVssExpressWriter) -> ::windows_sys::core::HRESULT;
 pub type IVssAdmin = *mut ::core::ffi::c_void;
 pub type IVssAdminEx = *mut ::core::ffi::c_void;
 pub type IVssAsync = *mut ::core::ffi::c_void;

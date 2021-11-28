@@ -1,16 +1,13 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn WscGetAntiMalwareUri(ppszuri: *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    pub fn WscGetSecurityProviderHealth(providers: u32, phealth: *mut WSC_SECURITY_PROVIDER_HEALTH) -> ::windows_sys::core::HRESULT;
-    pub fn WscQueryAntiMalwareUri() -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Threading"))]
-    pub fn WscRegisterForChanges(reserved: *mut ::core::ffi::c_void, phcallbackregistration: *mut super::super::Foundation::HANDLE, lpcallbackaddress: super::Threading::LPTHREAD_START_ROUTINE, pcontext: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn WscRegisterForUserNotifications() -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn WscUnRegisterChanges(hregistrationhandle: super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type WscGetAntiMalwareUri = unsafe extern "system" fn(ppszuri: *mut super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+pub type WscGetSecurityProviderHealth = unsafe extern "system" fn(providers: u32, phealth: *mut WSC_SECURITY_PROVIDER_HEALTH) -> ::windows_sys::core::HRESULT;
+pub type WscQueryAntiMalwareUri = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Threading"))]
+pub type WscRegisterForChanges = unsafe extern "system" fn(reserved: *mut ::core::ffi::c_void, phcallbackregistration: *mut super::super::Foundation::HANDLE, lpcallbackaddress: super::Threading::LPTHREAD_START_ROUTINE, pcontext: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type WscRegisterForUserNotifications = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type WscUnRegisterChanges = unsafe extern "system" fn(hregistrationhandle: super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
 pub type IWSCDefaultProduct = *mut ::core::ffi::c_void;
 pub type IWSCProductList = *mut ::core::ffi::c_void;
 pub type IWscProduct = *mut ::core::ffi::c_void;

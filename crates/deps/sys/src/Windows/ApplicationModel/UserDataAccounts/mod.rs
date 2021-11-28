@@ -3,8 +3,6 @@
 pub mod Provider;
 #[cfg(feature = "ApplicationModel_UserDataAccounts_SystemAccess")]
 pub mod SystemAccess;
-#[link(name = "windows")]
-extern "system" {}
 pub type UserDataAccount = *mut ::core::ffi::c_void;
 #[repr(transparent)]
 pub struct UserDataAccountContentKinds(pub u32);

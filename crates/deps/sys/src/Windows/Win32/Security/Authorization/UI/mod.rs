@@ -1,13 +1,10 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_UI_Controls")]
-    pub fn CreateSecurityPage(psi: ISecurityInformation) -> super::super::super::UI::Controls::HPROPSHEETPAGE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EditSecurity(hwndowner: super::super::super::Foundation::HWND, psi: ISecurityInformation) -> super::super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EditSecurityAdvanced(hwndowner: super::super::super::Foundation::HWND, psi: ISecurityInformation, usipage: SI_PAGE_TYPE) -> ::windows_sys::core::HRESULT;
-}
+#[cfg(feature = "Win32_UI_Controls")]
+pub type CreateSecurityPage = unsafe extern "system" fn(psi: ISecurityInformation) -> super::super::super::UI::Controls::HPROPSHEETPAGE;
+#[cfg(feature = "Win32_Foundation")]
+pub type EditSecurity = unsafe extern "system" fn(hwndowner: super::super::super::Foundation::HWND, psi: ISecurityInformation) -> super::super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EditSecurityAdvanced = unsafe extern "system" fn(hwndowner: super::super::super::Foundation::HWND, psi: ISecurityInformation, usipage: SI_PAGE_TYPE) -> ::windows_sys::core::HRESULT;
 pub const DOBJ_COND_NTACLS: i32 = 8i32;
 pub const DOBJ_RES_CONT: i32 = 1i32;
 pub const DOBJ_RES_ROOT: i32 = 2i32;

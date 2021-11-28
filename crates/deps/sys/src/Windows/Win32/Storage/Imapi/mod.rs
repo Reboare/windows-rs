@@ -1,29 +1,26 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn CloseIMsgSession(lpmsgsess: *mut _MSGSESS);
-    #[cfg(feature = "Win32_System_AddressBook")]
-    pub fn GetAttribIMsgOnIStg(lpobject: *mut ::core::ffi::c_void, lpproptagarray: *mut super::super::System::AddressBook::SPropTagArray, lpppropattrarray: *mut *mut SPropAttrArray) -> ::windows_sys::core::HRESULT;
-    pub fn MapStorageSCode(stgscode: i32) -> i32;
-    #[cfg(all(feature = "Win32_System_AddressBook", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
-    pub fn OpenIMsgOnIStg(
-        lpmsgsess: *mut _MSGSESS,
-        lpallocatebuffer: super::super::System::AddressBook::LPALLOCATEBUFFER,
-        lpallocatemore: super::super::System::AddressBook::LPALLOCATEMORE,
-        lpfreebuffer: super::super::System::AddressBook::LPFREEBUFFER,
-        lpmalloc: super::super::System::Com::IMalloc,
-        lpmapisup: *mut ::core::ffi::c_void,
-        lpstg: super::super::System::Com::StructuredStorage::IStorage,
-        lpfmsgcallrelease: *mut MSGCALLRELEASE,
-        ulcallerdata: u32,
-        ulflags: u32,
-        lppmsg: *mut super::super::System::AddressBook::IMessage,
-    ) -> i32;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn OpenIMsgSession(lpmalloc: super::super::System::Com::IMalloc, ulflags: u32, lppmsgsess: *mut *mut _MSGSESS) -> i32;
-    #[cfg(feature = "Win32_System_AddressBook")]
-    pub fn SetAttribIMsgOnIStg(lpobject: *mut ::core::ffi::c_void, lpproptags: *mut super::super::System::AddressBook::SPropTagArray, lppropattrs: *mut SPropAttrArray, lpppropproblems: *mut *mut super::super::System::AddressBook::SPropProblemArray) -> ::windows_sys::core::HRESULT;
-}
+pub type CloseIMsgSession = unsafe extern "system" fn(lpmsgsess: *mut _MSGSESS);
+#[cfg(feature = "Win32_System_AddressBook")]
+pub type GetAttribIMsgOnIStg = unsafe extern "system" fn(lpobject: *mut ::core::ffi::c_void, lpproptagarray: *mut super::super::System::AddressBook::SPropTagArray, lpppropattrarray: *mut *mut SPropAttrArray) -> ::windows_sys::core::HRESULT;
+pub type MapStorageSCode = unsafe extern "system" fn(stgscode: i32) -> i32;
+#[cfg(all(feature = "Win32_System_AddressBook", feature = "Win32_System_Com", feature = "Win32_System_Com_StructuredStorage"))]
+pub type OpenIMsgOnIStg = unsafe extern "system" fn(
+    lpmsgsess: *mut _MSGSESS,
+    lpallocatebuffer: super::super::System::AddressBook::LPALLOCATEBUFFER,
+    lpallocatemore: super::super::System::AddressBook::LPALLOCATEMORE,
+    lpfreebuffer: super::super::System::AddressBook::LPFREEBUFFER,
+    lpmalloc: super::super::System::Com::IMalloc,
+    lpmapisup: *mut ::core::ffi::c_void,
+    lpstg: super::super::System::Com::StructuredStorage::IStorage,
+    lpfmsgcallrelease: *mut MSGCALLRELEASE,
+    ulcallerdata: u32,
+    ulflags: u32,
+    lppmsg: *mut super::super::System::AddressBook::IMessage,
+) -> i32;
+#[cfg(feature = "Win32_System_Com")]
+pub type OpenIMsgSession = unsafe extern "system" fn(lpmalloc: super::super::System::Com::IMalloc, ulflags: u32, lppmsgsess: *mut *mut _MSGSESS) -> i32;
+#[cfg(feature = "Win32_System_AddressBook")]
+pub type SetAttribIMsgOnIStg = unsafe extern "system" fn(lpobject: *mut ::core::ffi::c_void, lpproptags: *mut super::super::System::AddressBook::SPropTagArray, lppropattrs: *mut SPropAttrArray, lpppropproblems: *mut *mut super::super::System::AddressBook::SPropProblemArray) -> ::windows_sys::core::HRESULT;
 pub const BlockRange: ::windows_sys::core::GUID = ::windows_sys::core::GUID { data1: 3037186599, data2: 8708, data3: 4573, data4: [150, 106, 0, 26, 160, 27, 188, 88] };
 pub const BlockRangeList: ::windows_sys::core::GUID = ::windows_sys::core::GUID { data1: 3037186600, data2: 8708, data3: 4573, data4: [150, 106, 0, 26, 160, 27, 188, 88] };
 pub const BootOptions: ::windows_sys::core::GUID = ::windows_sys::core::GUID { data1: 747904974, data2: 38747, data3: 22974, data4: [169, 96, 154, 42, 38, 40, 83, 165] };

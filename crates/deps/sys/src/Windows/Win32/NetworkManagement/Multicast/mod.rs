@@ -1,15 +1,12 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn McastApiCleanup();
-    pub fn McastApiStartup(version: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn McastEnumerateScopes(addrfamily: u16, requery: super::super::Foundation::BOOL, pscopelist: *mut MCAST_SCOPE_ENTRY, pscopelen: *mut u32, pscopecount: *mut u32) -> u32;
-    pub fn McastGenUID(prequestid: *mut MCAST_CLIENT_UID) -> u32;
-    pub fn McastReleaseAddress(addrfamily: u16, prequestid: *mut MCAST_CLIENT_UID, preleaserequest: *mut MCAST_LEASE_REQUEST) -> u32;
-    pub fn McastRenewAddress(addrfamily: u16, prequestid: *mut MCAST_CLIENT_UID, prenewrequest: *mut MCAST_LEASE_REQUEST, prenewresponse: *mut MCAST_LEASE_RESPONSE) -> u32;
-    pub fn McastRequestAddress(addrfamily: u16, prequestid: *mut MCAST_CLIENT_UID, pscopectx: *mut MCAST_SCOPE_CTX, paddrrequest: *mut MCAST_LEASE_REQUEST, paddrresponse: *mut MCAST_LEASE_RESPONSE) -> u32;
-}
+pub type McastApiCleanup = unsafe extern "system" fn();
+pub type McastApiStartup = unsafe extern "system" fn(version: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type McastEnumerateScopes = unsafe extern "system" fn(addrfamily: u16, requery: super::super::Foundation::BOOL, pscopelist: *mut MCAST_SCOPE_ENTRY, pscopelen: *mut u32, pscopecount: *mut u32) -> u32;
+pub type McastGenUID = unsafe extern "system" fn(prequestid: *mut MCAST_CLIENT_UID) -> u32;
+pub type McastReleaseAddress = unsafe extern "system" fn(addrfamily: u16, prequestid: *mut MCAST_CLIENT_UID, preleaserequest: *mut MCAST_LEASE_REQUEST) -> u32;
+pub type McastRenewAddress = unsafe extern "system" fn(addrfamily: u16, prequestid: *mut MCAST_CLIENT_UID, prenewrequest: *mut MCAST_LEASE_REQUEST, prenewresponse: *mut MCAST_LEASE_RESPONSE) -> u32;
+pub type McastRequestAddress = unsafe extern "system" fn(addrfamily: u16, prequestid: *mut MCAST_CLIENT_UID, pscopectx: *mut MCAST_SCOPE_CTX, paddrrequest: *mut MCAST_LEASE_REQUEST, paddrresponse: *mut MCAST_LEASE_RESPONSE) -> u32;
 #[repr(C)]
 pub union IPNG_ADDRESS {
     pub IpAddrV4: u32,

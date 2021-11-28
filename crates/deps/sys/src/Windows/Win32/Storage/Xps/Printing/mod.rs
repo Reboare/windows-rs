@@ -1,22 +1,19 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn StartXpsPrintJob(
-        printername: super::super::super::Foundation::PWSTR,
-        jobname: super::super::super::Foundation::PWSTR,
-        outputfilename: super::super::super::Foundation::PWSTR,
-        progressevent: super::super::super::Foundation::HANDLE,
-        completionevent: super::super::super::Foundation::HANDLE,
-        printablepageson: *const u8,
-        printablepagesoncount: u32,
-        xpsprintjob: *mut IXpsPrintJob,
-        documentstream: *mut IXpsPrintJobStream,
-        printticketstream: *mut IXpsPrintJobStream,
-    ) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn StartXpsPrintJob1(printername: super::super::super::Foundation::PWSTR, jobname: super::super::super::Foundation::PWSTR, outputfilename: super::super::super::Foundation::PWSTR, progressevent: super::super::super::Foundation::HANDLE, completionevent: super::super::super::Foundation::HANDLE, xpsprintjob: *mut IXpsPrintJob, printcontentreceiver: *mut super::IXpsOMPackageTarget) -> ::windows_sys::core::HRESULT;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type StartXpsPrintJob = unsafe extern "system" fn(
+    printername: super::super::super::Foundation::PWSTR,
+    jobname: super::super::super::Foundation::PWSTR,
+    outputfilename: super::super::super::Foundation::PWSTR,
+    progressevent: super::super::super::Foundation::HANDLE,
+    completionevent: super::super::super::Foundation::HANDLE,
+    printablepageson: *const u8,
+    printablepagesoncount: u32,
+    xpsprintjob: *mut IXpsPrintJob,
+    documentstream: *mut IXpsPrintJobStream,
+    printticketstream: *mut IXpsPrintJobStream,
+) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type StartXpsPrintJob1 = unsafe extern "system" fn(printername: super::super::super::Foundation::PWSTR, jobname: super::super::super::Foundation::PWSTR, outputfilename: super::super::super::Foundation::PWSTR, progressevent: super::super::super::Foundation::HANDLE, completionevent: super::super::super::Foundation::HANDLE, xpsprintjob: *mut IXpsPrintJob, printcontentreceiver: *mut super::IXpsOMPackageTarget) -> ::windows_sys::core::HRESULT;
 pub const ID_DOCUMENTPACKAGETARGET_MSXPS: ::windows_sys::core::GUID = ::windows_sys::core::GUID {
     data1: 2628665512,
     data2: 57041,

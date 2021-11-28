@@ -1,19 +1,16 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn WMCreateBackupRestorer(pcallback: ::windows_sys::core::IUnknown, ppbackup: *mut IWMLicenseBackup) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateEditor(ppeditor: *mut IWMMetadataEditor) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateIndexer(ppindexer: *mut IWMIndexer) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateProfileManager(ppprofilemanager: *mut IWMProfileManager) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateReader(punkcert: ::windows_sys::core::IUnknown, dwrights: u32, ppreader: *mut IWMReader) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateSyncReader(punkcert: ::windows_sys::core::IUnknown, dwrights: u32, ppsyncreader: *mut IWMSyncReader) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateWriter(punkcert: ::windows_sys::core::IUnknown, ppwriter: *mut IWMWriter) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateWriterFileSink(ppsink: *mut IWMWriterFileSink) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateWriterNetworkSink(ppsink: *mut IWMWriterNetworkSink) -> ::windows_sys::core::HRESULT;
-    pub fn WMCreateWriterPushSink(ppsink: *mut IWMWriterPushSink) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn WMIsContentProtected(pwszfilename: super::super::Foundation::PWSTR, pfisprotected: *mut super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-}
+pub type WMCreateBackupRestorer = unsafe extern "system" fn(pcallback: ::windows_sys::core::IUnknown, ppbackup: *mut IWMLicenseBackup) -> ::windows_sys::core::HRESULT;
+pub type WMCreateEditor = unsafe extern "system" fn(ppeditor: *mut IWMMetadataEditor) -> ::windows_sys::core::HRESULT;
+pub type WMCreateIndexer = unsafe extern "system" fn(ppindexer: *mut IWMIndexer) -> ::windows_sys::core::HRESULT;
+pub type WMCreateProfileManager = unsafe extern "system" fn(ppprofilemanager: *mut IWMProfileManager) -> ::windows_sys::core::HRESULT;
+pub type WMCreateReader = unsafe extern "system" fn(punkcert: ::windows_sys::core::IUnknown, dwrights: u32, ppreader: *mut IWMReader) -> ::windows_sys::core::HRESULT;
+pub type WMCreateSyncReader = unsafe extern "system" fn(punkcert: ::windows_sys::core::IUnknown, dwrights: u32, ppsyncreader: *mut IWMSyncReader) -> ::windows_sys::core::HRESULT;
+pub type WMCreateWriter = unsafe extern "system" fn(punkcert: ::windows_sys::core::IUnknown, ppwriter: *mut IWMWriter) -> ::windows_sys::core::HRESULT;
+pub type WMCreateWriterFileSink = unsafe extern "system" fn(ppsink: *mut IWMWriterFileSink) -> ::windows_sys::core::HRESULT;
+pub type WMCreateWriterNetworkSink = unsafe extern "system" fn(ppsink: *mut IWMWriterNetworkSink) -> ::windows_sys::core::HRESULT;
+pub type WMCreateWriterPushSink = unsafe extern "system" fn(ppsink: *mut IWMWriterPushSink) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type WMIsContentProtected = unsafe extern "system" fn(pwszfilename: super::super::Foundation::PWSTR, pfisprotected: *mut super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
 #[repr(C)]
 pub struct AM_WMT_EVENT_DATA {
     pub hrStatus: ::windows_sys::core::HRESULT,

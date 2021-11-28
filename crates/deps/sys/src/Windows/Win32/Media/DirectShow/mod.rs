@@ -1,13 +1,10 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
 #[cfg(feature = "Win32_Media_DirectShow_Xml")]
 pub mod Xml;
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AMGetErrorTextA(hr: ::windows_sys::core::HRESULT, pbuffer: super::super::Foundation::PSTR, maxlen: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AMGetErrorTextW(hr: ::windows_sys::core::HRESULT, pbuffer: super::super::Foundation::PWSTR, maxlen: u32) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type AMGetErrorTextA = unsafe extern "system" fn(hr: ::windows_sys::core::HRESULT, pbuffer: super::super::Foundation::PSTR, maxlen: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type AMGetErrorTextW = unsafe extern "system" fn(hr: ::windows_sys::core::HRESULT, pbuffer: super::super::Foundation::PWSTR, maxlen: u32) -> u32;
 pub type ADVISE_TYPE = u32;
 pub const ADVISE_NONE: ADVISE_TYPE = 0u32;
 pub const ADVISE_CLIPPING: ADVISE_TYPE = 1u32;

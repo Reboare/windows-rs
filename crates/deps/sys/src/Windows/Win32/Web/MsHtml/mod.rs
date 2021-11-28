@@ -1,59 +1,56 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn ComputeInvCMAP(prgbcolors: *const super::super::Graphics::Gdi::RGBQUAD, ncolors: u32, pinvtable: *mut u8, cbtable: u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Graphics_DirectDraw", feature = "Win32_Graphics_Gdi"))]
-    pub fn CreateDDrawSurfaceOnDIB(hbmdib: super::super::Graphics::Gdi::HBITMAP, ppsurface: *mut super::super::Graphics::DirectDraw::IDirectDrawSurface) -> ::windows_sys::core::HRESULT;
-    pub fn CreateMIMEMap(ppmap: *mut IMapMIMEToCLSID) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn DecodeImage(pstream: super::super::System::Com::IStream, pmap: IMapMIMEToCLSID, peventsink: ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
-    pub fn DecodeImageEx(pstream: super::super::System::Com::IStream, pmap: IMapMIMEToCLSID, peventsink: ::windows_sys::core::IUnknown, pszmimetypeparam: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Graphics_Gdi")]
-    pub fn DitherTo8(pdestbits: *mut u8, ndestpitch: i32, psrcbits: *mut u8, nsrcpitch: i32, bfidsrc: *const ::windows_sys::core::GUID, prgbdestcolors: *mut super::super::Graphics::Gdi::RGBQUAD, prgbsrccolors: *mut super::super::Graphics::Gdi::RGBQUAD, pbdestinvmap: *mut u8, x: i32, y: i32, cx: i32, cy: i32, ldesttrans: i32, lsrctrans: i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DoPrivacyDlg(hwndowner: super::super::Foundation::HWND, pszurl: super::super::Foundation::PWSTR, pprivacyenum: IEnumPrivacyRecords, freportallsites: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    pub fn GetMaxMIMEIDBytes(pnmaxbytes: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn IdentifyMIMEType(pbbytes: *const u8, nbytes: u32, pnformat: *mut u32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingAccessDeniedDialog(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR, pszcontentdescription: super::super::Foundation::PSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingAccessDeniedDialog2(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingAccessDeniedDialog2W(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingAccessDeniedDialogW(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR, pszcontentdescription: super::super::Foundation::PWSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingAddToApprovedSites(hdlg: super::super::Foundation::HWND, cbpasswordblob: u32, pbpasswordblob: *mut u8, lpszurl: super::super::Foundation::PWSTR, falwaysnever: super::super::Foundation::BOOL, fsitepage: super::super::Foundation::BOOL, fapprovedsitesenforced: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingCheckUserAccess(pszusername: super::super::Foundation::PSTR, pszurl: super::super::Foundation::PSTR, pszratinginfo: super::super::Foundation::PSTR, pdata: *const u8, cbdata: u32, ppratingdetails: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingCheckUserAccessW(pszusername: super::super::Foundation::PWSTR, pszurl: super::super::Foundation::PWSTR, pszratinginfo: super::super::Foundation::PWSTR, pdata: *const u8, cbdata: u32, ppratingdetails: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingClickedOnPRFInternal(hwndowner: super::super::Foundation::HWND, param1: super::super::Foundation::HINSTANCE, lpszfilename: super::super::Foundation::PSTR, nshow: i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingClickedOnRATInternal(hwndowner: super::super::Foundation::HWND, param1: super::super::Foundation::HINSTANCE, lpszfilename: super::super::Foundation::PSTR, nshow: i32) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingEnable(hwndparent: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR, fenable: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingEnableW(hwndparent: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR, fenable: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
-    pub fn RatingEnabledQuery() -> ::windows_sys::core::HRESULT;
-    pub fn RatingFreeDetails(pratingdetails: *const ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn RatingInit() -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingObtainCancel(hratingobtainquery: super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingObtainQuery(psztargeturl: super::super::Foundation::PSTR, dwuserdata: u32, fcallback: isize, phratingobtainquery: *mut super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingObtainQueryW(psztargeturl: super::super::Foundation::PWSTR, dwuserdata: u32, fcallback: isize, phratingobtainquery: *mut super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingSetupUI(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RatingSetupUIW(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn SniffStream(pinstream: super::super::System::Com::IStream, pnformat: *mut u32, ppoutstream: *mut super::super::System::Com::IStream) -> ::windows_sys::core::HRESULT;
-}
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type ComputeInvCMAP = unsafe extern "system" fn(prgbcolors: *const super::super::Graphics::Gdi::RGBQUAD, ncolors: u32, pinvtable: *mut u8, cbtable: u32) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Graphics_DirectDraw", feature = "Win32_Graphics_Gdi"))]
+pub type CreateDDrawSurfaceOnDIB = unsafe extern "system" fn(hbmdib: super::super::Graphics::Gdi::HBITMAP, ppsurface: *mut super::super::Graphics::DirectDraw::IDirectDrawSurface) -> ::windows_sys::core::HRESULT;
+pub type CreateMIMEMap = unsafe extern "system" fn(ppmap: *mut IMapMIMEToCLSID) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type DecodeImage = unsafe extern "system" fn(pstream: super::super::System::Com::IStream, pmap: IMapMIMEToCLSID, peventsink: ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com"))]
+pub type DecodeImageEx = unsafe extern "system" fn(pstream: super::super::System::Com::IStream, pmap: IMapMIMEToCLSID, peventsink: ::windows_sys::core::IUnknown, pszmimetypeparam: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Graphics_Gdi")]
+pub type DitherTo8 = unsafe extern "system" fn(pdestbits: *mut u8, ndestpitch: i32, psrcbits: *mut u8, nsrcpitch: i32, bfidsrc: *const ::windows_sys::core::GUID, prgbdestcolors: *mut super::super::Graphics::Gdi::RGBQUAD, prgbsrccolors: *mut super::super::Graphics::Gdi::RGBQUAD, pbdestinvmap: *mut u8, x: i32, y: i32, cx: i32, cy: i32, ldesttrans: i32, lsrctrans: i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type DoPrivacyDlg = unsafe extern "system" fn(hwndowner: super::super::Foundation::HWND, pszurl: super::super::Foundation::PWSTR, pprivacyenum: IEnumPrivacyRecords, freportallsites: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+pub type GetMaxMIMEIDBytes = unsafe extern "system" fn(pnmaxbytes: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type IdentifyMIMEType = unsafe extern "system" fn(pbbytes: *const u8, nbytes: u32, pnformat: *mut u32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingAccessDeniedDialog = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR, pszcontentdescription: super::super::Foundation::PSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingAccessDeniedDialog2 = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingAccessDeniedDialog2W = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingAccessDeniedDialogW = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR, pszcontentdescription: super::super::Foundation::PWSTR, pratingdetails: *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingAddToApprovedSites = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, cbpasswordblob: u32, pbpasswordblob: *mut u8, lpszurl: super::super::Foundation::PWSTR, falwaysnever: super::super::Foundation::BOOL, fsitepage: super::super::Foundation::BOOL, fapprovedsitesenforced: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingCheckUserAccess = unsafe extern "system" fn(pszusername: super::super::Foundation::PSTR, pszurl: super::super::Foundation::PSTR, pszratinginfo: super::super::Foundation::PSTR, pdata: *const u8, cbdata: u32, ppratingdetails: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingCheckUserAccessW = unsafe extern "system" fn(pszusername: super::super::Foundation::PWSTR, pszurl: super::super::Foundation::PWSTR, pszratinginfo: super::super::Foundation::PWSTR, pdata: *const u8, cbdata: u32, ppratingdetails: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingClickedOnPRFInternal = unsafe extern "system" fn(hwndowner: super::super::Foundation::HWND, param1: super::super::Foundation::HINSTANCE, lpszfilename: super::super::Foundation::PSTR, nshow: i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingClickedOnRATInternal = unsafe extern "system" fn(hwndowner: super::super::Foundation::HWND, param1: super::super::Foundation::HINSTANCE, lpszfilename: super::super::Foundation::PSTR, nshow: i32) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingEnable = unsafe extern "system" fn(hwndparent: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR, fenable: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingEnableW = unsafe extern "system" fn(hwndparent: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR, fenable: super::super::Foundation::BOOL) -> ::windows_sys::core::HRESULT;
+pub type RatingEnabledQuery = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
+pub type RatingFreeDetails = unsafe extern "system" fn(pratingdetails: *const ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type RatingInit = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingObtainCancel = unsafe extern "system" fn(hratingobtainquery: super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingObtainQuery = unsafe extern "system" fn(psztargeturl: super::super::Foundation::PSTR, dwuserdata: u32, fcallback: isize, phratingobtainquery: *mut super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingObtainQueryW = unsafe extern "system" fn(psztargeturl: super::super::Foundation::PWSTR, dwuserdata: u32, fcallback: isize, phratingobtainquery: *mut super::super::Foundation::HANDLE) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingSetupUI = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Foundation")]
+pub type RatingSetupUIW = unsafe extern "system" fn(hdlg: super::super::Foundation::HWND, pszusername: super::super::Foundation::PWSTR) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type SniffStream = unsafe extern "system" fn(pinstream: super::super::System::Com::IStream, pnformat: *mut u32, ppoutstream: *mut super::super::System::Com::IStream) -> ::windows_sys::core::HRESULT;
 pub const ADDRESSBAND: u32 = 2u32;
 pub type ADDURL_FLAG = i32;
 pub const ADDURL_FIRST: ADDURL_FLAG = 0i32;

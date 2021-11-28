@@ -1,16 +1,13 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn XInputEnable(enable: super::super::super::Foundation::BOOL);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn XInputGetAudioDeviceIds(dwuserindex: u32, prenderdeviceid: super::super::super::Foundation::PWSTR, prendercount: *mut u32, pcapturedeviceid: super::super::super::Foundation::PWSTR, pcapturecount: *mut u32) -> u32;
-    pub fn XInputGetBatteryInformation(dwuserindex: u32, devtype: u8, pbatteryinformation: *mut XINPUT_BATTERY_INFORMATION) -> u32;
-    pub fn XInputGetCapabilities(dwuserindex: u32, dwflags: u32, pcapabilities: *mut XINPUT_CAPABILITIES) -> u32;
-    pub fn XInputGetKeystroke(dwuserindex: u32, dwreserved: u32, pkeystroke: *mut XINPUT_KEYSTROKE) -> u32;
-    pub fn XInputGetState(dwuserindex: u32, pstate: *mut XINPUT_STATE) -> u32;
-    pub fn XInputSetState(dwuserindex: u32, pvibration: *const XINPUT_VIBRATION) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type XInputEnable = unsafe extern "system" fn(enable: super::super::super::Foundation::BOOL);
+#[cfg(feature = "Win32_Foundation")]
+pub type XInputGetAudioDeviceIds = unsafe extern "system" fn(dwuserindex: u32, prenderdeviceid: super::super::super::Foundation::PWSTR, prendercount: *mut u32, pcapturedeviceid: super::super::super::Foundation::PWSTR, pcapturecount: *mut u32) -> u32;
+pub type XInputGetBatteryInformation = unsafe extern "system" fn(dwuserindex: u32, devtype: u8, pbatteryinformation: *mut XINPUT_BATTERY_INFORMATION) -> u32;
+pub type XInputGetCapabilities = unsafe extern "system" fn(dwuserindex: u32, dwflags: u32, pcapabilities: *mut XINPUT_CAPABILITIES) -> u32;
+pub type XInputGetKeystroke = unsafe extern "system" fn(dwuserindex: u32, dwreserved: u32, pkeystroke: *mut XINPUT_KEYSTROKE) -> u32;
+pub type XInputGetState = unsafe extern "system" fn(dwuserindex: u32, pstate: *mut XINPUT_STATE) -> u32;
+pub type XInputSetState = unsafe extern "system" fn(dwuserindex: u32, pvibration: *const XINPUT_VIBRATION) -> u32;
 pub const BATTERY_DEVTYPE_GAMEPAD: u32 = 0u32;
 pub const BATTERY_DEVTYPE_HEADSET: u32 = 1u32;
 pub const BATTERY_LEVEL_EMPTY: u32 = 0u32;

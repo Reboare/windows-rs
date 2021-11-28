@@ -1,15 +1,12 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RtlExtendCorrelationVector(correlationvector: *mut CORRELATION_VECTOR) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RtlIncrementCorrelationVector(correlationvector: *mut CORRELATION_VECTOR) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RtlInitializeCorrelationVector(correlationvector: *mut CORRELATION_VECTOR, version: i32, guid: *const ::windows_sys::core::GUID) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RtlValidateCorrelationVector(vector: *const CORRELATION_VECTOR) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type RtlExtendCorrelationVector = unsafe extern "system" fn(correlationvector: *mut CORRELATION_VECTOR) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RtlIncrementCorrelationVector = unsafe extern "system" fn(correlationvector: *mut CORRELATION_VECTOR) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RtlInitializeCorrelationVector = unsafe extern "system" fn(correlationvector: *mut CORRELATION_VECTOR, version: i32, guid: *const ::windows_sys::core::GUID) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RtlValidateCorrelationVector = unsafe extern "system" fn(vector: *const CORRELATION_VECTOR) -> u32;
 #[repr(C)]
 #[cfg(feature = "Win32_Foundation")]
 pub struct CORRELATION_VECTOR {

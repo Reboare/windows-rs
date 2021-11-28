@@ -25,16 +25,13 @@ pub mod Speech;
 pub mod Streaming;
 #[cfg(feature = "Win32_Media_WindowsMediaFormat")]
 pub mod WindowsMediaFormat;
-#[link(name = "windows")]
-extern "system" {
-    pub fn timeBeginPeriod(uperiod: u32) -> u32;
-    pub fn timeEndPeriod(uperiod: u32) -> u32;
-    pub fn timeGetDevCaps(ptc: *mut TIMECAPS, cbtc: u32) -> u32;
-    pub fn timeGetSystemTime(pmmt: *mut MMTIME, cbmmt: u32) -> u32;
-    pub fn timeGetTime() -> u32;
-    pub fn timeKillEvent(utimerid: u32) -> u32;
-    pub fn timeSetEvent(udelay: u32, uresolution: u32, fptc: LPTIMECALLBACK, dwuser: usize, fuevent: u32) -> u32;
-}
+pub type timeBeginPeriod = unsafe extern "system" fn(uperiod: u32) -> u32;
+pub type timeEndPeriod = unsafe extern "system" fn(uperiod: u32) -> u32;
+pub type timeGetDevCaps = unsafe extern "system" fn(ptc: *mut TIMECAPS, cbtc: u32) -> u32;
+pub type timeGetSystemTime = unsafe extern "system" fn(pmmt: *mut MMTIME, cbmmt: u32) -> u32;
+pub type timeGetTime = unsafe extern "system" fn() -> u32;
+pub type timeKillEvent = unsafe extern "system" fn(utimerid: u32) -> u32;
+pub type timeSetEvent = unsafe extern "system" fn(udelay: u32, uresolution: u32, fptc: LPTIMECALLBACK, dwuser: usize, fuevent: u32) -> u32;
 pub type HTASK = isize;
 pub type IReferenceClock = *mut ::core::ffi::c_void;
 pub type IReferenceClock2 = *mut ::core::ffi::c_void;

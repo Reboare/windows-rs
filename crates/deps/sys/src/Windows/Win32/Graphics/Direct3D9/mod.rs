@@ -1,20 +1,17 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn D3DPERF_BeginEvent(col: u32, wszname: super::super::Foundation::PWSTR) -> i32;
-    pub fn D3DPERF_EndEvent() -> i32;
-    pub fn D3DPERF_GetStatus() -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn D3DPERF_QueryRepeatFrame() -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn D3DPERF_SetMarker(col: u32, wszname: super::super::Foundation::PWSTR);
-    pub fn D3DPERF_SetOptions(dwoptions: u32);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn D3DPERF_SetRegion(col: u32, wszname: super::super::Foundation::PWSTR);
-    pub fn Direct3DCreate9(sdkversion: u32) -> IDirect3D9;
-    pub fn Direct3DCreate9Ex(sdkversion: u32, param1: *mut IDirect3D9Ex) -> ::windows_sys::core::HRESULT;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type D3DPERF_BeginEvent = unsafe extern "system" fn(col: u32, wszname: super::super::Foundation::PWSTR) -> i32;
+pub type D3DPERF_EndEvent = unsafe extern "system" fn() -> i32;
+pub type D3DPERF_GetStatus = unsafe extern "system" fn() -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type D3DPERF_QueryRepeatFrame = unsafe extern "system" fn() -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type D3DPERF_SetMarker = unsafe extern "system" fn(col: u32, wszname: super::super::Foundation::PWSTR);
+pub type D3DPERF_SetOptions = unsafe extern "system" fn(dwoptions: u32);
+#[cfg(feature = "Win32_Foundation")]
+pub type D3DPERF_SetRegion = unsafe extern "system" fn(col: u32, wszname: super::super::Foundation::PWSTR);
+pub type Direct3DCreate9 = unsafe extern "system" fn(sdkversion: u32) -> IDirect3D9;
+pub type Direct3DCreate9Ex = unsafe extern "system" fn(sdkversion: u32, param1: *mut IDirect3D9Ex) -> ::windows_sys::core::HRESULT;
 pub const D3D9_RESOURCE_PRIORITY_HIGH: u32 = 2684354560u32;
 pub const D3D9_RESOURCE_PRIORITY_LOW: u32 = 1342177280u32;
 pub const D3D9_RESOURCE_PRIORITY_MAXIMUM: u32 = 3355443200u32;

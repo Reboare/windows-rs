@@ -1,171 +1,170 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetRegistryValueWithFallbackW(hkeyprimary: HKEY, pwszprimarysubkey: super::super::Foundation::PWSTR, hkeyfallback: HKEY, pwszfallbacksubkey: super::super::Foundation::PWSTR, pwszvalue: super::super::Foundation::PWSTR, dwflags: u32, pdwtype: *mut u32, pvdata: *mut ::core::ffi::c_void, cbdatain: u32, pcbdataout: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegCloseKey(hkey: HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegConnectRegistryA(lpmachinename: super::super::Foundation::PSTR, hkey: HKEY, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegConnectRegistryExA(lpmachinename: super::super::Foundation::PSTR, hkey: HKEY, flags: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegConnectRegistryExW(lpmachinename: super::super::Foundation::PWSTR, hkey: HKEY, flags: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegConnectRegistryW(lpmachinename: super::super::Foundation::PWSTR, hkey: HKEY, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegCopyTreeA(hkeysrc: HKEY, lpsubkey: super::super::Foundation::PSTR, hkeydest: HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegCopyTreeW(hkeysrc: HKEY, lpsubkey: super::super::Foundation::PWSTR, hkeydest: HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegCreateKeyA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegCreateKeyExA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, reserved: u32, lpclass: super::super::Foundation::PSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegCreateKeyExW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, reserved: u32, lpclass: super::super::Foundation::PWSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegCreateKeyTransactedA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, reserved: u32, lpclass: super::super::Foundation::PSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegCreateKeyTransactedW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, reserved: u32, lpclass: super::super::Foundation::PWSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegCreateKeyW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyExA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, samdesired: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyExW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, samdesired: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyTransactedA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, samdesired: u32, reserved: u32, htransaction: super::super::Foundation::HANDLE, pextendedparameter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyTransactedW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, samdesired: u32, reserved: u32, htransaction: super::super::Foundation::HANDLE, pextendedparameter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyValueA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpvaluename: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyValueW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpvaluename: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteKeyW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteTreeA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteTreeW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteValueA(hkey: HKEY, lpvaluename: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDeleteValueW(hkey: HKEY, lpvaluename: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDisablePredefinedCache() -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegDisablePredefinedCacheEx() -> super::super::Foundation::LSTATUS;
-    pub fn RegDisableReflectionKey(hbase: HKEY) -> i32;
-    pub fn RegEnableReflectionKey(hbase: HKEY) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegEnumKeyA(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PSTR, cchname: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegEnumKeyExA(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PSTR, lpcchname: *mut u32, lpreserved: *mut u32, lpclass: super::super::Foundation::PSTR, lpcchclass: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegEnumKeyExW(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PWSTR, lpcchname: *mut u32, lpreserved: *mut u32, lpclass: super::super::Foundation::PWSTR, lpcchclass: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegEnumKeyW(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PWSTR, cchname: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegEnumValueA(hkey: HKEY, dwindex: u32, lpvaluename: super::super::Foundation::PSTR, lpcchvaluename: *mut u32, lpreserved: *mut u32, lptype: *mut u32, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegEnumValueW(hkey: HKEY, dwindex: u32, lpvaluename: super::super::Foundation::PWSTR, lpcchvaluename: *mut u32, lpreserved: *mut u32, lptype: *mut u32, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegFlushKey(hkey: HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegGetKeySecurity(hkey: HKEY, securityinformation: u32, psecuritydescriptor: *mut super::super::Security::SECURITY_DESCRIPTOR, lpcbsecuritydescriptor: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegGetValueA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpvalue: super::super::Foundation::PSTR, dwflags: RRF_RT, pdwtype: *mut u32, pvdata: *mut ::core::ffi::c_void, pcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegGetValueW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpvalue: super::super::Foundation::PWSTR, dwflags: RRF_RT, pdwtype: *mut u32, pvdata: *mut ::core::ffi::c_void, pcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegLoadAppKeyA(lpfile: super::super::Foundation::PSTR, phkresult: *mut HKEY, samdesired: u32, dwoptions: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegLoadAppKeyW(lpfile: super::super::Foundation::PWSTR, phkresult: *mut HKEY, samdesired: u32, dwoptions: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegLoadKeyA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpfile: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegLoadKeyW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpfile: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegLoadMUIStringA(hkey: HKEY, pszvalue: super::super::Foundation::PSTR, pszoutbuf: super::super::Foundation::PSTR, cboutbuf: u32, pcbdata: *mut u32, flags: u32, pszdirectory: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegLoadMUIStringW(hkey: HKEY, pszvalue: super::super::Foundation::PWSTR, pszoutbuf: super::super::Foundation::PWSTR, cboutbuf: u32, pcbdata: *mut u32, flags: u32, pszdirectory: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegNotifyChangeKeyValue(hkey: HKEY, bwatchsubtree: super::super::Foundation::BOOL, dwnotifyfilter: REG_NOTIFY_FILTER, hevent: super::super::Foundation::HANDLE, fasynchronous: super::super::Foundation::BOOL) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenCurrentUser(samdesired: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenKeyA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenKeyExA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenKeyExW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenKeyTransactedA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenKeyTransactedW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenKeyW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOpenUserClassesRoot(htoken: super::super::Foundation::HANDLE, dwoptions: u32, samdesired: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegOverridePredefKey(hkey: HKEY, hnewhkey: HKEY) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryInfoKeyA(hkey: HKEY, lpclass: super::super::Foundation::PSTR, lpcchclass: *mut u32, lpreserved: *mut u32, lpcsubkeys: *mut u32, lpcbmaxsubkeylen: *mut u32, lpcbmaxclasslen: *mut u32, lpcvalues: *mut u32, lpcbmaxvaluenamelen: *mut u32, lpcbmaxvaluelen: *mut u32, lpcbsecuritydescriptor: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryInfoKeyW(hkey: HKEY, lpclass: super::super::Foundation::PWSTR, lpcchclass: *mut u32, lpreserved: *mut u32, lpcsubkeys: *mut u32, lpcbmaxsubkeylen: *mut u32, lpcbmaxclasslen: *mut u32, lpcvalues: *mut u32, lpcbmaxvaluenamelen: *mut u32, lpcbmaxvaluelen: *mut u32, lpcbsecuritydescriptor: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryMultipleValuesA(hkey: HKEY, val_list: *mut VALENTA, num_vals: u32, lpvaluebuf: super::super::Foundation::PSTR, ldwtotsize: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryMultipleValuesW(hkey: HKEY, val_list: *mut VALENTW, num_vals: u32, lpvaluebuf: super::super::Foundation::PWSTR, ldwtotsize: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryReflectionKey(hbase: HKEY, bisreflectiondisabled: *mut super::super::Foundation::BOOL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryValueA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpdata: super::super::Foundation::PSTR, lpcbdata: *mut i32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryValueExA(hkey: HKEY, lpvaluename: super::super::Foundation::PSTR, lpreserved: *mut u32, lptype: *mut REG_VALUE_TYPE, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryValueExW(hkey: HKEY, lpvaluename: super::super::Foundation::PWSTR, lpreserved: *mut u32, lptype: *mut REG_VALUE_TYPE, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegQueryValueW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpdata: super::super::Foundation::PWSTR, lpcbdata: *mut i32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegRenameKey(hkey: HKEY, lpsubkeyname: super::super::Foundation::PWSTR, lpnewkeyname: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegReplaceKeyA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpnewfile: super::super::Foundation::PSTR, lpoldfile: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegReplaceKeyW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpnewfile: super::super::Foundation::PWSTR, lpoldfile: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegRestoreKeyA(hkey: HKEY, lpfile: super::super::Foundation::PSTR, dwflags: REG_RESTORE_KEY_FLAGS) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegRestoreKeyW(hkey: HKEY, lpfile: super::super::Foundation::PWSTR, dwflags: REG_RESTORE_KEY_FLAGS) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegSaveKeyA(hkey: HKEY, lpfile: super::super::Foundation::PSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegSaveKeyExA(hkey: HKEY, lpfile: super::super::Foundation::PSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, flags: REG_SAVE_FORMAT) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegSaveKeyExW(hkey: HKEY, lpfile: super::super::Foundation::PWSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, flags: REG_SAVE_FORMAT) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegSaveKeyW(hkey: HKEY, lpfile: super::super::Foundation::PWSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES) -> super::super::Foundation::LSTATUS;
-    #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
-    pub fn RegSetKeySecurity(hkey: HKEY, securityinformation: u32, psecuritydescriptor: *const super::super::Security::SECURITY_DESCRIPTOR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegSetKeyValueA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpvaluename: super::super::Foundation::PSTR, dwtype: u32, lpdata: *const ::core::ffi::c_void, cbdata: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegSetKeyValueW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpvaluename: super::super::Foundation::PWSTR, dwtype: u32, lpdata: *const ::core::ffi::c_void, cbdata: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegSetValueA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, dwtype: REG_VALUE_TYPE, lpdata: super::super::Foundation::PSTR, cbdata: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegSetValueExA(hkey: HKEY, lpvaluename: super::super::Foundation::PSTR, reserved: u32, dwtype: REG_VALUE_TYPE, lpdata: *const u8, cbdata: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegSetValueExW(hkey: HKEY, lpvaluename: super::super::Foundation::PWSTR, reserved: u32, dwtype: REG_VALUE_TYPE, lpdata: *const u8, cbdata: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegSetValueW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, dwtype: REG_VALUE_TYPE, lpdata: super::super::Foundation::PWSTR, cbdata: u32) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegUnLoadKeyA(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegUnLoadKeyW(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type GetRegistryValueWithFallbackW = unsafe extern "system" fn(hkeyprimary: HKEY, pwszprimarysubkey: super::super::Foundation::PWSTR, hkeyfallback: HKEY, pwszfallbacksubkey: super::super::Foundation::PWSTR, pwszvalue: super::super::Foundation::PWSTR, dwflags: u32, pdwtype: *mut u32, pvdata: *mut ::core::ffi::c_void, cbdatain: u32, pcbdataout: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegCloseKey = unsafe extern "system" fn(hkey: HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegConnectRegistryA = unsafe extern "system" fn(lpmachinename: super::super::Foundation::PSTR, hkey: HKEY, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegConnectRegistryExA = unsafe extern "system" fn(lpmachinename: super::super::Foundation::PSTR, hkey: HKEY, flags: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegConnectRegistryExW = unsafe extern "system" fn(lpmachinename: super::super::Foundation::PWSTR, hkey: HKEY, flags: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegConnectRegistryW = unsafe extern "system" fn(lpmachinename: super::super::Foundation::PWSTR, hkey: HKEY, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegCopyTreeA = unsafe extern "system" fn(hkeysrc: HKEY, lpsubkey: super::super::Foundation::PSTR, hkeydest: HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegCopyTreeW = unsafe extern "system" fn(hkeysrc: HKEY, lpsubkey: super::super::Foundation::PWSTR, hkeydest: HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegCreateKeyA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegCreateKeyExA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, reserved: u32, lpclass: super::super::Foundation::PSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegCreateKeyExW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, reserved: u32, lpclass: super::super::Foundation::PWSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegCreateKeyTransactedA =
+    unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, reserved: u32, lpclass: super::super::Foundation::PSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegCreateKeyTransactedW =
+    unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, reserved: u32, lpclass: super::super::Foundation::PWSTR, dwoptions: REG_OPEN_CREATE_OPTIONS, samdesired: REG_SAM_FLAGS, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, phkresult: *mut HKEY, lpdwdisposition: *mut REG_CREATE_KEY_DISPOSITION, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegCreateKeyW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyExA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, samdesired: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyExW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, samdesired: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyTransactedA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, samdesired: u32, reserved: u32, htransaction: super::super::Foundation::HANDLE, pextendedparameter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyTransactedW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, samdesired: u32, reserved: u32, htransaction: super::super::Foundation::HANDLE, pextendedparameter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyValueA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpvaluename: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyValueW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpvaluename: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteKeyW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteTreeA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteTreeW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteValueA = unsafe extern "system" fn(hkey: HKEY, lpvaluename: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDeleteValueW = unsafe extern "system" fn(hkey: HKEY, lpvaluename: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDisablePredefinedCache = unsafe extern "system" fn() -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegDisablePredefinedCacheEx = unsafe extern "system" fn() -> super::super::Foundation::LSTATUS;
+pub type RegDisableReflectionKey = unsafe extern "system" fn(hbase: HKEY) -> i32;
+pub type RegEnableReflectionKey = unsafe extern "system" fn(hbase: HKEY) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegEnumKeyA = unsafe extern "system" fn(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PSTR, cchname: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegEnumKeyExA = unsafe extern "system" fn(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PSTR, lpcchname: *mut u32, lpreserved: *mut u32, lpclass: super::super::Foundation::PSTR, lpcchclass: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegEnumKeyExW = unsafe extern "system" fn(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PWSTR, lpcchname: *mut u32, lpreserved: *mut u32, lpclass: super::super::Foundation::PWSTR, lpcchclass: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegEnumKeyW = unsafe extern "system" fn(hkey: HKEY, dwindex: u32, lpname: super::super::Foundation::PWSTR, cchname: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegEnumValueA = unsafe extern "system" fn(hkey: HKEY, dwindex: u32, lpvaluename: super::super::Foundation::PSTR, lpcchvaluename: *mut u32, lpreserved: *mut u32, lptype: *mut u32, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegEnumValueW = unsafe extern "system" fn(hkey: HKEY, dwindex: u32, lpvaluename: super::super::Foundation::PWSTR, lpcchvaluename: *mut u32, lpreserved: *mut u32, lptype: *mut u32, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegFlushKey = unsafe extern "system" fn(hkey: HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegGetKeySecurity = unsafe extern "system" fn(hkey: HKEY, securityinformation: u32, psecuritydescriptor: *mut super::super::Security::SECURITY_DESCRIPTOR, lpcbsecuritydescriptor: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegGetValueA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpvalue: super::super::Foundation::PSTR, dwflags: RRF_RT, pdwtype: *mut u32, pvdata: *mut ::core::ffi::c_void, pcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegGetValueW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpvalue: super::super::Foundation::PWSTR, dwflags: RRF_RT, pdwtype: *mut u32, pvdata: *mut ::core::ffi::c_void, pcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegLoadAppKeyA = unsafe extern "system" fn(lpfile: super::super::Foundation::PSTR, phkresult: *mut HKEY, samdesired: u32, dwoptions: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegLoadAppKeyW = unsafe extern "system" fn(lpfile: super::super::Foundation::PWSTR, phkresult: *mut HKEY, samdesired: u32, dwoptions: u32, reserved: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegLoadKeyA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpfile: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegLoadKeyW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpfile: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegLoadMUIStringA = unsafe extern "system" fn(hkey: HKEY, pszvalue: super::super::Foundation::PSTR, pszoutbuf: super::super::Foundation::PSTR, cboutbuf: u32, pcbdata: *mut u32, flags: u32, pszdirectory: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegLoadMUIStringW = unsafe extern "system" fn(hkey: HKEY, pszvalue: super::super::Foundation::PWSTR, pszoutbuf: super::super::Foundation::PWSTR, cboutbuf: u32, pcbdata: *mut u32, flags: u32, pszdirectory: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegNotifyChangeKeyValue = unsafe extern "system" fn(hkey: HKEY, bwatchsubtree: super::super::Foundation::BOOL, dwnotifyfilter: REG_NOTIFY_FILTER, hevent: super::super::Foundation::HANDLE, fasynchronous: super::super::Foundation::BOOL) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenCurrentUser = unsafe extern "system" fn(samdesired: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenKeyA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenKeyExA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenKeyExW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenKeyTransactedA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenKeyTransactedW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, uloptions: u32, samdesired: REG_SAM_FLAGS, phkresult: *mut HKEY, htransaction: super::super::Foundation::HANDLE, pextendedparemeter: *mut ::core::ffi::c_void) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenKeyW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOpenUserClassesRoot = unsafe extern "system" fn(htoken: super::super::Foundation::HANDLE, dwoptions: u32, samdesired: u32, phkresult: *mut HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegOverridePredefKey = unsafe extern "system" fn(hkey: HKEY, hnewhkey: HKEY) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryInfoKeyA = unsafe extern "system" fn(hkey: HKEY, lpclass: super::super::Foundation::PSTR, lpcchclass: *mut u32, lpreserved: *mut u32, lpcsubkeys: *mut u32, lpcbmaxsubkeylen: *mut u32, lpcbmaxclasslen: *mut u32, lpcvalues: *mut u32, lpcbmaxvaluenamelen: *mut u32, lpcbmaxvaluelen: *mut u32, lpcbsecuritydescriptor: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryInfoKeyW = unsafe extern "system" fn(hkey: HKEY, lpclass: super::super::Foundation::PWSTR, lpcchclass: *mut u32, lpreserved: *mut u32, lpcsubkeys: *mut u32, lpcbmaxsubkeylen: *mut u32, lpcbmaxclasslen: *mut u32, lpcvalues: *mut u32, lpcbmaxvaluenamelen: *mut u32, lpcbmaxvaluelen: *mut u32, lpcbsecuritydescriptor: *mut u32, lpftlastwritetime: *mut super::super::Foundation::FILETIME) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryMultipleValuesA = unsafe extern "system" fn(hkey: HKEY, val_list: *mut VALENTA, num_vals: u32, lpvaluebuf: super::super::Foundation::PSTR, ldwtotsize: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryMultipleValuesW = unsafe extern "system" fn(hkey: HKEY, val_list: *mut VALENTW, num_vals: u32, lpvaluebuf: super::super::Foundation::PWSTR, ldwtotsize: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryReflectionKey = unsafe extern "system" fn(hbase: HKEY, bisreflectiondisabled: *mut super::super::Foundation::BOOL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryValueA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpdata: super::super::Foundation::PSTR, lpcbdata: *mut i32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryValueExA = unsafe extern "system" fn(hkey: HKEY, lpvaluename: super::super::Foundation::PSTR, lpreserved: *mut u32, lptype: *mut REG_VALUE_TYPE, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryValueExW = unsafe extern "system" fn(hkey: HKEY, lpvaluename: super::super::Foundation::PWSTR, lpreserved: *mut u32, lptype: *mut REG_VALUE_TYPE, lpdata: *mut u8, lpcbdata: *mut u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegQueryValueW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpdata: super::super::Foundation::PWSTR, lpcbdata: *mut i32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegRenameKey = unsafe extern "system" fn(hkey: HKEY, lpsubkeyname: super::super::Foundation::PWSTR, lpnewkeyname: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegReplaceKeyA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpnewfile: super::super::Foundation::PSTR, lpoldfile: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegReplaceKeyW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpnewfile: super::super::Foundation::PWSTR, lpoldfile: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegRestoreKeyA = unsafe extern "system" fn(hkey: HKEY, lpfile: super::super::Foundation::PSTR, dwflags: REG_RESTORE_KEY_FLAGS) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegRestoreKeyW = unsafe extern "system" fn(hkey: HKEY, lpfile: super::super::Foundation::PWSTR, dwflags: REG_RESTORE_KEY_FLAGS) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegSaveKeyA = unsafe extern "system" fn(hkey: HKEY, lpfile: super::super::Foundation::PSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegSaveKeyExA = unsafe extern "system" fn(hkey: HKEY, lpfile: super::super::Foundation::PSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, flags: REG_SAVE_FORMAT) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegSaveKeyExW = unsafe extern "system" fn(hkey: HKEY, lpfile: super::super::Foundation::PWSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES, flags: REG_SAVE_FORMAT) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegSaveKeyW = unsafe extern "system" fn(hkey: HKEY, lpfile: super::super::Foundation::PWSTR, lpsecurityattributes: *const super::super::Security::SECURITY_ATTRIBUTES) -> super::super::Foundation::LSTATUS;
+#[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security"))]
+pub type RegSetKeySecurity = unsafe extern "system" fn(hkey: HKEY, securityinformation: u32, psecuritydescriptor: *const super::super::Security::SECURITY_DESCRIPTOR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegSetKeyValueA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, lpvaluename: super::super::Foundation::PSTR, dwtype: u32, lpdata: *const ::core::ffi::c_void, cbdata: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegSetKeyValueW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, lpvaluename: super::super::Foundation::PWSTR, dwtype: u32, lpdata: *const ::core::ffi::c_void, cbdata: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegSetValueA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR, dwtype: REG_VALUE_TYPE, lpdata: super::super::Foundation::PSTR, cbdata: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegSetValueExA = unsafe extern "system" fn(hkey: HKEY, lpvaluename: super::super::Foundation::PSTR, reserved: u32, dwtype: REG_VALUE_TYPE, lpdata: *const u8, cbdata: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegSetValueExW = unsafe extern "system" fn(hkey: HKEY, lpvaluename: super::super::Foundation::PWSTR, reserved: u32, dwtype: REG_VALUE_TYPE, lpdata: *const u8, cbdata: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegSetValueW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR, dwtype: REG_VALUE_TYPE, lpdata: super::super::Foundation::PWSTR, cbdata: u32) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegUnLoadKeyA = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PSTR) -> super::super::Foundation::LSTATUS;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegUnLoadKeyW = unsafe extern "system" fn(hkey: HKEY, lpsubkey: super::super::Foundation::PWSTR) -> super::super::Foundation::LSTATUS;
 pub const AGP_FLAG_NO_1X_RATE: i32 = 1i32;
 pub const AGP_FLAG_NO_2X_RATE: i32 = 2i32;
 pub const AGP_FLAG_NO_4X_RATE: i32 = 4i32;

@@ -1,699 +1,696 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AbortPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AddFontMemResourceEx(pfileview: *const ::core::ffi::c_void, cjsize: u32, pvresrved: *mut ::core::ffi::c_void, pnumfonts: *const u32) -> super::super::Foundation::HANDLE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AddFontResourceA(param0: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AddFontResourceExA(name: super::super::Foundation::PSTR, fl: FONT_RESOURCE_CHARACTERISTICS, res: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AddFontResourceExW(name: super::super::Foundation::PWSTR, fl: FONT_RESOURCE_CHARACTERISTICS, res: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AddFontResourceW(param0: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AlphaBlend(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, ftn: BLENDFUNCTION) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AngleArc(hdc: HDC, x: i32, y: i32, r: u32, startangle: f32, sweepangle: f32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn AnimatePalette(hpal: HPALETTE, istartindex: u32, centries: u32, ppe: *const PALETTEENTRY) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Arc(hdc: HDC, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ArcTo(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32, xr1: i32, yr1: i32, xr2: i32, yr2: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn BeginPaint(hwnd: super::super::Foundation::HWND, lppaint: *mut PAINTSTRUCT) -> HDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn BeginPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn BitBlt(hdc: HDC, x: i32, y: i32, cx: i32, cy: i32, hdcsrc: HDC, x1: i32, y1: i32, rop: ROP_CODE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CancelDC(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ChangeDisplaySettingsA(lpdevmode: *const DEVMODEA, dwflags: CDS_TYPE) -> DISP_CHANGE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ChangeDisplaySettingsExA(lpszdevicename: super::super::Foundation::PSTR, lpdevmode: *const DEVMODEA, hwnd: super::super::Foundation::HWND, dwflags: CDS_TYPE, lparam: *const ::core::ffi::c_void) -> DISP_CHANGE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ChangeDisplaySettingsExW(lpszdevicename: super::super::Foundation::PWSTR, lpdevmode: *const DEVMODEW, hwnd: super::super::Foundation::HWND, dwflags: CDS_TYPE, lparam: *const ::core::ffi::c_void) -> DISP_CHANGE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ChangeDisplaySettingsW(lpdevmode: *const DEVMODEW, dwflags: CDS_TYPE) -> DISP_CHANGE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Chord(hdc: HDC, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ClientToScreen(hwnd: super::super::Foundation::HWND, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    pub fn CloseEnhMetaFile(hdc: HDC) -> HENHMETAFILE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CloseFigure(hdc: HDC) -> super::super::Foundation::BOOL;
-    pub fn CloseMetaFile(hdc: HDC) -> HMETAFILE;
-    pub fn CombineRgn(hrgndst: HRGN, hrgnsrc1: HRGN, hrgnsrc2: HRGN, imode: RGN_COMBINE_MODE) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CombineTransform(lpxfout: *mut XFORM, lpxf1: *const XFORM, lpxf2: *const XFORM) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CopyEnhMetaFileA(henh: HENHMETAFILE, lpfilename: super::super::Foundation::PSTR) -> HENHMETAFILE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CopyEnhMetaFileW(henh: HENHMETAFILE, lpfilename: super::super::Foundation::PWSTR) -> HENHMETAFILE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CopyMetaFileA(param0: HMETAFILE, param1: super::super::Foundation::PSTR) -> HMETAFILE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CopyMetaFileW(param0: HMETAFILE, param1: super::super::Foundation::PWSTR) -> HMETAFILE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CopyRect(lprcdst: *mut super::super::Foundation::RECT, lprcsrc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    pub fn CreateBitmap(nwidth: i32, nheight: i32, nplanes: u32, nbitcount: u32, lpbits: *const ::core::ffi::c_void) -> HBITMAP;
-    pub fn CreateBitmapIndirect(pbm: *const BITMAP) -> HBITMAP;
-    pub fn CreateBrushIndirect(plbrush: *const LOGBRUSH) -> HBRUSH;
-    pub fn CreateCompatibleBitmap(hdc: HDC, cx: i32, cy: i32) -> HBITMAP;
-    pub fn CreateCompatibleDC(hdc: HDC) -> CreatedHDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateDCA(pwszdriver: super::super::Foundation::PSTR, pwszdevice: super::super::Foundation::PSTR, pszport: super::super::Foundation::PSTR, pdm: *const DEVMODEA) -> CreatedHDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateDCW(pwszdriver: super::super::Foundation::PWSTR, pwszdevice: super::super::Foundation::PWSTR, pszport: super::super::Foundation::PWSTR, pdm: *const DEVMODEW) -> CreatedHDC;
-    pub fn CreateDIBPatternBrush(h: isize, iusage: DIB_USAGE) -> HBRUSH;
-    pub fn CreateDIBPatternBrushPt(lppackeddib: *const ::core::ffi::c_void, iusage: DIB_USAGE) -> HBRUSH;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateDIBSection(hdc: HDC, pbmi: *const BITMAPINFO, usage: DIB_USAGE, ppvbits: *mut *mut ::core::ffi::c_void, hsection: super::super::Foundation::HANDLE, offset: u32) -> HBITMAP;
-    pub fn CreateDIBitmap(hdc: HDC, pbmih: *const BITMAPINFOHEADER, flinit: u32, pjbits: *const ::core::ffi::c_void, pbmi: *const BITMAPINFO, iusage: DIB_USAGE) -> HBITMAP;
-    pub fn CreateDiscardableBitmap(hdc: HDC, cx: i32, cy: i32) -> HBITMAP;
-    pub fn CreateEllipticRgn(x1: i32, y1: i32, x2: i32, y2: i32) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateEllipticRgnIndirect(lprect: *const super::super::Foundation::RECT) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateEnhMetaFileA(hdc: HDC, lpfilename: super::super::Foundation::PSTR, lprc: *const super::super::Foundation::RECT, lpdesc: super::super::Foundation::PSTR) -> HdcMetdataEnhFileHandle;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateEnhMetaFileW(hdc: HDC, lpfilename: super::super::Foundation::PWSTR, lprc: *const super::super::Foundation::RECT, lpdesc: super::super::Foundation::PWSTR) -> HdcMetdataEnhFileHandle;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateFontA(cheight: i32, cwidth: i32, cescapement: i32, corientation: i32, cweight: i32, bitalic: u32, bunderline: u32, bstrikeout: u32, icharset: u32, ioutprecision: FONT_OUTPUT_PRECISION, iclipprecision: FONT_CLIP_PRECISION, iquality: FONT_QUALITY, ipitchandfamily: FONT_PITCH_AND_FAMILY, pszfacename: super::super::Foundation::PSTR) -> HFONT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateFontIndirectA(lplf: *const LOGFONTA) -> HFONT;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateFontIndirectExA(param0: *const ENUMLOGFONTEXDVA) -> HFONT;
-    pub fn CreateFontIndirectExW(param0: *const ENUMLOGFONTEXDVW) -> HFONT;
-    pub fn CreateFontIndirectW(lplf: *const LOGFONTW) -> HFONT;
-    pub fn CreateFontPackage(
-        puchsrcbuffer: *const u8,
-        ulsrcbuffersize: u32,
-        ppuchfontpackagebuffer: *mut *mut u8,
-        pulfontpackagebuffersize: *mut u32,
-        pulbyteswritten: *mut u32,
-        usflag: u16,
-        usttcindex: u16,
-        ussubsetformat: u16,
-        ussubsetlanguage: u16,
-        ussubsetplatform: CREATE_FONT_PACKAGE_SUBSET_PLATFORM,
-        ussubsetencoding: CREATE_FONT_PACKAGE_SUBSET_ENCODING,
-        pussubsetkeeplist: *const u16,
-        ussubsetlistcount: u16,
-        lpfnallocate: CFP_ALLOCPROC,
-        lpfnreallocate: CFP_REALLOCPROC,
-        lpfnfree: CFP_FREEPROC,
-        lpvreserved: *mut ::core::ffi::c_void,
-    ) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateFontW(cheight: i32, cwidth: i32, cescapement: i32, corientation: i32, cweight: i32, bitalic: u32, bunderline: u32, bstrikeout: u32, icharset: u32, ioutprecision: FONT_OUTPUT_PRECISION, iclipprecision: FONT_CLIP_PRECISION, iquality: FONT_QUALITY, ipitchandfamily: FONT_PITCH_AND_FAMILY, pszfacename: super::super::Foundation::PWSTR) -> HFONT;
-    pub fn CreateHalftonePalette(hdc: HDC) -> HPALETTE;
-    pub fn CreateHatchBrush(ihatch: HATCH_BRUSH_STYLE, color: u32) -> HBRUSH;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateICA(pszdriver: super::super::Foundation::PSTR, pszdevice: super::super::Foundation::PSTR, pszport: super::super::Foundation::PSTR, pdm: *const DEVMODEA) -> CreatedHDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateICW(pszdriver: super::super::Foundation::PWSTR, pszdevice: super::super::Foundation::PWSTR, pszport: super::super::Foundation::PWSTR, pdm: *const DEVMODEW) -> CreatedHDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateMetaFileA(pszfile: super::super::Foundation::PSTR) -> HdcMetdataFileHandle;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateMetaFileW(pszfile: super::super::Foundation::PWSTR) -> HdcMetdataFileHandle;
-    pub fn CreatePalette(plpal: *const LOGPALETTE) -> HPALETTE;
-    pub fn CreatePatternBrush(hbm: HBITMAP) -> HBRUSH;
-    pub fn CreatePen(istyle: PEN_STYLE, cwidth: i32, color: u32) -> HPEN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreatePenIndirect(plpen: *const LOGPEN) -> HPEN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreatePolyPolygonRgn(pptl: *const super::super::Foundation::POINT, pc: *const i32, cpoly: i32, imode: CREATE_POLYGON_RGN_MODE) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreatePolygonRgn(pptl: *const super::super::Foundation::POINT, cpoint: i32, imode: CREATE_POLYGON_RGN_MODE) -> HRGN;
-    pub fn CreateRectRgn(x1: i32, y1: i32, x2: i32, y2: i32) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateRectRgnIndirect(lprect: *const super::super::Foundation::RECT) -> HRGN;
-    pub fn CreateRoundRectRgn(x1: i32, y1: i32, x2: i32, y2: i32, w: i32, h: i32) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateScalableFontResourceA(fdwhidden: u32, lpszfont: super::super::Foundation::PSTR, lpszfile: super::super::Foundation::PSTR, lpszpath: super::super::Foundation::PSTR) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn CreateScalableFontResourceW(fdwhidden: u32, lpszfont: super::super::Foundation::PWSTR, lpszfile: super::super::Foundation::PWSTR, lpszpath: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
-    pub fn CreateSolidBrush(color: u32) -> HBRUSH;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DPtoLP(hdc: HDC, lppt: *mut super::super::Foundation::POINT, c: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DeleteDC(hdc: CreatedHDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DeleteEnhMetaFile(hmf: HENHMETAFILE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DeleteMetaFile(hmf: HMETAFILE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DeleteObject(ho: HGDIOBJ) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawAnimatedRects(hwnd: super::super::Foundation::HWND, idani: i32, lprcfrom: *const super::super::Foundation::RECT, lprcto: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawCaption(hwnd: super::super::Foundation::HWND, hdc: HDC, lprect: *const super::super::Foundation::RECT, flags: DRAW_CAPTION_FLAGS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawEdge(hdc: HDC, qrc: *mut super::super::Foundation::RECT, edge: DRAWEDGE_FLAGS, grfflags: DRAW_EDGE_FLAGS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawEscape(hdc: HDC, iescape: i32, cjin: i32, lpin: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawFocusRect(hdc: HDC, lprc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawFrameControl(param0: HDC, param1: *mut super::super::Foundation::RECT, param2: DFC_TYPE, param3: DFCS_STATE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawStateA(hdc: HDC, hbrfore: HBRUSH, qfncallback: DRAWSTATEPROC, ldata: super::super::Foundation::LPARAM, wdata: super::super::Foundation::WPARAM, x: i32, y: i32, cx: i32, cy: i32, uflags: DRAWSTATE_FLAGS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawStateW(hdc: HDC, hbrfore: HBRUSH, qfncallback: DRAWSTATEPROC, ldata: super::super::Foundation::LPARAM, wdata: super::super::Foundation::WPARAM, x: i32, y: i32, cx: i32, cy: i32, uflags: DRAWSTATE_FLAGS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawTextA(hdc: HDC, lpchtext: super::super::Foundation::PSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawTextExA(hdc: HDC, lpchtext: super::super::Foundation::PSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT, lpdtp: *const DRAWTEXTPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawTextExW(hdc: HDC, lpchtext: super::super::Foundation::PWSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT, lpdtp: *const DRAWTEXTPARAMS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DrawTextW(hdc: HDC, lpchtext: super::super::Foundation::PWSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Ellipse(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EndPaint(hwnd: super::super::Foundation::HWND, lppaint: *const PAINTSTRUCT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EndPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplayDevicesA(lpdevice: super::super::Foundation::PSTR, idevnum: u32, lpdisplaydevice: *mut DISPLAY_DEVICEA, dwflags: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplayDevicesW(lpdevice: super::super::Foundation::PWSTR, idevnum: u32, lpdisplaydevice: *mut DISPLAY_DEVICEW, dwflags: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplayMonitors(hdc: HDC, lprcclip: *const super::super::Foundation::RECT, lpfnenum: MONITORENUMPROC, dwdata: super::super::Foundation::LPARAM) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplaySettingsA(lpszdevicename: super::super::Foundation::PSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEA) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplaySettingsExA(lpszdevicename: super::super::Foundation::PSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEA, dwflags: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplaySettingsExW(lpszdevicename: super::super::Foundation::PWSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEW, dwflags: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumDisplaySettingsW(lpszdevicename: super::super::Foundation::PWSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEW) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumEnhMetaFile(hdc: HDC, hmf: HENHMETAFILE, proc: ENHMFENUMPROC, param3: *const ::core::ffi::c_void, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumFontFamiliesA(hdc: HDC, lplogfont: super::super::Foundation::PSTR, lpproc: FONTENUMPROCA, lparam: super::super::Foundation::LPARAM) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumFontFamiliesExA(hdc: HDC, lplogfont: *const LOGFONTA, lpproc: FONTENUMPROCA, lparam: super::super::Foundation::LPARAM, dwflags: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumFontFamiliesExW(hdc: HDC, lplogfont: *const LOGFONTW, lpproc: FONTENUMPROCW, lparam: super::super::Foundation::LPARAM, dwflags: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumFontFamiliesW(hdc: HDC, lplogfont: super::super::Foundation::PWSTR, lpproc: FONTENUMPROCW, lparam: super::super::Foundation::LPARAM) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumFontsA(hdc: HDC, lplogfont: super::super::Foundation::PSTR, lpproc: FONTENUMPROCA, lparam: super::super::Foundation::LPARAM) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumFontsW(hdc: HDC, lplogfont: super::super::Foundation::PWSTR, lpproc: FONTENUMPROCW, lparam: super::super::Foundation::LPARAM) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumMetaFile(hdc: HDC, hmf: HMETAFILE, proc: MFENUMPROC, param3: super::super::Foundation::LPARAM) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EnumObjects(hdc: HDC, ntype: OBJ_TYPE, lpfunc: GOBJENUMPROC, lparam: super::super::Foundation::LPARAM) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EqualRect(lprc1: *const super::super::Foundation::RECT, lprc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn EqualRgn(hrgn1: HRGN, hrgn2: HRGN) -> super::super::Foundation::BOOL;
-    pub fn ExcludeClipRect(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ExcludeUpdateRgn(hdc: HDC, hwnd: super::super::Foundation::HWND) -> i32;
-    pub fn ExtCreatePen(ipenstyle: PEN_STYLE, cwidth: u32, plbrush: *const LOGBRUSH, cstyle: u32, pstyle: *const u32) -> HPEN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ExtCreateRegion(lpx: *const XFORM, ncount: u32, lpdata: *const RGNDATA) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ExtFloodFill(hdc: HDC, x: i32, y: i32, color: u32, r#type: EXT_FLOOD_FILL_TYPE) -> super::super::Foundation::BOOL;
-    pub fn ExtSelectClipRgn(hdc: HDC, hrgn: HRGN, mode: RGN_COMBINE_MODE) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ExtTextOutA(hdc: HDC, x: i32, y: i32, options: ETO_OPTIONS, lprect: *const super::super::Foundation::RECT, lpstring: super::super::Foundation::PSTR, c: u32, lpdx: *const i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ExtTextOutW(hdc: HDC, x: i32, y: i32, options: ETO_OPTIONS, lprect: *const super::super::Foundation::RECT, lpstring: super::super::Foundation::PWSTR, c: u32, lpdx: *const i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FillPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FillRect(hdc: HDC, lprc: *const super::super::Foundation::RECT, hbr: HBRUSH) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FillRgn(hdc: HDC, hrgn: HRGN, hbr: HBRUSH) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FixBrushOrgEx(hdc: HDC, x: i32, y: i32, ptl: *const super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FlattenPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FloodFill(hdc: HDC, x: i32, y: i32, color: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FrameRect(hdc: HDC, lprc: *const super::super::Foundation::RECT, hbr: HBRUSH) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn FrameRgn(hdc: HDC, hrgn: HRGN, hbr: HBRUSH, w: i32, h: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GdiAlphaBlend(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, ftn: BLENDFUNCTION) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GdiComment(hdc: HDC, nsize: u32, lpdata: *const u8) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GdiFlush() -> super::super::Foundation::BOOL;
-    pub fn GdiGetBatchLimit() -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GdiGradientFill(hdc: HDC, pvertex: *const TRIVERTEX, nvertex: u32, pmesh: *const ::core::ffi::c_void, ncount: u32, ulmode: GRADIENT_FILL) -> super::super::Foundation::BOOL;
-    pub fn GdiSetBatchLimit(dw: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GdiTransparentBlt(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, crtransparent: u32) -> super::super::Foundation::BOOL;
-    pub fn GetArcDirection(hdc: HDC) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetAspectRatioFilterEx(hdc: HDC, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    pub fn GetBitmapBits(hbit: HBITMAP, cb: i32, lpvbits: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetBitmapDimensionEx(hbit: HBITMAP, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    pub fn GetBkColor(hdc: HDC) -> u32;
-    pub fn GetBkMode(hdc: HDC) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetBoundsRect(hdc: HDC, lprect: *mut super::super::Foundation::RECT, flags: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetBrushOrgEx(hdc: HDC, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharABCWidthsA(hdc: HDC, wfirst: u32, wlast: u32, lpabc: *mut ABC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharABCWidthsFloatA(hdc: HDC, ifirst: u32, ilast: u32, lpabc: *mut ABCFLOAT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharABCWidthsFloatW(hdc: HDC, ifirst: u32, ilast: u32, lpabc: *mut ABCFLOAT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharABCWidthsI(hdc: HDC, gifirst: u32, cgi: u32, pgi: *const u16, pabc: *mut ABC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharABCWidthsW(hdc: HDC, wfirst: u32, wlast: u32, lpabc: *mut ABC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidth32A(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidth32W(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidthA(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidthFloatA(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut f32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidthFloatW(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut f32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidthI(hdc: HDC, gifirst: u32, cgi: u32, pgi: *const u16, piwidths: *mut i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharWidthW(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharacterPlacementA(hdc: HDC, lpstring: super::super::Foundation::PSTR, ncount: i32, nmexextent: i32, lpresults: *mut GCP_RESULTSA, dwflags: GET_CHARACTER_PLACEMENT_FLAGS) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCharacterPlacementW(hdc: HDC, lpstring: super::super::Foundation::PWSTR, ncount: i32, nmexextent: i32, lpresults: *mut GCP_RESULTSW, dwflags: GET_CHARACTER_PLACEMENT_FLAGS) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetClipBox(hdc: HDC, lprect: *mut super::super::Foundation::RECT) -> i32;
-    pub fn GetClipRgn(hdc: HDC, hrgn: HRGN) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetColorAdjustment(hdc: HDC, lpca: *mut COLORADJUSTMENT) -> super::super::Foundation::BOOL;
-    pub fn GetCurrentObject(hdc: HDC, r#type: OBJ_TYPE) -> HGDIOBJ;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetCurrentPositionEx(hdc: HDC, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetDC(hwnd: super::super::Foundation::HWND) -> HDC;
-    pub fn GetDCBrushColor(hdc: HDC) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetDCEx(hwnd: super::super::Foundation::HWND, hrgnclip: HRGN, flags: GET_DCX_FLAGS) -> HDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetDCOrgEx(hdc: HDC, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    pub fn GetDCPenColor(hdc: HDC) -> u32;
-    pub fn GetDIBColorTable(hdc: HDC, istart: u32, centries: u32, prgbq: *mut RGBQUAD) -> u32;
-    pub fn GetDIBits(hdc: HDC, hbm: HBITMAP, start: u32, clines: u32, lpvbits: *mut ::core::ffi::c_void, lpbmi: *mut BITMAPINFO, usage: DIB_USAGE) -> i32;
-    pub fn GetDeviceCaps(hdc: HDC, index: GET_DEVICE_CAPS_INDEX) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetEnhMetaFileA(lpname: super::super::Foundation::PSTR) -> HENHMETAFILE;
-    pub fn GetEnhMetaFileBits(hemf: HENHMETAFILE, nsize: u32, lpdata: *mut u8) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetEnhMetaFileDescriptionA(hemf: HENHMETAFILE, cchbuffer: u32, lpdescription: super::super::Foundation::PSTR) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetEnhMetaFileDescriptionW(hemf: HENHMETAFILE, cchbuffer: u32, lpdescription: super::super::Foundation::PWSTR) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetEnhMetaFileHeader(hemf: HENHMETAFILE, nsize: u32, lpenhmetaheader: *mut ENHMETAHEADER) -> u32;
-    pub fn GetEnhMetaFilePaletteEntries(hemf: HENHMETAFILE, nnumentries: u32, lppaletteentries: *mut PALETTEENTRY) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetEnhMetaFileW(lpname: super::super::Foundation::PWSTR) -> HENHMETAFILE;
-    pub fn GetFontData(hdc: HDC, dwtable: u32, dwoffset: u32, pvbuffer: *mut ::core::ffi::c_void, cjbuffer: u32) -> u32;
-    pub fn GetFontLanguageInfo(hdc: HDC) -> u32;
-    pub fn GetFontUnicodeRanges(hdc: HDC, lpgs: *mut GLYPHSET) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetGlyphIndicesA(hdc: HDC, lpstr: super::super::Foundation::PSTR, c: i32, pgi: *mut u16, fl: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetGlyphIndicesW(hdc: HDC, lpstr: super::super::Foundation::PWSTR, c: i32, pgi: *mut u16, fl: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetGlyphOutlineA(hdc: HDC, uchar: u32, fuformat: GET_GLYPH_OUTLINE_FORMAT, lpgm: *mut GLYPHMETRICS, cjbuffer: u32, pvbuffer: *mut ::core::ffi::c_void, lpmat2: *const MAT2) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetGlyphOutlineW(hdc: HDC, uchar: u32, fuformat: GET_GLYPH_OUTLINE_FORMAT, lpgm: *mut GLYPHMETRICS, cjbuffer: u32, pvbuffer: *mut ::core::ffi::c_void, lpmat2: *const MAT2) -> u32;
-    pub fn GetGraphicsMode(hdc: HDC) -> i32;
-    pub fn GetKerningPairsA(hdc: HDC, npairs: u32, lpkernpair: *mut KERNINGPAIR) -> u32;
-    pub fn GetKerningPairsW(hdc: HDC, npairs: u32, lpkernpair: *mut KERNINGPAIR) -> u32;
-    pub fn GetLayout(hdc: HDC) -> u32;
-    pub fn GetMapMode(hdc: HDC) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetMetaFileA(lpname: super::super::Foundation::PSTR) -> HMETAFILE;
-    pub fn GetMetaFileBitsEx(hmf: HMETAFILE, cbbuffer: u32, lpdata: *mut ::core::ffi::c_void) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetMetaFileW(lpname: super::super::Foundation::PWSTR) -> HMETAFILE;
-    pub fn GetMetaRgn(hdc: HDC, hrgn: HRGN) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetMiterLimit(hdc: HDC, plimit: *mut f32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetMonitorInfoA(hmonitor: HMONITOR, lpmi: *mut MONITORINFO) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetMonitorInfoW(hmonitor: HMONITOR, lpmi: *mut MONITORINFO) -> super::super::Foundation::BOOL;
-    pub fn GetNearestColor(hdc: HDC, color: u32) -> u32;
-    pub fn GetNearestPaletteIndex(h: HPALETTE, color: u32) -> u32;
-    pub fn GetObjectA(h: HGDIOBJ, c: i32, pv: *mut ::core::ffi::c_void) -> i32;
-    pub fn GetObjectType(h: HGDIOBJ) -> u32;
-    pub fn GetObjectW(h: HGDIOBJ, c: i32, pv: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetOutlineTextMetricsA(hdc: HDC, cjcopy: u32, potm: *mut OUTLINETEXTMETRICA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetOutlineTextMetricsW(hdc: HDC, cjcopy: u32, potm: *mut OUTLINETEXTMETRICW) -> u32;
-    pub fn GetPaletteEntries(hpal: HPALETTE, istart: u32, centries: u32, ppalentries: *mut PALETTEENTRY) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetPath(hdc: HDC, apt: *mut super::super::Foundation::POINT, aj: *mut u8, cpt: i32) -> i32;
-    pub fn GetPixel(hdc: HDC, x: i32, y: i32) -> u32;
-    pub fn GetPolyFillMode(hdc: HDC) -> i32;
-    pub fn GetROP2(hdc: HDC) -> i32;
-    pub fn GetRandomRgn(hdc: HDC, hrgn: HRGN, i: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetRasterizerCaps(lpraststat: *mut RASTERIZER_STATUS, cjbytes: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetRegionData(hrgn: HRGN, ncount: u32, lprgndata: *mut RGNDATA) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetRgnBox(hrgn: HRGN, lprc: *mut super::super::Foundation::RECT) -> i32;
-    pub fn GetStockObject(i: GET_STOCK_OBJECT_FLAGS) -> HGDIOBJ;
-    pub fn GetStretchBltMode(hdc: HDC) -> i32;
-    pub fn GetSysColorBrush(nindex: i32) -> HBRUSH;
-    pub fn GetSystemPaletteEntries(hdc: HDC, istart: u32, centries: u32, ppalentries: *mut PALETTEENTRY) -> u32;
-    pub fn GetSystemPaletteUse(hdc: HDC) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTabbedTextExtentA(hdc: HDC, lpstring: super::super::Foundation::PSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTabbedTextExtentW(hdc: HDC, lpstring: super::super::Foundation::PWSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32) -> u32;
-    pub fn GetTextAlign(hdc: HDC) -> u32;
-    pub fn GetTextCharacterExtra(hdc: HDC) -> i32;
-    pub fn GetTextColor(hdc: HDC) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentExPointA(hdc: HDC, lpszstring: super::super::Foundation::PSTR, cchstring: i32, nmaxextent: i32, lpnfit: *mut i32, lpndx: *mut i32, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentExPointI(hdc: HDC, lpwszstring: *const u16, cwchstring: i32, nmaxextent: i32, lpnfit: *mut i32, lpndx: *mut i32, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentExPointW(hdc: HDC, lpszstring: super::super::Foundation::PWSTR, cchstring: i32, nmaxextent: i32, lpnfit: *mut i32, lpndx: *mut i32, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentPoint32A(hdc: HDC, lpstring: super::super::Foundation::PSTR, c: i32, psizl: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentPoint32W(hdc: HDC, lpstring: super::super::Foundation::PWSTR, c: i32, psizl: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentPointA(hdc: HDC, lpstring: super::super::Foundation::PSTR, c: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentPointI(hdc: HDC, pgiin: *const u16, cgi: i32, psize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextExtentPointW(hdc: HDC, lpstring: super::super::Foundation::PWSTR, c: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextFaceA(hdc: HDC, c: i32, lpname: super::super::Foundation::PSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextFaceW(hdc: HDC, c: i32, lpname: super::super::Foundation::PWSTR) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextMetricsA(hdc: HDC, lptm: *mut TEXTMETRICA) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetTextMetricsW(hdc: HDC, lptm: *mut TEXTMETRICW) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetUpdateRect(hwnd: super::super::Foundation::HWND, lprect: *mut super::super::Foundation::RECT, berase: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetUpdateRgn(hwnd: super::super::Foundation::HWND, hrgn: HRGN, berase: super::super::Foundation::BOOL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetViewportExtEx(hdc: HDC, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetViewportOrgEx(hdc: HDC, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    pub fn GetWinMetaFileBits(hemf: HENHMETAFILE, cbdata16: u32, pdata16: *mut u8, imapmode: i32, hdcref: HDC) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetWindowDC(hwnd: super::super::Foundation::HWND) -> HDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetWindowExtEx(hdc: HDC, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetWindowOrgEx(hdc: HDC, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetWindowRgn(hwnd: super::super::Foundation::HWND, hrgn: HRGN) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetWindowRgnBox(hwnd: super::super::Foundation::HWND, lprc: *mut super::super::Foundation::RECT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GetWorldTransform(hdc: HDC, lpxf: *mut XFORM) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GradientFill(hdc: HDC, pvertex: *const TRIVERTEX, nvertex: u32, pmesh: *const ::core::ffi::c_void, nmesh: u32, ulmode: GRADIENT_FILL) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GrayStringA(hdc: HDC, hbrush: HBRUSH, lpoutputfunc: GRAYSTRINGPROC, lpdata: super::super::Foundation::LPARAM, ncount: i32, x: i32, y: i32, nwidth: i32, nheight: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn GrayStringW(hdc: HDC, hbrush: HBRUSH, lpoutputfunc: GRAYSTRINGPROC, lpdata: super::super::Foundation::LPARAM, ncount: i32, x: i32, y: i32, nwidth: i32, nheight: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn InflateRect(lprc: *mut super::super::Foundation::RECT, dx: i32, dy: i32) -> super::super::Foundation::BOOL;
-    pub fn IntersectClipRect(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn IntersectRect(lprcdst: *mut super::super::Foundation::RECT, lprcsrc1: *const super::super::Foundation::RECT, lprcsrc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn InvalidateRect(hwnd: super::super::Foundation::HWND, lprect: *const super::super::Foundation::RECT, berase: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn InvalidateRgn(hwnd: super::super::Foundation::HWND, hrgn: HRGN, berase: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn InvertRect(hdc: HDC, lprc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn InvertRgn(hdc: HDC, hrgn: HRGN) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn IsRectEmpty(lprc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn LPtoDP(hdc: HDC, lppt: *mut super::super::Foundation::POINT, c: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn LineDDA(xstart: i32, ystart: i32, xend: i32, yend: i32, lpproc: LINEDDAPROC, data: super::super::Foundation::LPARAM) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn LineTo(hdc: HDC, x: i32, y: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn LoadBitmapA(hinstance: super::super::Foundation::HINSTANCE, lpbitmapname: super::super::Foundation::PSTR) -> HBITMAP;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn LoadBitmapW(hinstance: super::super::Foundation::HINSTANCE, lpbitmapname: super::super::Foundation::PWSTR) -> HBITMAP;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn LockWindowUpdate(hwndlock: super::super::Foundation::HWND) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MapWindowPoints(hwndfrom: super::super::Foundation::HWND, hwndto: super::super::Foundation::HWND, lppoints: *mut super::super::Foundation::POINT, cpoints: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MaskBlt(hdcdest: HDC, xdest: i32, ydest: i32, width: i32, height: i32, hdcsrc: HDC, xsrc: i32, ysrc: i32, hbmmask: HBITMAP, xmask: i32, ymask: i32, rop: u32) -> super::super::Foundation::BOOL;
-    pub fn MergeFontPackage(puchmergefontbuffer: *const u8, ulmergefontbuffersize: u32, puchfontpackagebuffer: *const u8, ulfontpackagebuffersize: u32, ppuchdestbuffer: *mut *mut u8, puldestbuffersize: *mut u32, pulbyteswritten: *mut u32, usmode: u16, lpfnallocate: CFP_ALLOCPROC, lpfnreallocate: CFP_REALLOCPROC, lpfnfree: CFP_FREEPROC, lpvreserved: *mut ::core::ffi::c_void) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ModifyWorldTransform(hdc: HDC, lpxf: *const XFORM, mode: MODIFY_WORLD_TRANSFORM_MODE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MonitorFromPoint(pt: super::super::Foundation::POINT, dwflags: MONITOR_FROM_FLAGS) -> HMONITOR;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MonitorFromRect(lprc: *const super::super::Foundation::RECT, dwflags: MONITOR_FROM_FLAGS) -> HMONITOR;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MonitorFromWindow(hwnd: super::super::Foundation::HWND, dwflags: MONITOR_FROM_FLAGS) -> HMONITOR;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MoveToEx(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    pub fn OffsetClipRgn(hdc: HDC, x: i32, y: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OffsetRect(lprc: *mut super::super::Foundation::RECT, dx: i32, dy: i32) -> super::super::Foundation::BOOL;
-    pub fn OffsetRgn(hrgn: HRGN, x: i32, y: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OffsetViewportOrgEx(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OffsetWindowOrgEx(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PaintDesktop(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PaintRgn(hdc: HDC, hrgn: HRGN) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PatBlt(hdc: HDC, x: i32, y: i32, w: i32, h: i32, rop: ROP_CODE) -> super::super::Foundation::BOOL;
-    pub fn PathToRegion(hdc: HDC) -> HRGN;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Pie(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32, xr1: i32, yr1: i32, xr2: i32, yr2: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlayEnhMetaFile(hdc: HDC, hmf: HENHMETAFILE, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlayEnhMetaFileRecord(hdc: HDC, pht: *const HANDLETABLE, pmr: *const ENHMETARECORD, cht: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlayMetaFile(hdc: HDC, hmf: HMETAFILE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlayMetaFileRecord(hdc: HDC, lphandletable: *const HANDLETABLE, lpmr: *const METARECORD, noobjs: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PlgBlt(hdcdest: HDC, lppoint: *const super::super::Foundation::POINT, hdcsrc: HDC, xsrc: i32, ysrc: i32, width: i32, height: i32, hbmmask: HBITMAP, xmask: i32, ymask: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyBezier(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyBezierTo(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyDraw(hdc: HDC, apt: *const super::super::Foundation::POINT, aj: *const u8, cpt: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyPolygon(hdc: HDC, apt: *const super::super::Foundation::POINT, asz: *const i32, csz: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyPolyline(hdc: HDC, apt: *const super::super::Foundation::POINT, asz: *const u32, csz: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyTextOutA(hdc: HDC, ppt: *const POLYTEXTA, nstrings: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolyTextOutW(hdc: HDC, ppt: *const POLYTEXTW, nstrings: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Polygon(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Polyline(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PolylineTo(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PtInRect(lprc: *const super::super::Foundation::RECT, pt: super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PtInRegion(hrgn: HRGN, x: i32, y: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PtVisible(hdc: HDC, x: i32, y: i32) -> super::super::Foundation::BOOL;
-    pub fn RealizePalette(hdc: HDC) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RectInRegion(hrgn: HRGN, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RectVisible(hdc: HDC, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn Rectangle(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RedrawWindow(hwnd: super::super::Foundation::HWND, lprcupdate: *const super::super::Foundation::RECT, hrgnupdate: HRGN, flags: REDRAW_WINDOW_FLAGS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ReleaseDC(hwnd: super::super::Foundation::HWND, hdc: HDC) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RemoveFontMemResourceEx(h: super::super::Foundation::HANDLE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RemoveFontResourceA(lpfilename: super::super::Foundation::PSTR) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RemoveFontResourceExA(name: super::super::Foundation::PSTR, fl: u32, pdv: *mut ::core::ffi::c_void) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RemoveFontResourceExW(name: super::super::Foundation::PWSTR, fl: u32, pdv: *mut ::core::ffi::c_void) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RemoveFontResourceW(lpfilename: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ResetDCA(hdc: HDC, lpdm: *const DEVMODEA) -> HDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ResetDCW(hdc: HDC, lpdm: *const DEVMODEW) -> HDC;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ResizePalette(hpal: HPALETTE, n: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RestoreDC(hdc: HDC, nsaveddc: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RoundRect(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32, width: i32, height: i32) -> super::super::Foundation::BOOL;
-    pub fn SaveDC(hdc: HDC) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ScaleViewportExtEx(hdc: HDC, xn: i32, dx: i32, yn: i32, yd: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ScaleWindowExtEx(hdc: HDC, xn: i32, xd: i32, yn: i32, yd: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ScreenToClient(hwnd: super::super::Foundation::HWND, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SelectClipPath(hdc: HDC, mode: RGN_COMBINE_MODE) -> super::super::Foundation::BOOL;
-    pub fn SelectClipRgn(hdc: HDC, hrgn: HRGN) -> i32;
-    pub fn SelectObject(hdc: HDC, h: HGDIOBJ) -> HGDIOBJ;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SelectPalette(hdc: HDC, hpal: HPALETTE, bforcebkgd: super::super::Foundation::BOOL) -> HPALETTE;
-    pub fn SetArcDirection(hdc: HDC, dir: ARC_DIRECTION) -> i32;
-    pub fn SetBitmapBits(hbm: HBITMAP, cb: u32, pvbits: *const ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetBitmapDimensionEx(hbm: HBITMAP, w: i32, h: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    pub fn SetBkColor(hdc: HDC, color: u32) -> u32;
-    pub fn SetBkMode(hdc: HDC, mode: BACKGROUND_MODE) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetBoundsRect(hdc: HDC, lprect: *const super::super::Foundation::RECT, flags: SET_BOUNDS_RECT_FLAGS) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetBrushOrgEx(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetColorAdjustment(hdc: HDC, lpca: *const COLORADJUSTMENT) -> super::super::Foundation::BOOL;
-    pub fn SetDCBrushColor(hdc: HDC, color: u32) -> u32;
-    pub fn SetDCPenColor(hdc: HDC, color: u32) -> u32;
-    pub fn SetDIBColorTable(hdc: HDC, istart: u32, centries: u32, prgbq: *const RGBQUAD) -> u32;
-    pub fn SetDIBits(hdc: HDC, hbm: HBITMAP, start: u32, clines: u32, lpbits: *const ::core::ffi::c_void, lpbmi: *const BITMAPINFO, coloruse: DIB_USAGE) -> i32;
-    pub fn SetDIBitsToDevice(hdc: HDC, xdest: i32, ydest: i32, w: u32, h: u32, xsrc: i32, ysrc: i32, startscan: u32, clines: u32, lpvbits: *const ::core::ffi::c_void, lpbmi: *const BITMAPINFO, coloruse: DIB_USAGE) -> i32;
-    pub fn SetEnhMetaFileBits(nsize: u32, pb: *const u8) -> HENHMETAFILE;
-    pub fn SetGraphicsMode(hdc: HDC, imode: GRAPHICS_MODE) -> i32;
-    pub fn SetLayout(hdc: HDC, l: DC_LAYOUT) -> u32;
-    pub fn SetMapMode(hdc: HDC, imode: HDC_MAP_MODE) -> i32;
-    pub fn SetMapperFlags(hdc: HDC, flags: u32) -> u32;
-    pub fn SetMetaFileBitsEx(cbbuffer: u32, lpdata: *const u8) -> HMETAFILE;
-    pub fn SetMetaRgn(hdc: HDC) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetMiterLimit(hdc: HDC, limit: f32, old: *mut f32) -> super::super::Foundation::BOOL;
-    pub fn SetPaletteEntries(hpal: HPALETTE, istart: u32, centries: u32, ppalentries: *const PALETTEENTRY) -> u32;
-    pub fn SetPixel(hdc: HDC, x: i32, y: i32, color: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetPixelV(hdc: HDC, x: i32, y: i32, color: u32) -> super::super::Foundation::BOOL;
-    pub fn SetPolyFillMode(hdc: HDC, mode: CREATE_POLYGON_RGN_MODE) -> i32;
-    pub fn SetROP2(hdc: HDC, rop2: R2_MODE) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetRect(lprc: *mut super::super::Foundation::RECT, xleft: i32, ytop: i32, xright: i32, ybottom: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetRectEmpty(lprc: *mut super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetRectRgn(hrgn: HRGN, left: i32, top: i32, right: i32, bottom: i32) -> super::super::Foundation::BOOL;
-    pub fn SetStretchBltMode(hdc: HDC, mode: STRETCH_BLT_MODE) -> i32;
-    pub fn SetSystemPaletteUse(hdc: HDC, r#use: SYSTEM_PALETTE_USE) -> u32;
-    pub fn SetTextAlign(hdc: HDC, align: TEXT_ALIGN_OPTIONS) -> u32;
-    pub fn SetTextCharacterExtra(hdc: HDC, extra: i32) -> i32;
-    pub fn SetTextColor(hdc: HDC, color: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetTextJustification(hdc: HDC, extra: i32, count: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetViewportExtEx(hdc: HDC, x: i32, y: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetViewportOrgEx(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetWindowExtEx(hdc: HDC, x: i32, y: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetWindowOrgEx(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetWindowRgn(hwnd: super::super::Foundation::HWND, hrgn: HRGN, bredraw: super::super::Foundation::BOOL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SetWorldTransform(hdc: HDC, lpxf: *const XFORM) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn StretchBlt(hdcdest: HDC, xdest: i32, ydest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xsrc: i32, ysrc: i32, wsrc: i32, hsrc: i32, rop: ROP_CODE) -> super::super::Foundation::BOOL;
-    pub fn StretchDIBits(hdc: HDC, xdest: i32, ydest: i32, destwidth: i32, destheight: i32, xsrc: i32, ysrc: i32, srcwidth: i32, srcheight: i32, lpbits: *const ::core::ffi::c_void, lpbmi: *const BITMAPINFO, iusage: DIB_USAGE, rop: ROP_CODE) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn StrokeAndFillPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn StrokePath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn SubtractRect(lprcdst: *mut super::super::Foundation::RECT, lprcsrc1: *const super::super::Foundation::RECT, lprcsrc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    pub fn TTCharToUnicode(hdc: HDC, puccharcodes: *const u8, ulcharcodesize: u32, pusshortcodes: *mut u16, ulshortcodesize: u32, ulflags: u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTDeleteEmbeddedFont(hfontreference: super::super::Foundation::HANDLE, ulflags: u32, pulstatus: *mut u32) -> i32;
-    pub fn TTEmbedFont(hdc: HDC, ulflags: TTEMBED_FLAGS, ulcharset: EMBED_FONT_CHARSET, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, pulstatus: *mut u32, lpfnwritetostream: WRITEEMBEDPROC, lpvwritestream: *const ::core::ffi::c_void, puscharcodeset: *const u16, uscharcodecount: u16, uslanguage: u16, pttembedinfo: *const TTEMBEDINFO) -> i32;
-    pub fn TTEmbedFontEx(hdc: HDC, ulflags: TTEMBED_FLAGS, ulcharset: EMBED_FONT_CHARSET, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, pulstatus: *mut u32, lpfnwritetostream: WRITEEMBEDPROC, lpvwritestream: *const ::core::ffi::c_void, pulcharcodeset: *const u32, uscharcodecount: u16, uslanguage: u16, pttembedinfo: *const TTEMBEDINFO) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTEmbedFontFromFileA(hdc: HDC, szfontfilename: super::super::Foundation::PSTR, usttcindex: u16, ulflags: TTEMBED_FLAGS, ulcharset: EMBED_FONT_CHARSET, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, pulstatus: *mut u32, lpfnwritetostream: WRITEEMBEDPROC, lpvwritestream: *const ::core::ffi::c_void, puscharcodeset: *const u16, uscharcodecount: u16, uslanguage: u16, pttembedinfo: *const TTEMBEDINFO) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTEnableEmbeddingForFacename(lpszfacename: super::super::Foundation::PSTR, benable: super::super::Foundation::BOOL) -> i32;
-    pub fn TTGetEmbeddedFontInfo(ulflags: TTEMBED_FLAGS, pulprivstatus: *mut u32, ulprivs: FONT_LICENSE_PRIVS, pulstatus: *mut u32, lpfnreadfromstream: READEMBEDPROC, lpvreadstream: *const ::core::ffi::c_void, pttloadinfo: *const TTLOADINFO) -> i32;
-    pub fn TTGetEmbeddingType(hdc: HDC, pulembedtype: *mut EMBEDDED_FONT_PRIV_STATUS) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTGetNewFontName(phfontreference: *const super::super::Foundation::HANDLE, wzwinfamilyname: super::super::Foundation::PWSTR, cchmaxwinname: i32, szmacfamilyname: super::super::Foundation::PSTR, cchmaxmacname: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTIsEmbeddingEnabled(hdc: HDC, pbenabled: *mut super::super::Foundation::BOOL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTIsEmbeddingEnabledForFacename(lpszfacename: super::super::Foundation::PSTR, pbenabled: *mut super::super::Foundation::BOOL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TTLoadEmbeddedFont(phfontreference: *mut super::super::Foundation::HANDLE, ulflags: u32, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, ulprivs: FONT_LICENSE_PRIVS, pulstatus: *mut TTLOAD_EMBEDDED_FONT_STATUS, lpfnreadfromstream: READEMBEDPROC, lpvreadstream: *const ::core::ffi::c_void, szwinfamilyname: super::super::Foundation::PWSTR, szmacfamilyname: super::super::Foundation::PSTR, pttloadinfo: *const TTLOADINFO) -> i32;
-    pub fn TTRunValidationTests(hdc: HDC, ptestparam: *const TTVALIDATIONTESTSPARAMS) -> i32;
-    pub fn TTRunValidationTestsEx(hdc: HDC, ptestparam: *const TTVALIDATIONTESTSPARAMSEX) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TabbedTextOutA(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32, ntaborigin: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TabbedTextOutW(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PWSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32, ntaborigin: i32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TextOutA(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PSTR, c: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TextOutW(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PWSTR, c: i32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn TransparentBlt(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, crtransparent: u32) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn UnionRect(lprcdst: *mut super::super::Foundation::RECT, lprcsrc1: *const super::super::Foundation::RECT, lprcsrc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn UnrealizeObject(h: HGDIOBJ) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn UpdateColors(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn UpdateWindow(hwnd: super::super::Foundation::HWND) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ValidateRect(hwnd: super::super::Foundation::HWND, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn ValidateRgn(hwnd: super::super::Foundation::HWND, hrgn: HRGN) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn WidenPath(hdc: HDC) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn WindowFromDC(hdc: HDC) -> super::super::Foundation::HWND;
-    pub fn wglSwapMultipleBuffers(param0: u32, param1: *const WGLSWAP) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type AbortPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type AddFontMemResourceEx = unsafe extern "system" fn(pfileview: *const ::core::ffi::c_void, cjsize: u32, pvresrved: *mut ::core::ffi::c_void, pnumfonts: *const u32) -> super::super::Foundation::HANDLE;
+#[cfg(feature = "Win32_Foundation")]
+pub type AddFontResourceA = unsafe extern "system" fn(param0: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type AddFontResourceExA = unsafe extern "system" fn(name: super::super::Foundation::PSTR, fl: FONT_RESOURCE_CHARACTERISTICS, res: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type AddFontResourceExW = unsafe extern "system" fn(name: super::super::Foundation::PWSTR, fl: FONT_RESOURCE_CHARACTERISTICS, res: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type AddFontResourceW = unsafe extern "system" fn(param0: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type AlphaBlend = unsafe extern "system" fn(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, ftn: BLENDFUNCTION) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type AngleArc = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, r: u32, startangle: f32, sweepangle: f32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type AnimatePalette = unsafe extern "system" fn(hpal: HPALETTE, istartindex: u32, centries: u32, ppe: *const PALETTEENTRY) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type Arc = unsafe extern "system" fn(hdc: HDC, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ArcTo = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32, xr1: i32, yr1: i32, xr2: i32, yr2: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type BeginPaint = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lppaint: *mut PAINTSTRUCT) -> HDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type BeginPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type BitBlt = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, cx: i32, cy: i32, hdcsrc: HDC, x1: i32, y1: i32, rop: ROP_CODE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type CancelDC = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ChangeDisplaySettingsA = unsafe extern "system" fn(lpdevmode: *const DEVMODEA, dwflags: CDS_TYPE) -> DISP_CHANGE;
+#[cfg(feature = "Win32_Foundation")]
+pub type ChangeDisplaySettingsExA = unsafe extern "system" fn(lpszdevicename: super::super::Foundation::PSTR, lpdevmode: *const DEVMODEA, hwnd: super::super::Foundation::HWND, dwflags: CDS_TYPE, lparam: *const ::core::ffi::c_void) -> DISP_CHANGE;
+#[cfg(feature = "Win32_Foundation")]
+pub type ChangeDisplaySettingsExW = unsafe extern "system" fn(lpszdevicename: super::super::Foundation::PWSTR, lpdevmode: *const DEVMODEW, hwnd: super::super::Foundation::HWND, dwflags: CDS_TYPE, lparam: *const ::core::ffi::c_void) -> DISP_CHANGE;
+#[cfg(feature = "Win32_Foundation")]
+pub type ChangeDisplaySettingsW = unsafe extern "system" fn(lpdevmode: *const DEVMODEW, dwflags: CDS_TYPE) -> DISP_CHANGE;
+#[cfg(feature = "Win32_Foundation")]
+pub type Chord = unsafe extern "system" fn(hdc: HDC, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ClientToScreen = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+pub type CloseEnhMetaFile = unsafe extern "system" fn(hdc: HDC) -> HENHMETAFILE;
+#[cfg(feature = "Win32_Foundation")]
+pub type CloseFigure = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+pub type CloseMetaFile = unsafe extern "system" fn(hdc: HDC) -> HMETAFILE;
+pub type CombineRgn = unsafe extern "system" fn(hrgndst: HRGN, hrgnsrc1: HRGN, hrgnsrc2: HRGN, imode: RGN_COMBINE_MODE) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type CombineTransform = unsafe extern "system" fn(lpxfout: *mut XFORM, lpxf1: *const XFORM, lpxf2: *const XFORM) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type CopyEnhMetaFileA = unsafe extern "system" fn(henh: HENHMETAFILE, lpfilename: super::super::Foundation::PSTR) -> HENHMETAFILE;
+#[cfg(feature = "Win32_Foundation")]
+pub type CopyEnhMetaFileW = unsafe extern "system" fn(henh: HENHMETAFILE, lpfilename: super::super::Foundation::PWSTR) -> HENHMETAFILE;
+#[cfg(feature = "Win32_Foundation")]
+pub type CopyMetaFileA = unsafe extern "system" fn(param0: HMETAFILE, param1: super::super::Foundation::PSTR) -> HMETAFILE;
+#[cfg(feature = "Win32_Foundation")]
+pub type CopyMetaFileW = unsafe extern "system" fn(param0: HMETAFILE, param1: super::super::Foundation::PWSTR) -> HMETAFILE;
+#[cfg(feature = "Win32_Foundation")]
+pub type CopyRect = unsafe extern "system" fn(lprcdst: *mut super::super::Foundation::RECT, lprcsrc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+pub type CreateBitmap = unsafe extern "system" fn(nwidth: i32, nheight: i32, nplanes: u32, nbitcount: u32, lpbits: *const ::core::ffi::c_void) -> HBITMAP;
+pub type CreateBitmapIndirect = unsafe extern "system" fn(pbm: *const BITMAP) -> HBITMAP;
+pub type CreateBrushIndirect = unsafe extern "system" fn(plbrush: *const LOGBRUSH) -> HBRUSH;
+pub type CreateCompatibleBitmap = unsafe extern "system" fn(hdc: HDC, cx: i32, cy: i32) -> HBITMAP;
+pub type CreateCompatibleDC = unsafe extern "system" fn(hdc: HDC) -> CreatedHDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateDCA = unsafe extern "system" fn(pwszdriver: super::super::Foundation::PSTR, pwszdevice: super::super::Foundation::PSTR, pszport: super::super::Foundation::PSTR, pdm: *const DEVMODEA) -> CreatedHDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateDCW = unsafe extern "system" fn(pwszdriver: super::super::Foundation::PWSTR, pwszdevice: super::super::Foundation::PWSTR, pszport: super::super::Foundation::PWSTR, pdm: *const DEVMODEW) -> CreatedHDC;
+pub type CreateDIBPatternBrush = unsafe extern "system" fn(h: isize, iusage: DIB_USAGE) -> HBRUSH;
+pub type CreateDIBPatternBrushPt = unsafe extern "system" fn(lppackeddib: *const ::core::ffi::c_void, iusage: DIB_USAGE) -> HBRUSH;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateDIBSection = unsafe extern "system" fn(hdc: HDC, pbmi: *const BITMAPINFO, usage: DIB_USAGE, ppvbits: *mut *mut ::core::ffi::c_void, hsection: super::super::Foundation::HANDLE, offset: u32) -> HBITMAP;
+pub type CreateDIBitmap = unsafe extern "system" fn(hdc: HDC, pbmih: *const BITMAPINFOHEADER, flinit: u32, pjbits: *const ::core::ffi::c_void, pbmi: *const BITMAPINFO, iusage: DIB_USAGE) -> HBITMAP;
+pub type CreateDiscardableBitmap = unsafe extern "system" fn(hdc: HDC, cx: i32, cy: i32) -> HBITMAP;
+pub type CreateEllipticRgn = unsafe extern "system" fn(x1: i32, y1: i32, x2: i32, y2: i32) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateEllipticRgnIndirect = unsafe extern "system" fn(lprect: *const super::super::Foundation::RECT) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateEnhMetaFileA = unsafe extern "system" fn(hdc: HDC, lpfilename: super::super::Foundation::PSTR, lprc: *const super::super::Foundation::RECT, lpdesc: super::super::Foundation::PSTR) -> HdcMetdataEnhFileHandle;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateEnhMetaFileW = unsafe extern "system" fn(hdc: HDC, lpfilename: super::super::Foundation::PWSTR, lprc: *const super::super::Foundation::RECT, lpdesc: super::super::Foundation::PWSTR) -> HdcMetdataEnhFileHandle;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateFontA = unsafe extern "system" fn(cheight: i32, cwidth: i32, cescapement: i32, corientation: i32, cweight: i32, bitalic: u32, bunderline: u32, bstrikeout: u32, icharset: u32, ioutprecision: FONT_OUTPUT_PRECISION, iclipprecision: FONT_CLIP_PRECISION, iquality: FONT_QUALITY, ipitchandfamily: FONT_PITCH_AND_FAMILY, pszfacename: super::super::Foundation::PSTR) -> HFONT;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateFontIndirectA = unsafe extern "system" fn(lplf: *const LOGFONTA) -> HFONT;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateFontIndirectExA = unsafe extern "system" fn(param0: *const ENUMLOGFONTEXDVA) -> HFONT;
+pub type CreateFontIndirectExW = unsafe extern "system" fn(param0: *const ENUMLOGFONTEXDVW) -> HFONT;
+pub type CreateFontIndirectW = unsafe extern "system" fn(lplf: *const LOGFONTW) -> HFONT;
+pub type CreateFontPackage = unsafe extern "system" fn(
+    puchsrcbuffer: *const u8,
+    ulsrcbuffersize: u32,
+    ppuchfontpackagebuffer: *mut *mut u8,
+    pulfontpackagebuffersize: *mut u32,
+    pulbyteswritten: *mut u32,
+    usflag: u16,
+    usttcindex: u16,
+    ussubsetformat: u16,
+    ussubsetlanguage: u16,
+    ussubsetplatform: CREATE_FONT_PACKAGE_SUBSET_PLATFORM,
+    ussubsetencoding: CREATE_FONT_PACKAGE_SUBSET_ENCODING,
+    pussubsetkeeplist: *const u16,
+    ussubsetlistcount: u16,
+    lpfnallocate: CFP_ALLOCPROC,
+    lpfnreallocate: CFP_REALLOCPROC,
+    lpfnfree: CFP_FREEPROC,
+    lpvreserved: *mut ::core::ffi::c_void,
+) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateFontW = unsafe extern "system" fn(cheight: i32, cwidth: i32, cescapement: i32, corientation: i32, cweight: i32, bitalic: u32, bunderline: u32, bstrikeout: u32, icharset: u32, ioutprecision: FONT_OUTPUT_PRECISION, iclipprecision: FONT_CLIP_PRECISION, iquality: FONT_QUALITY, ipitchandfamily: FONT_PITCH_AND_FAMILY, pszfacename: super::super::Foundation::PWSTR) -> HFONT;
+pub type CreateHalftonePalette = unsafe extern "system" fn(hdc: HDC) -> HPALETTE;
+pub type CreateHatchBrush = unsafe extern "system" fn(ihatch: HATCH_BRUSH_STYLE, color: u32) -> HBRUSH;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateICA = unsafe extern "system" fn(pszdriver: super::super::Foundation::PSTR, pszdevice: super::super::Foundation::PSTR, pszport: super::super::Foundation::PSTR, pdm: *const DEVMODEA) -> CreatedHDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateICW = unsafe extern "system" fn(pszdriver: super::super::Foundation::PWSTR, pszdevice: super::super::Foundation::PWSTR, pszport: super::super::Foundation::PWSTR, pdm: *const DEVMODEW) -> CreatedHDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateMetaFileA = unsafe extern "system" fn(pszfile: super::super::Foundation::PSTR) -> HdcMetdataFileHandle;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateMetaFileW = unsafe extern "system" fn(pszfile: super::super::Foundation::PWSTR) -> HdcMetdataFileHandle;
+pub type CreatePalette = unsafe extern "system" fn(plpal: *const LOGPALETTE) -> HPALETTE;
+pub type CreatePatternBrush = unsafe extern "system" fn(hbm: HBITMAP) -> HBRUSH;
+pub type CreatePen = unsafe extern "system" fn(istyle: PEN_STYLE, cwidth: i32, color: u32) -> HPEN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreatePenIndirect = unsafe extern "system" fn(plpen: *const LOGPEN) -> HPEN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreatePolyPolygonRgn = unsafe extern "system" fn(pptl: *const super::super::Foundation::POINT, pc: *const i32, cpoly: i32, imode: CREATE_POLYGON_RGN_MODE) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreatePolygonRgn = unsafe extern "system" fn(pptl: *const super::super::Foundation::POINT, cpoint: i32, imode: CREATE_POLYGON_RGN_MODE) -> HRGN;
+pub type CreateRectRgn = unsafe extern "system" fn(x1: i32, y1: i32, x2: i32, y2: i32) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateRectRgnIndirect = unsafe extern "system" fn(lprect: *const super::super::Foundation::RECT) -> HRGN;
+pub type CreateRoundRectRgn = unsafe extern "system" fn(x1: i32, y1: i32, x2: i32, y2: i32, w: i32, h: i32) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateScalableFontResourceA = unsafe extern "system" fn(fdwhidden: u32, lpszfont: super::super::Foundation::PSTR, lpszfile: super::super::Foundation::PSTR, lpszpath: super::super::Foundation::PSTR) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type CreateScalableFontResourceW = unsafe extern "system" fn(fdwhidden: u32, lpszfont: super::super::Foundation::PWSTR, lpszfile: super::super::Foundation::PWSTR, lpszpath: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
+pub type CreateSolidBrush = unsafe extern "system" fn(color: u32) -> HBRUSH;
+#[cfg(feature = "Win32_Foundation")]
+pub type DPtoLP = unsafe extern "system" fn(hdc: HDC, lppt: *mut super::super::Foundation::POINT, c: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DeleteDC = unsafe extern "system" fn(hdc: CreatedHDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DeleteEnhMetaFile = unsafe extern "system" fn(hmf: HENHMETAFILE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DeleteMetaFile = unsafe extern "system" fn(hmf: HMETAFILE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DeleteObject = unsafe extern "system" fn(ho: HGDIOBJ) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawAnimatedRects = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, idani: i32, lprcfrom: *const super::super::Foundation::RECT, lprcto: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawCaption = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hdc: HDC, lprect: *const super::super::Foundation::RECT, flags: DRAW_CAPTION_FLAGS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawEdge = unsafe extern "system" fn(hdc: HDC, qrc: *mut super::super::Foundation::RECT, edge: DRAWEDGE_FLAGS, grfflags: DRAW_EDGE_FLAGS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawEscape = unsafe extern "system" fn(hdc: HDC, iescape: i32, cjin: i32, lpin: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawFocusRect = unsafe extern "system" fn(hdc: HDC, lprc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawFrameControl = unsafe extern "system" fn(param0: HDC, param1: *mut super::super::Foundation::RECT, param2: DFC_TYPE, param3: DFCS_STATE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawStateA = unsafe extern "system" fn(hdc: HDC, hbrfore: HBRUSH, qfncallback: DRAWSTATEPROC, ldata: super::super::Foundation::LPARAM, wdata: super::super::Foundation::WPARAM, x: i32, y: i32, cx: i32, cy: i32, uflags: DRAWSTATE_FLAGS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawStateW = unsafe extern "system" fn(hdc: HDC, hbrfore: HBRUSH, qfncallback: DRAWSTATEPROC, ldata: super::super::Foundation::LPARAM, wdata: super::super::Foundation::WPARAM, x: i32, y: i32, cx: i32, cy: i32, uflags: DRAWSTATE_FLAGS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawTextA = unsafe extern "system" fn(hdc: HDC, lpchtext: super::super::Foundation::PSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawTextExA = unsafe extern "system" fn(hdc: HDC, lpchtext: super::super::Foundation::PSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT, lpdtp: *const DRAWTEXTPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawTextExW = unsafe extern "system" fn(hdc: HDC, lpchtext: super::super::Foundation::PWSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT, lpdtp: *const DRAWTEXTPARAMS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DrawTextW = unsafe extern "system" fn(hdc: HDC, lpchtext: super::super::Foundation::PWSTR, cchtext: i32, lprc: *mut super::super::Foundation::RECT, format: DRAW_TEXT_FORMAT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type Ellipse = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EndPaint = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lppaint: *const PAINTSTRUCT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EndPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplayDevicesA = unsafe extern "system" fn(lpdevice: super::super::Foundation::PSTR, idevnum: u32, lpdisplaydevice: *mut DISPLAY_DEVICEA, dwflags: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplayDevicesW = unsafe extern "system" fn(lpdevice: super::super::Foundation::PWSTR, idevnum: u32, lpdisplaydevice: *mut DISPLAY_DEVICEW, dwflags: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplayMonitors = unsafe extern "system" fn(hdc: HDC, lprcclip: *const super::super::Foundation::RECT, lpfnenum: MONITORENUMPROC, dwdata: super::super::Foundation::LPARAM) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplaySettingsA = unsafe extern "system" fn(lpszdevicename: super::super::Foundation::PSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEA) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplaySettingsExA = unsafe extern "system" fn(lpszdevicename: super::super::Foundation::PSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEA, dwflags: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplaySettingsExW = unsafe extern "system" fn(lpszdevicename: super::super::Foundation::PWSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEW, dwflags: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumDisplaySettingsW = unsafe extern "system" fn(lpszdevicename: super::super::Foundation::PWSTR, imodenum: ENUM_DISPLAY_SETTINGS_MODE, lpdevmode: *mut DEVMODEW) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumEnhMetaFile = unsafe extern "system" fn(hdc: HDC, hmf: HENHMETAFILE, proc: ENHMFENUMPROC, param3: *const ::core::ffi::c_void, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumFontFamiliesA = unsafe extern "system" fn(hdc: HDC, lplogfont: super::super::Foundation::PSTR, lpproc: FONTENUMPROCA, lparam: super::super::Foundation::LPARAM) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumFontFamiliesExA = unsafe extern "system" fn(hdc: HDC, lplogfont: *const LOGFONTA, lpproc: FONTENUMPROCA, lparam: super::super::Foundation::LPARAM, dwflags: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumFontFamiliesExW = unsafe extern "system" fn(hdc: HDC, lplogfont: *const LOGFONTW, lpproc: FONTENUMPROCW, lparam: super::super::Foundation::LPARAM, dwflags: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumFontFamiliesW = unsafe extern "system" fn(hdc: HDC, lplogfont: super::super::Foundation::PWSTR, lpproc: FONTENUMPROCW, lparam: super::super::Foundation::LPARAM) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumFontsA = unsafe extern "system" fn(hdc: HDC, lplogfont: super::super::Foundation::PSTR, lpproc: FONTENUMPROCA, lparam: super::super::Foundation::LPARAM) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumFontsW = unsafe extern "system" fn(hdc: HDC, lplogfont: super::super::Foundation::PWSTR, lpproc: FONTENUMPROCW, lparam: super::super::Foundation::LPARAM) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumMetaFile = unsafe extern "system" fn(hdc: HDC, hmf: HMETAFILE, proc: MFENUMPROC, param3: super::super::Foundation::LPARAM) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EnumObjects = unsafe extern "system" fn(hdc: HDC, ntype: OBJ_TYPE, lpfunc: GOBJENUMPROC, lparam: super::super::Foundation::LPARAM) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type EqualRect = unsafe extern "system" fn(lprc1: *const super::super::Foundation::RECT, lprc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type EqualRgn = unsafe extern "system" fn(hrgn1: HRGN, hrgn2: HRGN) -> super::super::Foundation::BOOL;
+pub type ExcludeClipRect = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type ExcludeUpdateRgn = unsafe extern "system" fn(hdc: HDC, hwnd: super::super::Foundation::HWND) -> i32;
+pub type ExtCreatePen = unsafe extern "system" fn(ipenstyle: PEN_STYLE, cwidth: u32, plbrush: *const LOGBRUSH, cstyle: u32, pstyle: *const u32) -> HPEN;
+#[cfg(feature = "Win32_Foundation")]
+pub type ExtCreateRegion = unsafe extern "system" fn(lpx: *const XFORM, ncount: u32, lpdata: *const RGNDATA) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type ExtFloodFill = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, color: u32, r#type: EXT_FLOOD_FILL_TYPE) -> super::super::Foundation::BOOL;
+pub type ExtSelectClipRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN, mode: RGN_COMBINE_MODE) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type ExtTextOutA = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, options: ETO_OPTIONS, lprect: *const super::super::Foundation::RECT, lpstring: super::super::Foundation::PSTR, c: u32, lpdx: *const i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ExtTextOutW = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, options: ETO_OPTIONS, lprect: *const super::super::Foundation::RECT, lpstring: super::super::Foundation::PWSTR, c: u32, lpdx: *const i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type FillPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type FillRect = unsafe extern "system" fn(hdc: HDC, lprc: *const super::super::Foundation::RECT, hbr: HBRUSH) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type FillRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN, hbr: HBRUSH) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type FixBrushOrgEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, ptl: *const super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type FlattenPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type FloodFill = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, color: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type FrameRect = unsafe extern "system" fn(hdc: HDC, lprc: *const super::super::Foundation::RECT, hbr: HBRUSH) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type FrameRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN, hbr: HBRUSH, w: i32, h: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GdiAlphaBlend = unsafe extern "system" fn(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, ftn: BLENDFUNCTION) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GdiComment = unsafe extern "system" fn(hdc: HDC, nsize: u32, lpdata: *const u8) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GdiFlush = unsafe extern "system" fn() -> super::super::Foundation::BOOL;
+pub type GdiGetBatchLimit = unsafe extern "system" fn() -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GdiGradientFill = unsafe extern "system" fn(hdc: HDC, pvertex: *const TRIVERTEX, nvertex: u32, pmesh: *const ::core::ffi::c_void, ncount: u32, ulmode: GRADIENT_FILL) -> super::super::Foundation::BOOL;
+pub type GdiSetBatchLimit = unsafe extern "system" fn(dw: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GdiTransparentBlt = unsafe extern "system" fn(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, crtransparent: u32) -> super::super::Foundation::BOOL;
+pub type GetArcDirection = unsafe extern "system" fn(hdc: HDC) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetAspectRatioFilterEx = unsafe extern "system" fn(hdc: HDC, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+pub type GetBitmapBits = unsafe extern "system" fn(hbit: HBITMAP, cb: i32, lpvbits: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetBitmapDimensionEx = unsafe extern "system" fn(hbit: HBITMAP, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+pub type GetBkColor = unsafe extern "system" fn(hdc: HDC) -> u32;
+pub type GetBkMode = unsafe extern "system" fn(hdc: HDC) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetBoundsRect = unsafe extern "system" fn(hdc: HDC, lprect: *mut super::super::Foundation::RECT, flags: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetBrushOrgEx = unsafe extern "system" fn(hdc: HDC, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharABCWidthsA = unsafe extern "system" fn(hdc: HDC, wfirst: u32, wlast: u32, lpabc: *mut ABC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharABCWidthsFloatA = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpabc: *mut ABCFLOAT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharABCWidthsFloatW = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpabc: *mut ABCFLOAT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharABCWidthsI = unsafe extern "system" fn(hdc: HDC, gifirst: u32, cgi: u32, pgi: *const u16, pabc: *mut ABC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharABCWidthsW = unsafe extern "system" fn(hdc: HDC, wfirst: u32, wlast: u32, lpabc: *mut ABC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidth32A = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidth32W = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidthA = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidthFloatA = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut f32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidthFloatW = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut f32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidthI = unsafe extern "system" fn(hdc: HDC, gifirst: u32, cgi: u32, pgi: *const u16, piwidths: *mut i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharWidthW = unsafe extern "system" fn(hdc: HDC, ifirst: u32, ilast: u32, lpbuffer: *mut i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharacterPlacementA = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PSTR, ncount: i32, nmexextent: i32, lpresults: *mut GCP_RESULTSA, dwflags: GET_CHARACTER_PLACEMENT_FLAGS) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCharacterPlacementW = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PWSTR, ncount: i32, nmexextent: i32, lpresults: *mut GCP_RESULTSW, dwflags: GET_CHARACTER_PLACEMENT_FLAGS) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetClipBox = unsafe extern "system" fn(hdc: HDC, lprect: *mut super::super::Foundation::RECT) -> i32;
+pub type GetClipRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetColorAdjustment = unsafe extern "system" fn(hdc: HDC, lpca: *mut COLORADJUSTMENT) -> super::super::Foundation::BOOL;
+pub type GetCurrentObject = unsafe extern "system" fn(hdc: HDC, r#type: OBJ_TYPE) -> HGDIOBJ;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetCurrentPositionEx = unsafe extern "system" fn(hdc: HDC, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetDC = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND) -> HDC;
+pub type GetDCBrushColor = unsafe extern "system" fn(hdc: HDC) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetDCEx = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hrgnclip: HRGN, flags: GET_DCX_FLAGS) -> HDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetDCOrgEx = unsafe extern "system" fn(hdc: HDC, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+pub type GetDCPenColor = unsafe extern "system" fn(hdc: HDC) -> u32;
+pub type GetDIBColorTable = unsafe extern "system" fn(hdc: HDC, istart: u32, centries: u32, prgbq: *mut RGBQUAD) -> u32;
+pub type GetDIBits = unsafe extern "system" fn(hdc: HDC, hbm: HBITMAP, start: u32, clines: u32, lpvbits: *mut ::core::ffi::c_void, lpbmi: *mut BITMAPINFO, usage: DIB_USAGE) -> i32;
+pub type GetDeviceCaps = unsafe extern "system" fn(hdc: HDC, index: GET_DEVICE_CAPS_INDEX) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetEnhMetaFileA = unsafe extern "system" fn(lpname: super::super::Foundation::PSTR) -> HENHMETAFILE;
+pub type GetEnhMetaFileBits = unsafe extern "system" fn(hemf: HENHMETAFILE, nsize: u32, lpdata: *mut u8) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetEnhMetaFileDescriptionA = unsafe extern "system" fn(hemf: HENHMETAFILE, cchbuffer: u32, lpdescription: super::super::Foundation::PSTR) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetEnhMetaFileDescriptionW = unsafe extern "system" fn(hemf: HENHMETAFILE, cchbuffer: u32, lpdescription: super::super::Foundation::PWSTR) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetEnhMetaFileHeader = unsafe extern "system" fn(hemf: HENHMETAFILE, nsize: u32, lpenhmetaheader: *mut ENHMETAHEADER) -> u32;
+pub type GetEnhMetaFilePaletteEntries = unsafe extern "system" fn(hemf: HENHMETAFILE, nnumentries: u32, lppaletteentries: *mut PALETTEENTRY) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetEnhMetaFileW = unsafe extern "system" fn(lpname: super::super::Foundation::PWSTR) -> HENHMETAFILE;
+pub type GetFontData = unsafe extern "system" fn(hdc: HDC, dwtable: u32, dwoffset: u32, pvbuffer: *mut ::core::ffi::c_void, cjbuffer: u32) -> u32;
+pub type GetFontLanguageInfo = unsafe extern "system" fn(hdc: HDC) -> u32;
+pub type GetFontUnicodeRanges = unsafe extern "system" fn(hdc: HDC, lpgs: *mut GLYPHSET) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetGlyphIndicesA = unsafe extern "system" fn(hdc: HDC, lpstr: super::super::Foundation::PSTR, c: i32, pgi: *mut u16, fl: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetGlyphIndicesW = unsafe extern "system" fn(hdc: HDC, lpstr: super::super::Foundation::PWSTR, c: i32, pgi: *mut u16, fl: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetGlyphOutlineA = unsafe extern "system" fn(hdc: HDC, uchar: u32, fuformat: GET_GLYPH_OUTLINE_FORMAT, lpgm: *mut GLYPHMETRICS, cjbuffer: u32, pvbuffer: *mut ::core::ffi::c_void, lpmat2: *const MAT2) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetGlyphOutlineW = unsafe extern "system" fn(hdc: HDC, uchar: u32, fuformat: GET_GLYPH_OUTLINE_FORMAT, lpgm: *mut GLYPHMETRICS, cjbuffer: u32, pvbuffer: *mut ::core::ffi::c_void, lpmat2: *const MAT2) -> u32;
+pub type GetGraphicsMode = unsafe extern "system" fn(hdc: HDC) -> i32;
+pub type GetKerningPairsA = unsafe extern "system" fn(hdc: HDC, npairs: u32, lpkernpair: *mut KERNINGPAIR) -> u32;
+pub type GetKerningPairsW = unsafe extern "system" fn(hdc: HDC, npairs: u32, lpkernpair: *mut KERNINGPAIR) -> u32;
+pub type GetLayout = unsafe extern "system" fn(hdc: HDC) -> u32;
+pub type GetMapMode = unsafe extern "system" fn(hdc: HDC) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetMetaFileA = unsafe extern "system" fn(lpname: super::super::Foundation::PSTR) -> HMETAFILE;
+pub type GetMetaFileBitsEx = unsafe extern "system" fn(hmf: HMETAFILE, cbbuffer: u32, lpdata: *mut ::core::ffi::c_void) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetMetaFileW = unsafe extern "system" fn(lpname: super::super::Foundation::PWSTR) -> HMETAFILE;
+pub type GetMetaRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetMiterLimit = unsafe extern "system" fn(hdc: HDC, plimit: *mut f32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetMonitorInfoA = unsafe extern "system" fn(hmonitor: HMONITOR, lpmi: *mut MONITORINFO) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetMonitorInfoW = unsafe extern "system" fn(hmonitor: HMONITOR, lpmi: *mut MONITORINFO) -> super::super::Foundation::BOOL;
+pub type GetNearestColor = unsafe extern "system" fn(hdc: HDC, color: u32) -> u32;
+pub type GetNearestPaletteIndex = unsafe extern "system" fn(h: HPALETTE, color: u32) -> u32;
+pub type GetObjectA = unsafe extern "system" fn(h: HGDIOBJ, c: i32, pv: *mut ::core::ffi::c_void) -> i32;
+pub type GetObjectType = unsafe extern "system" fn(h: HGDIOBJ) -> u32;
+pub type GetObjectW = unsafe extern "system" fn(h: HGDIOBJ, c: i32, pv: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetOutlineTextMetricsA = unsafe extern "system" fn(hdc: HDC, cjcopy: u32, potm: *mut OUTLINETEXTMETRICA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetOutlineTextMetricsW = unsafe extern "system" fn(hdc: HDC, cjcopy: u32, potm: *mut OUTLINETEXTMETRICW) -> u32;
+pub type GetPaletteEntries = unsafe extern "system" fn(hpal: HPALETTE, istart: u32, centries: u32, ppalentries: *mut PALETTEENTRY) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetPath = unsafe extern "system" fn(hdc: HDC, apt: *mut super::super::Foundation::POINT, aj: *mut u8, cpt: i32) -> i32;
+pub type GetPixel = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32) -> u32;
+pub type GetPolyFillMode = unsafe extern "system" fn(hdc: HDC) -> i32;
+pub type GetROP2 = unsafe extern "system" fn(hdc: HDC) -> i32;
+pub type GetRandomRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN, i: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetRasterizerCaps = unsafe extern "system" fn(lpraststat: *mut RASTERIZER_STATUS, cjbytes: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetRegionData = unsafe extern "system" fn(hrgn: HRGN, ncount: u32, lprgndata: *mut RGNDATA) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetRgnBox = unsafe extern "system" fn(hrgn: HRGN, lprc: *mut super::super::Foundation::RECT) -> i32;
+pub type GetStockObject = unsafe extern "system" fn(i: GET_STOCK_OBJECT_FLAGS) -> HGDIOBJ;
+pub type GetStretchBltMode = unsafe extern "system" fn(hdc: HDC) -> i32;
+pub type GetSysColorBrush = unsafe extern "system" fn(nindex: i32) -> HBRUSH;
+pub type GetSystemPaletteEntries = unsafe extern "system" fn(hdc: HDC, istart: u32, centries: u32, ppalentries: *mut PALETTEENTRY) -> u32;
+pub type GetSystemPaletteUse = unsafe extern "system" fn(hdc: HDC) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTabbedTextExtentA = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTabbedTextExtentW = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PWSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32) -> u32;
+pub type GetTextAlign = unsafe extern "system" fn(hdc: HDC) -> u32;
+pub type GetTextCharacterExtra = unsafe extern "system" fn(hdc: HDC) -> i32;
+pub type GetTextColor = unsafe extern "system" fn(hdc: HDC) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentExPointA = unsafe extern "system" fn(hdc: HDC, lpszstring: super::super::Foundation::PSTR, cchstring: i32, nmaxextent: i32, lpnfit: *mut i32, lpndx: *mut i32, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentExPointI = unsafe extern "system" fn(hdc: HDC, lpwszstring: *const u16, cwchstring: i32, nmaxextent: i32, lpnfit: *mut i32, lpndx: *mut i32, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentExPointW = unsafe extern "system" fn(hdc: HDC, lpszstring: super::super::Foundation::PWSTR, cchstring: i32, nmaxextent: i32, lpnfit: *mut i32, lpndx: *mut i32, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentPoint32A = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PSTR, c: i32, psizl: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentPoint32W = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PWSTR, c: i32, psizl: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentPointA = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PSTR, c: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentPointI = unsafe extern "system" fn(hdc: HDC, pgiin: *const u16, cgi: i32, psize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextExtentPointW = unsafe extern "system" fn(hdc: HDC, lpstring: super::super::Foundation::PWSTR, c: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextFaceA = unsafe extern "system" fn(hdc: HDC, c: i32, lpname: super::super::Foundation::PSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextFaceW = unsafe extern "system" fn(hdc: HDC, c: i32, lpname: super::super::Foundation::PWSTR) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextMetricsA = unsafe extern "system" fn(hdc: HDC, lptm: *mut TEXTMETRICA) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetTextMetricsW = unsafe extern "system" fn(hdc: HDC, lptm: *mut TEXTMETRICW) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetUpdateRect = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lprect: *mut super::super::Foundation::RECT, berase: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetUpdateRgn = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hrgn: HRGN, berase: super::super::Foundation::BOOL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetViewportExtEx = unsafe extern "system" fn(hdc: HDC, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetViewportOrgEx = unsafe extern "system" fn(hdc: HDC, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+pub type GetWinMetaFileBits = unsafe extern "system" fn(hemf: HENHMETAFILE, cbdata16: u32, pdata16: *mut u8, imapmode: i32, hdcref: HDC) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetWindowDC = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND) -> HDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetWindowExtEx = unsafe extern "system" fn(hdc: HDC, lpsize: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetWindowOrgEx = unsafe extern "system" fn(hdc: HDC, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetWindowRgn = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hrgn: HRGN) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetWindowRgnBox = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lprc: *mut super::super::Foundation::RECT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type GetWorldTransform = unsafe extern "system" fn(hdc: HDC, lpxf: *mut XFORM) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GradientFill = unsafe extern "system" fn(hdc: HDC, pvertex: *const TRIVERTEX, nvertex: u32, pmesh: *const ::core::ffi::c_void, nmesh: u32, ulmode: GRADIENT_FILL) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GrayStringA = unsafe extern "system" fn(hdc: HDC, hbrush: HBRUSH, lpoutputfunc: GRAYSTRINGPROC, lpdata: super::super::Foundation::LPARAM, ncount: i32, x: i32, y: i32, nwidth: i32, nheight: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type GrayStringW = unsafe extern "system" fn(hdc: HDC, hbrush: HBRUSH, lpoutputfunc: GRAYSTRINGPROC, lpdata: super::super::Foundation::LPARAM, ncount: i32, x: i32, y: i32, nwidth: i32, nheight: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type InflateRect = unsafe extern "system" fn(lprc: *mut super::super::Foundation::RECT, dx: i32, dy: i32) -> super::super::Foundation::BOOL;
+pub type IntersectClipRect = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type IntersectRect = unsafe extern "system" fn(lprcdst: *mut super::super::Foundation::RECT, lprcsrc1: *const super::super::Foundation::RECT, lprcsrc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type InvalidateRect = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lprect: *const super::super::Foundation::RECT, berase: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type InvalidateRgn = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hrgn: HRGN, berase: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type InvertRect = unsafe extern "system" fn(hdc: HDC, lprc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type InvertRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type IsRectEmpty = unsafe extern "system" fn(lprc: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type LPtoDP = unsafe extern "system" fn(hdc: HDC, lppt: *mut super::super::Foundation::POINT, c: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type LineDDA = unsafe extern "system" fn(xstart: i32, ystart: i32, xend: i32, yend: i32, lpproc: LINEDDAPROC, data: super::super::Foundation::LPARAM) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type LineTo = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type LoadBitmapA = unsafe extern "system" fn(hinstance: super::super::Foundation::HINSTANCE, lpbitmapname: super::super::Foundation::PSTR) -> HBITMAP;
+#[cfg(feature = "Win32_Foundation")]
+pub type LoadBitmapW = unsafe extern "system" fn(hinstance: super::super::Foundation::HINSTANCE, lpbitmapname: super::super::Foundation::PWSTR) -> HBITMAP;
+#[cfg(feature = "Win32_Foundation")]
+pub type LockWindowUpdate = unsafe extern "system" fn(hwndlock: super::super::Foundation::HWND) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type MapWindowPoints = unsafe extern "system" fn(hwndfrom: super::super::Foundation::HWND, hwndto: super::super::Foundation::HWND, lppoints: *mut super::super::Foundation::POINT, cpoints: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type MaskBlt = unsafe extern "system" fn(hdcdest: HDC, xdest: i32, ydest: i32, width: i32, height: i32, hdcsrc: HDC, xsrc: i32, ysrc: i32, hbmmask: HBITMAP, xmask: i32, ymask: i32, rop: u32) -> super::super::Foundation::BOOL;
+pub type MergeFontPackage = unsafe extern "system" fn(puchmergefontbuffer: *const u8, ulmergefontbuffersize: u32, puchfontpackagebuffer: *const u8, ulfontpackagebuffersize: u32, ppuchdestbuffer: *mut *mut u8, puldestbuffersize: *mut u32, pulbyteswritten: *mut u32, usmode: u16, lpfnallocate: CFP_ALLOCPROC, lpfnreallocate: CFP_REALLOCPROC, lpfnfree: CFP_FREEPROC, lpvreserved: *mut ::core::ffi::c_void) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type ModifyWorldTransform = unsafe extern "system" fn(hdc: HDC, lpxf: *const XFORM, mode: MODIFY_WORLD_TRANSFORM_MODE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type MonitorFromPoint = unsafe extern "system" fn(pt: super::super::Foundation::POINT, dwflags: MONITOR_FROM_FLAGS) -> HMONITOR;
+#[cfg(feature = "Win32_Foundation")]
+pub type MonitorFromRect = unsafe extern "system" fn(lprc: *const super::super::Foundation::RECT, dwflags: MONITOR_FROM_FLAGS) -> HMONITOR;
+#[cfg(feature = "Win32_Foundation")]
+pub type MonitorFromWindow = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, dwflags: MONITOR_FROM_FLAGS) -> HMONITOR;
+#[cfg(feature = "Win32_Foundation")]
+pub type MoveToEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+pub type OffsetClipRgn = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OffsetRect = unsafe extern "system" fn(lprc: *mut super::super::Foundation::RECT, dx: i32, dy: i32) -> super::super::Foundation::BOOL;
+pub type OffsetRgn = unsafe extern "system" fn(hrgn: HRGN, x: i32, y: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OffsetViewportOrgEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type OffsetWindowOrgEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PaintDesktop = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PaintRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PatBlt = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, w: i32, h: i32, rop: ROP_CODE) -> super::super::Foundation::BOOL;
+pub type PathToRegion = unsafe extern "system" fn(hdc: HDC) -> HRGN;
+#[cfg(feature = "Win32_Foundation")]
+pub type Pie = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32, xr1: i32, yr1: i32, xr2: i32, yr2: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlayEnhMetaFile = unsafe extern "system" fn(hdc: HDC, hmf: HENHMETAFILE, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlayEnhMetaFileRecord = unsafe extern "system" fn(hdc: HDC, pht: *const HANDLETABLE, pmr: *const ENHMETARECORD, cht: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlayMetaFile = unsafe extern "system" fn(hdc: HDC, hmf: HMETAFILE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlayMetaFileRecord = unsafe extern "system" fn(hdc: HDC, lphandletable: *const HANDLETABLE, lpmr: *const METARECORD, noobjs: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PlgBlt = unsafe extern "system" fn(hdcdest: HDC, lppoint: *const super::super::Foundation::POINT, hdcsrc: HDC, xsrc: i32, ysrc: i32, width: i32, height: i32, hbmmask: HBITMAP, xmask: i32, ymask: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyBezier = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyBezierTo = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyDraw = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, aj: *const u8, cpt: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyPolygon = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, asz: *const i32, csz: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyPolyline = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, asz: *const u32, csz: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyTextOutA = unsafe extern "system" fn(hdc: HDC, ppt: *const POLYTEXTA, nstrings: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolyTextOutW = unsafe extern "system" fn(hdc: HDC, ppt: *const POLYTEXTW, nstrings: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type Polygon = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type Polyline = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PolylineTo = unsafe extern "system" fn(hdc: HDC, apt: *const super::super::Foundation::POINT, cpt: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PtInRect = unsafe extern "system" fn(lprc: *const super::super::Foundation::RECT, pt: super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PtInRegion = unsafe extern "system" fn(hrgn: HRGN, x: i32, y: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PtVisible = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32) -> super::super::Foundation::BOOL;
+pub type RealizePalette = unsafe extern "system" fn(hdc: HDC) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RectInRegion = unsafe extern "system" fn(hrgn: HRGN, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RectVisible = unsafe extern "system" fn(hdc: HDC, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type Rectangle = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RedrawWindow = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lprcupdate: *const super::super::Foundation::RECT, hrgnupdate: HRGN, flags: REDRAW_WINDOW_FLAGS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ReleaseDC = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hdc: HDC) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RemoveFontMemResourceEx = unsafe extern "system" fn(h: super::super::Foundation::HANDLE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RemoveFontResourceA = unsafe extern "system" fn(lpfilename: super::super::Foundation::PSTR) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RemoveFontResourceExA = unsafe extern "system" fn(name: super::super::Foundation::PSTR, fl: u32, pdv: *mut ::core::ffi::c_void) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RemoveFontResourceExW = unsafe extern "system" fn(name: super::super::Foundation::PWSTR, fl: u32, pdv: *mut ::core::ffi::c_void) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RemoveFontResourceW = unsafe extern "system" fn(lpfilename: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ResetDCA = unsafe extern "system" fn(hdc: HDC, lpdm: *const DEVMODEA) -> HDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type ResetDCW = unsafe extern "system" fn(hdc: HDC, lpdm: *const DEVMODEW) -> HDC;
+#[cfg(feature = "Win32_Foundation")]
+pub type ResizePalette = unsafe extern "system" fn(hpal: HPALETTE, n: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RestoreDC = unsafe extern "system" fn(hdc: HDC, nsaveddc: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type RoundRect = unsafe extern "system" fn(hdc: HDC, left: i32, top: i32, right: i32, bottom: i32, width: i32, height: i32) -> super::super::Foundation::BOOL;
+pub type SaveDC = unsafe extern "system" fn(hdc: HDC) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type ScaleViewportExtEx = unsafe extern "system" fn(hdc: HDC, xn: i32, dx: i32, yn: i32, yd: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ScaleWindowExtEx = unsafe extern "system" fn(hdc: HDC, xn: i32, xd: i32, yn: i32, yd: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ScreenToClient = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lppoint: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SelectClipPath = unsafe extern "system" fn(hdc: HDC, mode: RGN_COMBINE_MODE) -> super::super::Foundation::BOOL;
+pub type SelectClipRgn = unsafe extern "system" fn(hdc: HDC, hrgn: HRGN) -> i32;
+pub type SelectObject = unsafe extern "system" fn(hdc: HDC, h: HGDIOBJ) -> HGDIOBJ;
+#[cfg(feature = "Win32_Foundation")]
+pub type SelectPalette = unsafe extern "system" fn(hdc: HDC, hpal: HPALETTE, bforcebkgd: super::super::Foundation::BOOL) -> HPALETTE;
+pub type SetArcDirection = unsafe extern "system" fn(hdc: HDC, dir: ARC_DIRECTION) -> i32;
+pub type SetBitmapBits = unsafe extern "system" fn(hbm: HBITMAP, cb: u32, pvbits: *const ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetBitmapDimensionEx = unsafe extern "system" fn(hbm: HBITMAP, w: i32, h: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+pub type SetBkColor = unsafe extern "system" fn(hdc: HDC, color: u32) -> u32;
+pub type SetBkMode = unsafe extern "system" fn(hdc: HDC, mode: BACKGROUND_MODE) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetBoundsRect = unsafe extern "system" fn(hdc: HDC, lprect: *const super::super::Foundation::RECT, flags: SET_BOUNDS_RECT_FLAGS) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetBrushOrgEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetColorAdjustment = unsafe extern "system" fn(hdc: HDC, lpca: *const COLORADJUSTMENT) -> super::super::Foundation::BOOL;
+pub type SetDCBrushColor = unsafe extern "system" fn(hdc: HDC, color: u32) -> u32;
+pub type SetDCPenColor = unsafe extern "system" fn(hdc: HDC, color: u32) -> u32;
+pub type SetDIBColorTable = unsafe extern "system" fn(hdc: HDC, istart: u32, centries: u32, prgbq: *const RGBQUAD) -> u32;
+pub type SetDIBits = unsafe extern "system" fn(hdc: HDC, hbm: HBITMAP, start: u32, clines: u32, lpbits: *const ::core::ffi::c_void, lpbmi: *const BITMAPINFO, coloruse: DIB_USAGE) -> i32;
+pub type SetDIBitsToDevice = unsafe extern "system" fn(hdc: HDC, xdest: i32, ydest: i32, w: u32, h: u32, xsrc: i32, ysrc: i32, startscan: u32, clines: u32, lpvbits: *const ::core::ffi::c_void, lpbmi: *const BITMAPINFO, coloruse: DIB_USAGE) -> i32;
+pub type SetEnhMetaFileBits = unsafe extern "system" fn(nsize: u32, pb: *const u8) -> HENHMETAFILE;
+pub type SetGraphicsMode = unsafe extern "system" fn(hdc: HDC, imode: GRAPHICS_MODE) -> i32;
+pub type SetLayout = unsafe extern "system" fn(hdc: HDC, l: DC_LAYOUT) -> u32;
+pub type SetMapMode = unsafe extern "system" fn(hdc: HDC, imode: HDC_MAP_MODE) -> i32;
+pub type SetMapperFlags = unsafe extern "system" fn(hdc: HDC, flags: u32) -> u32;
+pub type SetMetaFileBitsEx = unsafe extern "system" fn(cbbuffer: u32, lpdata: *const u8) -> HMETAFILE;
+pub type SetMetaRgn = unsafe extern "system" fn(hdc: HDC) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetMiterLimit = unsafe extern "system" fn(hdc: HDC, limit: f32, old: *mut f32) -> super::super::Foundation::BOOL;
+pub type SetPaletteEntries = unsafe extern "system" fn(hpal: HPALETTE, istart: u32, centries: u32, ppalentries: *const PALETTEENTRY) -> u32;
+pub type SetPixel = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, color: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetPixelV = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, color: u32) -> super::super::Foundation::BOOL;
+pub type SetPolyFillMode = unsafe extern "system" fn(hdc: HDC, mode: CREATE_POLYGON_RGN_MODE) -> i32;
+pub type SetROP2 = unsafe extern "system" fn(hdc: HDC, rop2: R2_MODE) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetRect = unsafe extern "system" fn(lprc: *mut super::super::Foundation::RECT, xleft: i32, ytop: i32, xright: i32, ybottom: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetRectEmpty = unsafe extern "system" fn(lprc: *mut super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetRectRgn = unsafe extern "system" fn(hrgn: HRGN, left: i32, top: i32, right: i32, bottom: i32) -> super::super::Foundation::BOOL;
+pub type SetStretchBltMode = unsafe extern "system" fn(hdc: HDC, mode: STRETCH_BLT_MODE) -> i32;
+pub type SetSystemPaletteUse = unsafe extern "system" fn(hdc: HDC, r#use: SYSTEM_PALETTE_USE) -> u32;
+pub type SetTextAlign = unsafe extern "system" fn(hdc: HDC, align: TEXT_ALIGN_OPTIONS) -> u32;
+pub type SetTextCharacterExtra = unsafe extern "system" fn(hdc: HDC, extra: i32) -> i32;
+pub type SetTextColor = unsafe extern "system" fn(hdc: HDC, color: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetTextJustification = unsafe extern "system" fn(hdc: HDC, extra: i32, count: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetViewportExtEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetViewportOrgEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetWindowExtEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lpsz: *mut super::super::Foundation::SIZE) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetWindowOrgEx = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lppt: *mut super::super::Foundation::POINT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetWindowRgn = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hrgn: HRGN, bredraw: super::super::Foundation::BOOL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type SetWorldTransform = unsafe extern "system" fn(hdc: HDC, lpxf: *const XFORM) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type StretchBlt = unsafe extern "system" fn(hdcdest: HDC, xdest: i32, ydest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xsrc: i32, ysrc: i32, wsrc: i32, hsrc: i32, rop: ROP_CODE) -> super::super::Foundation::BOOL;
+pub type StretchDIBits = unsafe extern "system" fn(hdc: HDC, xdest: i32, ydest: i32, destwidth: i32, destheight: i32, xsrc: i32, ysrc: i32, srcwidth: i32, srcheight: i32, lpbits: *const ::core::ffi::c_void, lpbmi: *const BITMAPINFO, iusage: DIB_USAGE, rop: ROP_CODE) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type StrokeAndFillPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type StrokePath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type SubtractRect = unsafe extern "system" fn(lprcdst: *mut super::super::Foundation::RECT, lprcsrc1: *const super::super::Foundation::RECT, lprcsrc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+pub type TTCharToUnicode = unsafe extern "system" fn(hdc: HDC, puccharcodes: *const u8, ulcharcodesize: u32, pusshortcodes: *mut u16, ulshortcodesize: u32, ulflags: u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTDeleteEmbeddedFont = unsafe extern "system" fn(hfontreference: super::super::Foundation::HANDLE, ulflags: u32, pulstatus: *mut u32) -> i32;
+pub type TTEmbedFont = unsafe extern "system" fn(hdc: HDC, ulflags: TTEMBED_FLAGS, ulcharset: EMBED_FONT_CHARSET, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, pulstatus: *mut u32, lpfnwritetostream: WRITEEMBEDPROC, lpvwritestream: *const ::core::ffi::c_void, puscharcodeset: *const u16, uscharcodecount: u16, uslanguage: u16, pttembedinfo: *const TTEMBEDINFO) -> i32;
+pub type TTEmbedFontEx = unsafe extern "system" fn(hdc: HDC, ulflags: TTEMBED_FLAGS, ulcharset: EMBED_FONT_CHARSET, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, pulstatus: *mut u32, lpfnwritetostream: WRITEEMBEDPROC, lpvwritestream: *const ::core::ffi::c_void, pulcharcodeset: *const u32, uscharcodecount: u16, uslanguage: u16, pttembedinfo: *const TTEMBEDINFO) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTEmbedFontFromFileA = unsafe extern "system" fn(hdc: HDC, szfontfilename: super::super::Foundation::PSTR, usttcindex: u16, ulflags: TTEMBED_FLAGS, ulcharset: EMBED_FONT_CHARSET, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, pulstatus: *mut u32, lpfnwritetostream: WRITEEMBEDPROC, lpvwritestream: *const ::core::ffi::c_void, puscharcodeset: *const u16, uscharcodecount: u16, uslanguage: u16, pttembedinfo: *const TTEMBEDINFO) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTEnableEmbeddingForFacename = unsafe extern "system" fn(lpszfacename: super::super::Foundation::PSTR, benable: super::super::Foundation::BOOL) -> i32;
+pub type TTGetEmbeddedFontInfo = unsafe extern "system" fn(ulflags: TTEMBED_FLAGS, pulprivstatus: *mut u32, ulprivs: FONT_LICENSE_PRIVS, pulstatus: *mut u32, lpfnreadfromstream: READEMBEDPROC, lpvreadstream: *const ::core::ffi::c_void, pttloadinfo: *const TTLOADINFO) -> i32;
+pub type TTGetEmbeddingType = unsafe extern "system" fn(hdc: HDC, pulembedtype: *mut EMBEDDED_FONT_PRIV_STATUS) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTGetNewFontName = unsafe extern "system" fn(phfontreference: *const super::super::Foundation::HANDLE, wzwinfamilyname: super::super::Foundation::PWSTR, cchmaxwinname: i32, szmacfamilyname: super::super::Foundation::PSTR, cchmaxmacname: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTIsEmbeddingEnabled = unsafe extern "system" fn(hdc: HDC, pbenabled: *mut super::super::Foundation::BOOL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTIsEmbeddingEnabledForFacename = unsafe extern "system" fn(lpszfacename: super::super::Foundation::PSTR, pbenabled: *mut super::super::Foundation::BOOL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TTLoadEmbeddedFont = unsafe extern "system" fn(phfontreference: *mut super::super::Foundation::HANDLE, ulflags: u32, pulprivstatus: *mut EMBEDDED_FONT_PRIV_STATUS, ulprivs: FONT_LICENSE_PRIVS, pulstatus: *mut TTLOAD_EMBEDDED_FONT_STATUS, lpfnreadfromstream: READEMBEDPROC, lpvreadstream: *const ::core::ffi::c_void, szwinfamilyname: super::super::Foundation::PWSTR, szmacfamilyname: super::super::Foundation::PSTR, pttloadinfo: *const TTLOADINFO) -> i32;
+pub type TTRunValidationTests = unsafe extern "system" fn(hdc: HDC, ptestparam: *const TTVALIDATIONTESTSPARAMS) -> i32;
+pub type TTRunValidationTestsEx = unsafe extern "system" fn(hdc: HDC, ptestparam: *const TTVALIDATIONTESTSPARAMSEX) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TabbedTextOutA = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32, ntaborigin: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TabbedTextOutW = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PWSTR, chcount: i32, ntabpositions: i32, lpntabstoppositions: *const i32, ntaborigin: i32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type TextOutA = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PSTR, c: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type TextOutW = unsafe extern "system" fn(hdc: HDC, x: i32, y: i32, lpstring: super::super::Foundation::PWSTR, c: i32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type TransparentBlt = unsafe extern "system" fn(hdcdest: HDC, xorigindest: i32, yorigindest: i32, wdest: i32, hdest: i32, hdcsrc: HDC, xoriginsrc: i32, yoriginsrc: i32, wsrc: i32, hsrc: i32, crtransparent: u32) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type UnionRect = unsafe extern "system" fn(lprcdst: *mut super::super::Foundation::RECT, lprcsrc1: *const super::super::Foundation::RECT, lprcsrc2: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type UnrealizeObject = unsafe extern "system" fn(h: HGDIOBJ) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type UpdateColors = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type UpdateWindow = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ValidateRect = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, lprect: *const super::super::Foundation::RECT) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type ValidateRgn = unsafe extern "system" fn(hwnd: super::super::Foundation::HWND, hrgn: HRGN) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type WidenPath = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type WindowFromDC = unsafe extern "system" fn(hdc: HDC) -> super::super::Foundation::HWND;
+pub type wglSwapMultipleBuffers = unsafe extern "system" fn(param0: u32, param1: *const WGLSWAP) -> u32;
 #[repr(C)]
 pub struct ABC {
     pub abcA: i32,

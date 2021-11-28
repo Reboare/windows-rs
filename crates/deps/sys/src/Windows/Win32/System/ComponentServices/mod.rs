@@ -1,17 +1,14 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn CoCreateActivity(piunknown: ::windows_sys::core::IUnknown, riid: *const ::windows_sys::core::GUID, ppobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn CoEnterServiceDomain(pconfigobject: ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_System_Com")]
-    pub fn CoGetDefaultContext(apttype: super::Com::APTTYPE, riid: *const ::windows_sys::core::GUID, ppv: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn CoLeaveServiceDomain(punkstatus: ::windows_sys::core::IUnknown);
-    pub fn GetDispenserManager(param0: *mut IDispenserManager) -> ::windows_sys::core::HRESULT;
-    pub fn GetManagedExtensions(dwexts: *mut u32) -> ::windows_sys::core::HRESULT;
-    pub fn MTSCreateActivity(riid: *const ::windows_sys::core::GUID, ppobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn RecycleSurrogate(lreasoncode: i32) -> ::windows_sys::core::HRESULT;
-    pub fn SafeRef(rid: *const ::windows_sys::core::GUID, punk: ::windows_sys::core::IUnknown) -> *mut ::core::ffi::c_void;
-}
+pub type CoCreateActivity = unsafe extern "system" fn(piunknown: ::windows_sys::core::IUnknown, riid: *const ::windows_sys::core::GUID, ppobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type CoEnterServiceDomain = unsafe extern "system" fn(pconfigobject: ::windows_sys::core::IUnknown) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_System_Com")]
+pub type CoGetDefaultContext = unsafe extern "system" fn(apttype: super::Com::APTTYPE, riid: *const ::windows_sys::core::GUID, ppv: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type CoLeaveServiceDomain = unsafe extern "system" fn(punkstatus: ::windows_sys::core::IUnknown);
+pub type GetDispenserManager = unsafe extern "system" fn(param0: *mut IDispenserManager) -> ::windows_sys::core::HRESULT;
+pub type GetManagedExtensions = unsafe extern "system" fn(dwexts: *mut u32) -> ::windows_sys::core::HRESULT;
+pub type MTSCreateActivity = unsafe extern "system" fn(riid: *const ::windows_sys::core::GUID, ppobj: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type RecycleSurrogate = unsafe extern "system" fn(lreasoncode: i32) -> ::windows_sys::core::HRESULT;
+pub type SafeRef = unsafe extern "system" fn(rid: *const ::windows_sys::core::GUID, punk: ::windows_sys::core::IUnknown) -> *mut ::core::ffi::c_void;
 pub const AppDomainHelper: ::windows_sys::core::GUID = ::windows_sys::core::GUID {
     data1: 4012177033,
     data2: 5368,

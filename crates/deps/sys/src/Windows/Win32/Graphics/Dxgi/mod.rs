@@ -1,14 +1,11 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
 #[cfg(feature = "Win32_Graphics_Dxgi_Common")]
 pub mod Common;
-#[link(name = "windows")]
-extern "system" {
-    pub fn CreateDXGIFactory(riid: *const ::windows_sys::core::GUID, ppfactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn CreateDXGIFactory1(riid: *const ::windows_sys::core::GUID, ppfactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn CreateDXGIFactory2(flags: u32, riid: *const ::windows_sys::core::GUID, ppfactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    pub fn DXGIDeclareAdapterRemovalSupport() -> ::windows_sys::core::HRESULT;
-    pub fn DXGIGetDebugInterface1(flags: u32, riid: *const ::windows_sys::core::GUID, pdebug: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-}
+pub type CreateDXGIFactory = unsafe extern "system" fn(riid: *const ::windows_sys::core::GUID, ppfactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type CreateDXGIFactory1 = unsafe extern "system" fn(riid: *const ::windows_sys::core::GUID, ppfactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type CreateDXGIFactory2 = unsafe extern "system" fn(flags: u32, riid: *const ::windows_sys::core::GUID, ppfactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+pub type DXGIDeclareAdapterRemovalSupport = unsafe extern "system" fn() -> ::windows_sys::core::HRESULT;
+pub type DXGIGetDebugInterface1 = unsafe extern "system" fn(flags: u32, riid: *const ::windows_sys::core::GUID, pdebug: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
 #[repr(C)]
 #[cfg(feature = "Win32_Foundation")]
 pub struct DXGI_ADAPTER_DESC {

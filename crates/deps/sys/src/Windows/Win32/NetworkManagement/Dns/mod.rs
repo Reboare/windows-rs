@@ -1,117 +1,114 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn DnsAcquireContextHandle_A(credentialflags: u32, credentials: *const ::core::ffi::c_void, pcontext: *mut DnsContextHandle) -> i32;
-    pub fn DnsAcquireContextHandle_W(credentialflags: u32, credentials: *const ::core::ffi::c_void, pcontext: *mut DnsContextHandle) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsCancelQuery(pcancelhandle: *const DNS_QUERY_CANCEL) -> i32;
-    pub fn DnsConnectionDeletePolicyEntries(policyentrytag: DNS_CONNECTION_POLICY_TAG) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionDeleteProxyInfo(pwszconnectionname: super::super::Foundation::PWSTR, r#type: DNS_CONNECTION_PROXY_TYPE) -> u32;
-    pub fn DnsConnectionFreeNameList(pnamelist: *mut DNS_CONNECTION_NAME_LIST);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionFreeProxyInfo(pproxyinfo: *mut DNS_CONNECTION_PROXY_INFO);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionFreeProxyInfoEx(pproxyinfoex: *mut DNS_CONNECTION_PROXY_INFO_EX);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionFreeProxyList(pproxylist: *mut DNS_CONNECTION_PROXY_LIST);
-    pub fn DnsConnectionGetNameList(pnamelist: *mut DNS_CONNECTION_NAME_LIST) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionGetProxyInfo(pwszconnectionname: super::super::Foundation::PWSTR, r#type: DNS_CONNECTION_PROXY_TYPE, pproxyinfo: *mut DNS_CONNECTION_PROXY_INFO) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionGetProxyInfoForHostUrl(pwszhosturl: super::super::Foundation::PWSTR, pselectioncontext: *const u8, dwselectioncontextlength: u32, dwexplicitinterfaceindex: u32, pproxyinfoex: *mut DNS_CONNECTION_PROXY_INFO_EX) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionGetProxyList(pwszconnectionname: super::super::Foundation::PWSTR, pproxylist: *mut DNS_CONNECTION_PROXY_LIST) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionSetPolicyEntries(policyentrytag: DNS_CONNECTION_POLICY_TAG, ppolicyentrylist: *const DNS_CONNECTION_POLICY_ENTRY_LIST) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionSetProxyInfo(pwszconnectionname: super::super::Foundation::PWSTR, r#type: DNS_CONNECTION_PROXY_TYPE, pproxyinfo: *const DNS_CONNECTION_PROXY_INFO) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsConnectionUpdateIfIndexTable(pconnectionifindexentries: *const DNS_CONNECTION_IFINDEX_LIST) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsExtractRecordsFromMessage_UTF8(pdnsbuffer: *const DNS_MESSAGE_BUFFER, wmessagelength: u16, pprecord: *mut *mut DNS_RECORDA) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsExtractRecordsFromMessage_W(pdnsbuffer: *const DNS_MESSAGE_BUFFER, wmessagelength: u16, pprecord: *mut *mut DNS_RECORDA) -> i32;
-    pub fn DnsFree(pdata: *const ::core::ffi::c_void, freetype: DNS_FREE_TYPE);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsFreeCustomServers(pcservers: *mut u32, ppservers: *mut *mut DNS_CUSTOM_SERVER);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsFreeProxyName(proxyname: super::super::Foundation::PWSTR);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsGetApplicationSettings(pcservers: *mut u32, ppdefaultservers: *mut *mut DNS_CUSTOM_SERVER, psettings: *mut DNS_APPLICATION_SETTINGS) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsGetProxyInformation(hostname: super::super::Foundation::PWSTR, proxyinformation: *mut DNS_PROXY_INFORMATION, defaultproxyinformation: *mut DNS_PROXY_INFORMATION, completionroutine: DNS_PROXY_COMPLETION_ROUTINE, completioncontext: *const ::core::ffi::c_void) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsModifyRecordsInSet_A(paddrecords: *const DNS_RECORDA, pdeleterecords: *const DNS_RECORDA, options: u32, hcredentials: super::super::Foundation::HANDLE, pextralist: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsModifyRecordsInSet_UTF8(paddrecords: *const DNS_RECORDA, pdeleterecords: *const DNS_RECORDA, options: u32, hcredentials: super::super::Foundation::HANDLE, pextralist: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsModifyRecordsInSet_W(paddrecords: *const DNS_RECORDA, pdeleterecords: *const DNS_RECORDA, options: u32, hcredentials: super::super::Foundation::HANDLE, pextralist: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsNameCompare_A(pname1: super::super::Foundation::PSTR, pname2: super::super::Foundation::PSTR) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsNameCompare_W(pname1: super::super::Foundation::PWSTR, pname2: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsQueryConfig(config: DNS_CONFIG_TYPE, flag: u32, pwsadaptername: super::super::Foundation::PWSTR, preserved: *const ::core::ffi::c_void, pbuffer: *mut ::core::ffi::c_void, pbuflen: *mut u32) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsQueryEx(pqueryrequest: *const DNS_QUERY_REQUEST, pqueryresults: *mut DNS_QUERY_RESULT, pcancelhandle: *mut DNS_QUERY_CANCEL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsQuery_A(pszname: super::super::Foundation::PSTR, wtype: u16, options: u32, pextra: *mut ::core::ffi::c_void, ppqueryresults: *mut *mut DNS_RECORDA, preserved: *mut *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsQuery_UTF8(pszname: super::super::Foundation::PSTR, wtype: u16, options: u32, pextra: *mut ::core::ffi::c_void, ppqueryresults: *mut *mut DNS_RECORDA, preserved: *mut *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsQuery_W(pszname: super::super::Foundation::PWSTR, wtype: u16, options: u32, pextra: *mut ::core::ffi::c_void, ppqueryresults: *mut *mut DNS_RECORDA, preserved: *mut *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsRecordCompare(precord1: *const DNS_RECORDA, precord2: *const DNS_RECORDA) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsRecordCopyEx(precord: *const DNS_RECORDA, charsetin: DNS_CHARSET, charsetout: DNS_CHARSET) -> *mut DNS_RECORDA;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsRecordSetCompare(prr1: *mut DNS_RECORDA, prr2: *mut DNS_RECORDA, ppdiff1: *mut *mut DNS_RECORDA, ppdiff2: *mut *mut DNS_RECORDA) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsRecordSetCopyEx(precordset: *const DNS_RECORDA, charsetin: DNS_CHARSET, charsetout: DNS_CHARSET) -> *mut DNS_RECORDA;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsRecordSetDetach(precordlist: *mut DNS_RECORDA) -> *mut DNS_RECORDA;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsReleaseContextHandle(hcontext: super::super::Foundation::HANDLE);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsReplaceRecordSetA(preplaceset: *const DNS_RECORDA, options: u32, hcontext: super::super::Foundation::HANDLE, pextrainfo: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsReplaceRecordSetUTF8(preplaceset: *const DNS_RECORDA, options: u32, hcontext: super::super::Foundation::HANDLE, pextrainfo: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsReplaceRecordSetW(preplaceset: *const DNS_RECORDA, options: u32, hcontext: super::super::Foundation::HANDLE, pextrainfo: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceBrowse(prequest: *const DNS_SERVICE_BROWSE_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> i32;
-    pub fn DnsServiceBrowseCancel(pcancelhandle: *const DNS_SERVICE_CANCEL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceConstructInstance(pservicename: super::super::Foundation::PWSTR, phostname: super::super::Foundation::PWSTR, pip4: *const u32, pip6: *const IP6_ADDRESS, wport: u16, wpriority: u16, wweight: u16, dwpropertiescount: u32, keys: *const super::super::Foundation::PWSTR, values: *const super::super::Foundation::PWSTR) -> *mut DNS_SERVICE_INSTANCE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceCopyInstance(porig: *const DNS_SERVICE_INSTANCE) -> *mut DNS_SERVICE_INSTANCE;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceDeRegister(prequest: *const DNS_SERVICE_REGISTER_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceFreeInstance(pinstance: *const DNS_SERVICE_INSTANCE);
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceRegister(prequest: *const DNS_SERVICE_REGISTER_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> u32;
-    pub fn DnsServiceRegisterCancel(pcancelhandle: *const DNS_SERVICE_CANCEL) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsServiceResolve(prequest: *const DNS_SERVICE_RESOLVE_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> i32;
-    pub fn DnsServiceResolveCancel(pcancelhandle: *const DNS_SERVICE_CANCEL) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsSetApplicationSettings(cservers: u32, pservers: *const DNS_CUSTOM_SERVER, psettings: *const DNS_APPLICATION_SETTINGS) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsStartMulticastQuery(pqueryrequest: *const MDNS_QUERY_REQUEST, phandle: *mut MDNS_QUERY_HANDLE) -> i32;
-    pub fn DnsStopMulticastQuery(phandle: *mut MDNS_QUERY_HANDLE) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsValidateName_A(pszname: super::super::Foundation::PSTR, format: DNS_NAME_FORMAT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsValidateName_UTF8(pszname: super::super::Foundation::PSTR, format: DNS_NAME_FORMAT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsValidateName_W(pszname: super::super::Foundation::PWSTR, format: DNS_NAME_FORMAT) -> i32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsWriteQuestionToBuffer_UTF8(pdnsbuffer: *mut DNS_MESSAGE_BUFFER, pdwbuffersize: *mut u32, pszname: super::super::Foundation::PSTR, wtype: u16, xid: u16, frecursiondesired: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DnsWriteQuestionToBuffer_W(pdnsbuffer: *mut DNS_MESSAGE_BUFFER, pdwbuffersize: *mut u32, pszname: super::super::Foundation::PWSTR, wtype: u16, xid: u16, frecursiondesired: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
-}
+pub type DnsAcquireContextHandle_A = unsafe extern "system" fn(credentialflags: u32, credentials: *const ::core::ffi::c_void, pcontext: *mut DnsContextHandle) -> i32;
+pub type DnsAcquireContextHandle_W = unsafe extern "system" fn(credentialflags: u32, credentials: *const ::core::ffi::c_void, pcontext: *mut DnsContextHandle) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsCancelQuery = unsafe extern "system" fn(pcancelhandle: *const DNS_QUERY_CANCEL) -> i32;
+pub type DnsConnectionDeletePolicyEntries = unsafe extern "system" fn(policyentrytag: DNS_CONNECTION_POLICY_TAG) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionDeleteProxyInfo = unsafe extern "system" fn(pwszconnectionname: super::super::Foundation::PWSTR, r#type: DNS_CONNECTION_PROXY_TYPE) -> u32;
+pub type DnsConnectionFreeNameList = unsafe extern "system" fn(pnamelist: *mut DNS_CONNECTION_NAME_LIST);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionFreeProxyInfo = unsafe extern "system" fn(pproxyinfo: *mut DNS_CONNECTION_PROXY_INFO);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionFreeProxyInfoEx = unsafe extern "system" fn(pproxyinfoex: *mut DNS_CONNECTION_PROXY_INFO_EX);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionFreeProxyList = unsafe extern "system" fn(pproxylist: *mut DNS_CONNECTION_PROXY_LIST);
+pub type DnsConnectionGetNameList = unsafe extern "system" fn(pnamelist: *mut DNS_CONNECTION_NAME_LIST) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionGetProxyInfo = unsafe extern "system" fn(pwszconnectionname: super::super::Foundation::PWSTR, r#type: DNS_CONNECTION_PROXY_TYPE, pproxyinfo: *mut DNS_CONNECTION_PROXY_INFO) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionGetProxyInfoForHostUrl = unsafe extern "system" fn(pwszhosturl: super::super::Foundation::PWSTR, pselectioncontext: *const u8, dwselectioncontextlength: u32, dwexplicitinterfaceindex: u32, pproxyinfoex: *mut DNS_CONNECTION_PROXY_INFO_EX) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionGetProxyList = unsafe extern "system" fn(pwszconnectionname: super::super::Foundation::PWSTR, pproxylist: *mut DNS_CONNECTION_PROXY_LIST) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionSetPolicyEntries = unsafe extern "system" fn(policyentrytag: DNS_CONNECTION_POLICY_TAG, ppolicyentrylist: *const DNS_CONNECTION_POLICY_ENTRY_LIST) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionSetProxyInfo = unsafe extern "system" fn(pwszconnectionname: super::super::Foundation::PWSTR, r#type: DNS_CONNECTION_PROXY_TYPE, pproxyinfo: *const DNS_CONNECTION_PROXY_INFO) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsConnectionUpdateIfIndexTable = unsafe extern "system" fn(pconnectionifindexentries: *const DNS_CONNECTION_IFINDEX_LIST) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsExtractRecordsFromMessage_UTF8 = unsafe extern "system" fn(pdnsbuffer: *const DNS_MESSAGE_BUFFER, wmessagelength: u16, pprecord: *mut *mut DNS_RECORDA) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsExtractRecordsFromMessage_W = unsafe extern "system" fn(pdnsbuffer: *const DNS_MESSAGE_BUFFER, wmessagelength: u16, pprecord: *mut *mut DNS_RECORDA) -> i32;
+pub type DnsFree = unsafe extern "system" fn(pdata: *const ::core::ffi::c_void, freetype: DNS_FREE_TYPE);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsFreeCustomServers = unsafe extern "system" fn(pcservers: *mut u32, ppservers: *mut *mut DNS_CUSTOM_SERVER);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsFreeProxyName = unsafe extern "system" fn(proxyname: super::super::Foundation::PWSTR);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsGetApplicationSettings = unsafe extern "system" fn(pcservers: *mut u32, ppdefaultservers: *mut *mut DNS_CUSTOM_SERVER, psettings: *mut DNS_APPLICATION_SETTINGS) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsGetProxyInformation = unsafe extern "system" fn(hostname: super::super::Foundation::PWSTR, proxyinformation: *mut DNS_PROXY_INFORMATION, defaultproxyinformation: *mut DNS_PROXY_INFORMATION, completionroutine: DNS_PROXY_COMPLETION_ROUTINE, completioncontext: *const ::core::ffi::c_void) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsModifyRecordsInSet_A = unsafe extern "system" fn(paddrecords: *const DNS_RECORDA, pdeleterecords: *const DNS_RECORDA, options: u32, hcredentials: super::super::Foundation::HANDLE, pextralist: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsModifyRecordsInSet_UTF8 = unsafe extern "system" fn(paddrecords: *const DNS_RECORDA, pdeleterecords: *const DNS_RECORDA, options: u32, hcredentials: super::super::Foundation::HANDLE, pextralist: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsModifyRecordsInSet_W = unsafe extern "system" fn(paddrecords: *const DNS_RECORDA, pdeleterecords: *const DNS_RECORDA, options: u32, hcredentials: super::super::Foundation::HANDLE, pextralist: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsNameCompare_A = unsafe extern "system" fn(pname1: super::super::Foundation::PSTR, pname2: super::super::Foundation::PSTR) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsNameCompare_W = unsafe extern "system" fn(pname1: super::super::Foundation::PWSTR, pname2: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsQueryConfig = unsafe extern "system" fn(config: DNS_CONFIG_TYPE, flag: u32, pwsadaptername: super::super::Foundation::PWSTR, preserved: *const ::core::ffi::c_void, pbuffer: *mut ::core::ffi::c_void, pbuflen: *mut u32) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsQueryEx = unsafe extern "system" fn(pqueryrequest: *const DNS_QUERY_REQUEST, pqueryresults: *mut DNS_QUERY_RESULT, pcancelhandle: *mut DNS_QUERY_CANCEL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsQuery_A = unsafe extern "system" fn(pszname: super::super::Foundation::PSTR, wtype: u16, options: u32, pextra: *mut ::core::ffi::c_void, ppqueryresults: *mut *mut DNS_RECORDA, preserved: *mut *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsQuery_UTF8 = unsafe extern "system" fn(pszname: super::super::Foundation::PSTR, wtype: u16, options: u32, pextra: *mut ::core::ffi::c_void, ppqueryresults: *mut *mut DNS_RECORDA, preserved: *mut *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsQuery_W = unsafe extern "system" fn(pszname: super::super::Foundation::PWSTR, wtype: u16, options: u32, pextra: *mut ::core::ffi::c_void, ppqueryresults: *mut *mut DNS_RECORDA, preserved: *mut *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsRecordCompare = unsafe extern "system" fn(precord1: *const DNS_RECORDA, precord2: *const DNS_RECORDA) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsRecordCopyEx = unsafe extern "system" fn(precord: *const DNS_RECORDA, charsetin: DNS_CHARSET, charsetout: DNS_CHARSET) -> *mut DNS_RECORDA;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsRecordSetCompare = unsafe extern "system" fn(prr1: *mut DNS_RECORDA, prr2: *mut DNS_RECORDA, ppdiff1: *mut *mut DNS_RECORDA, ppdiff2: *mut *mut DNS_RECORDA) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsRecordSetCopyEx = unsafe extern "system" fn(precordset: *const DNS_RECORDA, charsetin: DNS_CHARSET, charsetout: DNS_CHARSET) -> *mut DNS_RECORDA;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsRecordSetDetach = unsafe extern "system" fn(precordlist: *mut DNS_RECORDA) -> *mut DNS_RECORDA;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsReleaseContextHandle = unsafe extern "system" fn(hcontext: super::super::Foundation::HANDLE);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsReplaceRecordSetA = unsafe extern "system" fn(preplaceset: *const DNS_RECORDA, options: u32, hcontext: super::super::Foundation::HANDLE, pextrainfo: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsReplaceRecordSetUTF8 = unsafe extern "system" fn(preplaceset: *const DNS_RECORDA, options: u32, hcontext: super::super::Foundation::HANDLE, pextrainfo: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsReplaceRecordSetW = unsafe extern "system" fn(preplaceset: *const DNS_RECORDA, options: u32, hcontext: super::super::Foundation::HANDLE, pextrainfo: *mut ::core::ffi::c_void, preserved: *mut ::core::ffi::c_void) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceBrowse = unsafe extern "system" fn(prequest: *const DNS_SERVICE_BROWSE_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> i32;
+pub type DnsServiceBrowseCancel = unsafe extern "system" fn(pcancelhandle: *const DNS_SERVICE_CANCEL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceConstructInstance = unsafe extern "system" fn(pservicename: super::super::Foundation::PWSTR, phostname: super::super::Foundation::PWSTR, pip4: *const u32, pip6: *const IP6_ADDRESS, wport: u16, wpriority: u16, wweight: u16, dwpropertiescount: u32, keys: *const super::super::Foundation::PWSTR, values: *const super::super::Foundation::PWSTR) -> *mut DNS_SERVICE_INSTANCE;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceCopyInstance = unsafe extern "system" fn(porig: *const DNS_SERVICE_INSTANCE) -> *mut DNS_SERVICE_INSTANCE;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceDeRegister = unsafe extern "system" fn(prequest: *const DNS_SERVICE_REGISTER_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceFreeInstance = unsafe extern "system" fn(pinstance: *const DNS_SERVICE_INSTANCE);
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceRegister = unsafe extern "system" fn(prequest: *const DNS_SERVICE_REGISTER_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> u32;
+pub type DnsServiceRegisterCancel = unsafe extern "system" fn(pcancelhandle: *const DNS_SERVICE_CANCEL) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsServiceResolve = unsafe extern "system" fn(prequest: *const DNS_SERVICE_RESOLVE_REQUEST, pcancel: *mut DNS_SERVICE_CANCEL) -> i32;
+pub type DnsServiceResolveCancel = unsafe extern "system" fn(pcancelhandle: *const DNS_SERVICE_CANCEL) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsSetApplicationSettings = unsafe extern "system" fn(cservers: u32, pservers: *const DNS_CUSTOM_SERVER, psettings: *const DNS_APPLICATION_SETTINGS) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsStartMulticastQuery = unsafe extern "system" fn(pqueryrequest: *const MDNS_QUERY_REQUEST, phandle: *mut MDNS_QUERY_HANDLE) -> i32;
+pub type DnsStopMulticastQuery = unsafe extern "system" fn(phandle: *mut MDNS_QUERY_HANDLE) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsValidateName_A = unsafe extern "system" fn(pszname: super::super::Foundation::PSTR, format: DNS_NAME_FORMAT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsValidateName_UTF8 = unsafe extern "system" fn(pszname: super::super::Foundation::PSTR, format: DNS_NAME_FORMAT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsValidateName_W = unsafe extern "system" fn(pszname: super::super::Foundation::PWSTR, format: DNS_NAME_FORMAT) -> i32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsWriteQuestionToBuffer_UTF8 = unsafe extern "system" fn(pdnsbuffer: *mut DNS_MESSAGE_BUFFER, pdwbuffersize: *mut u32, pszname: super::super::Foundation::PSTR, wtype: u16, xid: u16, frecursiondesired: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type DnsWriteQuestionToBuffer_W = unsafe extern "system" fn(pdnsbuffer: *mut DNS_MESSAGE_BUFFER, pdwbuffersize: *mut u32, pszname: super::super::Foundation::PWSTR, wtype: u16, xid: u16, frecursiondesired: super::super::Foundation::BOOL) -> super::super::Foundation::BOOL;
 pub const DNSREC_ADDITIONAL: u32 = 3u32;
 pub const DNSREC_ANSWER: u32 = 1u32;
 pub const DNSREC_AUTHORITY: u32 = 2u32;

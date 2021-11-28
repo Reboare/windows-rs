@@ -1,11 +1,8 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OperationEnd(operationendparams: *const OPERATION_END_PARAMETERS) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OperationStart(operationstartparams: *const OPERATION_START_PARAMETERS) -> super::super::Foundation::BOOL;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type OperationEnd = unsafe extern "system" fn(operationendparams: *const OPERATION_END_PARAMETERS) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type OperationStart = unsafe extern "system" fn(operationstartparams: *const OPERATION_START_PARAMETERS) -> super::super::Foundation::BOOL;
 #[repr(C)]
 pub struct OPERATION_END_PARAMETERS {
     pub Version: u32,

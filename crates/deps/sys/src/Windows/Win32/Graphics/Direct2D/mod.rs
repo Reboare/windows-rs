@@ -1,48 +1,45 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
 #[cfg(feature = "Win32_Graphics_Direct2D_Common")]
 pub mod Common;
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Foundation_Numerics")]
-    pub fn D2D1ComputeMaximumScaleFactor(matrix: *const super::super::super::Foundation::Numerics::Matrix3x2) -> f32;
-    #[cfg(feature = "Win32_Graphics_Direct2D_Common")]
-    pub fn D2D1ConvertColorSpace(sourcecolorspace: D2D1_COLOR_SPACE, destinationcolorspace: D2D1_COLOR_SPACE, color: *const Common::D2D1_COLOR_F) -> Common::D2D1_COLOR_F;
-    #[cfg(feature = "Win32_Graphics_Dxgi")]
-    pub fn D2D1CreateDevice(dxgidevice: super::Dxgi::IDXGIDevice, creationproperties: *const D2D1_CREATION_PROPERTIES, d2ddevice: *mut ID2D1Device) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Graphics_Dxgi")]
-    pub fn D2D1CreateDeviceContext(dxgisurface: super::Dxgi::IDXGISurface, creationproperties: *const D2D1_CREATION_PROPERTIES, d2ddevicecontext: *mut ID2D1DeviceContext) -> ::windows_sys::core::HRESULT;
-    pub fn D2D1CreateFactory(factorytype: D2D1_FACTORY_TYPE, riid: *const ::windows_sys::core::GUID, pfactoryoptions: *const D2D1_FACTORY_OPTIONS, ppifactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
-    #[cfg(feature = "Win32_Graphics_Direct2D_Common")]
-    pub fn D2D1GetGradientMeshInteriorPointsFromCoonsPatch(
-        ppoint0: *const Common::D2D_POINT_2F,
-        ppoint1: *const Common::D2D_POINT_2F,
-        ppoint2: *const Common::D2D_POINT_2F,
-        ppoint3: *const Common::D2D_POINT_2F,
-        ppoint4: *const Common::D2D_POINT_2F,
-        ppoint5: *const Common::D2D_POINT_2F,
-        ppoint6: *const Common::D2D_POINT_2F,
-        ppoint7: *const Common::D2D_POINT_2F,
-        ppoint8: *const Common::D2D_POINT_2F,
-        ppoint9: *const Common::D2D_POINT_2F,
-        ppoint10: *const Common::D2D_POINT_2F,
-        ppoint11: *const Common::D2D_POINT_2F,
-        ptensorpoint11: *mut Common::D2D_POINT_2F,
-        ptensorpoint12: *mut Common::D2D_POINT_2F,
-        ptensorpoint21: *mut Common::D2D_POINT_2F,
-        ptensorpoint22: *mut Common::D2D_POINT_2F,
-    );
-    #[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Foundation"))]
-    pub fn D2D1InvertMatrix(matrix: *mut super::super::super::Foundation::Numerics::Matrix3x2) -> super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Foundation"))]
-    pub fn D2D1IsMatrixInvertible(matrix: *const super::super::super::Foundation::Numerics::Matrix3x2) -> super::super::Foundation::BOOL;
-    #[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Graphics_Direct2D_Common"))]
-    pub fn D2D1MakeRotateMatrix(angle: f32, center: Common::D2D_POINT_2F, matrix: *mut super::super::super::Foundation::Numerics::Matrix3x2);
-    #[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Graphics_Direct2D_Common"))]
-    pub fn D2D1MakeSkewMatrix(anglex: f32, angley: f32, center: Common::D2D_POINT_2F, matrix: *mut super::super::super::Foundation::Numerics::Matrix3x2);
-    pub fn D2D1SinCos(angle: f32, s: *mut f32, c: *mut f32);
-    pub fn D2D1Tan(angle: f32) -> f32;
-    pub fn D2D1Vec3Length(x: f32, y: f32, z: f32) -> f32;
-}
+#[cfg(feature = "Foundation_Numerics")]
+pub type D2D1ComputeMaximumScaleFactor = unsafe extern "system" fn(matrix: *const super::super::super::Foundation::Numerics::Matrix3x2) -> f32;
+#[cfg(feature = "Win32_Graphics_Direct2D_Common")]
+pub type D2D1ConvertColorSpace = unsafe extern "system" fn(sourcecolorspace: D2D1_COLOR_SPACE, destinationcolorspace: D2D1_COLOR_SPACE, color: *const Common::D2D1_COLOR_F) -> Common::D2D1_COLOR_F;
+#[cfg(feature = "Win32_Graphics_Dxgi")]
+pub type D2D1CreateDevice = unsafe extern "system" fn(dxgidevice: super::Dxgi::IDXGIDevice, creationproperties: *const D2D1_CREATION_PROPERTIES, d2ddevice: *mut ID2D1Device) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Graphics_Dxgi")]
+pub type D2D1CreateDeviceContext = unsafe extern "system" fn(dxgisurface: super::Dxgi::IDXGISurface, creationproperties: *const D2D1_CREATION_PROPERTIES, d2ddevicecontext: *mut ID2D1DeviceContext) -> ::windows_sys::core::HRESULT;
+pub type D2D1CreateFactory = unsafe extern "system" fn(factorytype: D2D1_FACTORY_TYPE, riid: *const ::windows_sys::core::GUID, pfactoryoptions: *const D2D1_FACTORY_OPTIONS, ppifactory: *mut *mut ::core::ffi::c_void) -> ::windows_sys::core::HRESULT;
+#[cfg(feature = "Win32_Graphics_Direct2D_Common")]
+pub type D2D1GetGradientMeshInteriorPointsFromCoonsPatch = unsafe extern "system" fn(
+    ppoint0: *const Common::D2D_POINT_2F,
+    ppoint1: *const Common::D2D_POINT_2F,
+    ppoint2: *const Common::D2D_POINT_2F,
+    ppoint3: *const Common::D2D_POINT_2F,
+    ppoint4: *const Common::D2D_POINT_2F,
+    ppoint5: *const Common::D2D_POINT_2F,
+    ppoint6: *const Common::D2D_POINT_2F,
+    ppoint7: *const Common::D2D_POINT_2F,
+    ppoint8: *const Common::D2D_POINT_2F,
+    ppoint9: *const Common::D2D_POINT_2F,
+    ppoint10: *const Common::D2D_POINT_2F,
+    ppoint11: *const Common::D2D_POINT_2F,
+    ptensorpoint11: *mut Common::D2D_POINT_2F,
+    ptensorpoint12: *mut Common::D2D_POINT_2F,
+    ptensorpoint21: *mut Common::D2D_POINT_2F,
+    ptensorpoint22: *mut Common::D2D_POINT_2F,
+);
+#[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Foundation"))]
+pub type D2D1InvertMatrix = unsafe extern "system" fn(matrix: *mut super::super::super::Foundation::Numerics::Matrix3x2) -> super::super::Foundation::BOOL;
+#[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Foundation"))]
+pub type D2D1IsMatrixInvertible = unsafe extern "system" fn(matrix: *const super::super::super::Foundation::Numerics::Matrix3x2) -> super::super::Foundation::BOOL;
+#[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Graphics_Direct2D_Common"))]
+pub type D2D1MakeRotateMatrix = unsafe extern "system" fn(angle: f32, center: Common::D2D_POINT_2F, matrix: *mut super::super::super::Foundation::Numerics::Matrix3x2);
+#[cfg(all(feature = "Foundation_Numerics", feature = "Win32_Graphics_Direct2D_Common"))]
+pub type D2D1MakeSkewMatrix = unsafe extern "system" fn(anglex: f32, angley: f32, center: Common::D2D_POINT_2F, matrix: *mut super::super::super::Foundation::Numerics::Matrix3x2);
+pub type D2D1SinCos = unsafe extern "system" fn(angle: f32, s: *mut f32, c: *mut f32);
+pub type D2D1Tan = unsafe extern "system" fn(angle: f32) -> f32;
+pub type D2D1Vec3Length = unsafe extern "system" fn(x: f32, y: f32, z: f32) -> f32;
 pub const CLSID_D2D12DAffineTransform: ::windows_sys::core::GUID = ::windows_sys::core::GUID {
     data1: 1789490309,
     data2: 25428,

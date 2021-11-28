@@ -346,10 +346,7 @@ fn gen_functions(tree: &TypeTree, gen: &Gen) -> TokenStream {
 
     if functions.peek().is_some() {
         quote! {
-            #[link(name = "windows")]
-            extern "system" {
-                #(#functions)*
-            }
+            #(#functions)*
         }
     } else {
         quote! {}
@@ -382,7 +379,7 @@ fn gen_function(def: &MethodDef, gen: &Gen) -> TokenStream {
 
     quote! {
         #cfg
-        pub fn #name(#(#params),*) #return_type;
+        pub type #name = unsafe extern "system" fn(#(#params),*) #return_type;
     }
 }
 

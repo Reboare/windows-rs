@@ -1,28 +1,25 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavAddConnection(connectionhandle: *mut super::super::Foundation::HANDLE, remotename: super::super::Foundation::PWSTR, username: super::super::Foundation::PWSTR, password: super::super::Foundation::PWSTR, clientcert: *const u8, certsize: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavCancelConnectionsToServer(lpname: super::super::Foundation::PWSTR, fforce: super::super::Foundation::BOOL) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavDeleteConnection(connectionhandle: super::super::Foundation::HANDLE) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavFlushFile(hfile: super::super::Foundation::HANDLE) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavGetExtendedError(hfile: super::super::Foundation::HANDLE, exterror: *mut u32, exterrorstring: super::super::Foundation::PWSTR, cchsize: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavGetHTTPFromUNCPath(uncpath: super::super::Foundation::PWSTR, url: super::super::Foundation::PWSTR, lpsize: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavGetTheLockOwnerOfTheFile(filename: super::super::Foundation::PWSTR, lockownername: super::super::Foundation::PWSTR, lockownernamelengthinbytes: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavGetUNCFromHTTPPath(url: super::super::Foundation::PWSTR, uncpath: super::super::Foundation::PWSTR, lpsize: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavInvalidateCache(urlname: super::super::Foundation::PWSTR) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn DavRegisterAuthCallback(callback: PFNDAVAUTHCALLBACK, version: u32) -> u32;
-    pub fn DavUnregisterAuthCallback(hcallback: u32);
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type DavAddConnection = unsafe extern "system" fn(connectionhandle: *mut super::super::Foundation::HANDLE, remotename: super::super::Foundation::PWSTR, username: super::super::Foundation::PWSTR, password: super::super::Foundation::PWSTR, clientcert: *const u8, certsize: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavCancelConnectionsToServer = unsafe extern "system" fn(lpname: super::super::Foundation::PWSTR, fforce: super::super::Foundation::BOOL) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavDeleteConnection = unsafe extern "system" fn(connectionhandle: super::super::Foundation::HANDLE) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavFlushFile = unsafe extern "system" fn(hfile: super::super::Foundation::HANDLE) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavGetExtendedError = unsafe extern "system" fn(hfile: super::super::Foundation::HANDLE, exterror: *mut u32, exterrorstring: super::super::Foundation::PWSTR, cchsize: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavGetHTTPFromUNCPath = unsafe extern "system" fn(uncpath: super::super::Foundation::PWSTR, url: super::super::Foundation::PWSTR, lpsize: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavGetTheLockOwnerOfTheFile = unsafe extern "system" fn(filename: super::super::Foundation::PWSTR, lockownername: super::super::Foundation::PWSTR, lockownernamelengthinbytes: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavGetUNCFromHTTPPath = unsafe extern "system" fn(url: super::super::Foundation::PWSTR, uncpath: super::super::Foundation::PWSTR, lpsize: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavInvalidateCache = unsafe extern "system" fn(urlname: super::super::Foundation::PWSTR) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type DavRegisterAuthCallback = unsafe extern "system" fn(callback: PFNDAVAUTHCALLBACK, version: u32) -> u32;
+pub type DavUnregisterAuthCallback = unsafe extern "system" fn(hcallback: u32);
 pub type AUTHNEXTSTEP = i32;
 pub const DefaultBehavior: AUTHNEXTSTEP = 0i32;
 pub const RetryRequest: AUTHNEXTSTEP = 1i32;

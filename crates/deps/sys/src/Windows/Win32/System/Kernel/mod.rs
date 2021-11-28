@@ -1,14 +1,11 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn RtlFirstEntrySList(listhead: *const SLIST_HEADER) -> *mut SLIST_ENTRY;
-    pub fn RtlInitializeSListHead(listhead: *mut SLIST_HEADER);
-    pub fn RtlInterlockedFlushSList(listhead: *mut SLIST_HEADER) -> *mut SLIST_ENTRY;
-    pub fn RtlInterlockedPopEntrySList(listhead: *mut SLIST_HEADER) -> *mut SLIST_ENTRY;
-    pub fn RtlInterlockedPushEntrySList(listhead: *mut SLIST_HEADER, listentry: *mut SLIST_ENTRY) -> *mut SLIST_ENTRY;
-    pub fn RtlInterlockedPushListSListEx(listhead: *mut SLIST_HEADER, list: *mut SLIST_ENTRY, listend: *mut SLIST_ENTRY, count: u32) -> *mut SLIST_ENTRY;
-    pub fn RtlQueryDepthSList(listhead: *const SLIST_HEADER) -> u16;
-}
+pub type RtlFirstEntrySList = unsafe extern "system" fn(listhead: *const SLIST_HEADER) -> *mut SLIST_ENTRY;
+pub type RtlInitializeSListHead = unsafe extern "system" fn(listhead: *mut SLIST_HEADER);
+pub type RtlInterlockedFlushSList = unsafe extern "system" fn(listhead: *mut SLIST_HEADER) -> *mut SLIST_ENTRY;
+pub type RtlInterlockedPopEntrySList = unsafe extern "system" fn(listhead: *mut SLIST_HEADER) -> *mut SLIST_ENTRY;
+pub type RtlInterlockedPushEntrySList = unsafe extern "system" fn(listhead: *mut SLIST_HEADER, listentry: *mut SLIST_ENTRY) -> *mut SLIST_ENTRY;
+pub type RtlInterlockedPushListSListEx = unsafe extern "system" fn(listhead: *mut SLIST_HEADER, list: *mut SLIST_ENTRY, listend: *mut SLIST_ENTRY, count: u32) -> *mut SLIST_ENTRY;
+pub type RtlQueryDepthSList = unsafe extern "system" fn(listhead: *const SLIST_HEADER) -> u16;
 pub type COMPARTMENT_ID = i32;
 pub const UNSPECIFIED_COMPARTMENT_ID: COMPARTMENT_ID = 0i32;
 pub const DEFAULT_COMPARTMENT_ID: COMPARTMENT_ID = 1i32;

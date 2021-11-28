@@ -5,8 +5,6 @@ pub mod Peers;
 pub mod Provider;
 #[cfg(feature = "UI_Xaml_Automation_Text")]
 pub mod Text;
-#[link(name = "windows")]
-extern "system" {}
 pub type AnnotationPatternIdentifiers = *mut ::core::ffi::c_void;
 #[repr(transparent)]
 pub struct AnnotationType(pub i32);

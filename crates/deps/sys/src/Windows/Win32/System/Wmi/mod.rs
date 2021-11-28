@@ -1,8 +1,5 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    pub fn MI_Application_InitializeV1(flags: u32, applicationid: *const u16, extendederror: *mut *mut MI_Instance, application: *mut MI_Application) -> MI_Result;
-}
+pub type MI_Application_InitializeV1 = unsafe extern "system" fn(flags: u32, applicationid: *const u16, extendederror: *mut *mut MI_Instance, application: *mut MI_Application) -> MI_Result;
 pub type CIMTYPE_ENUMERATION = i32;
 pub const CIM_ILLEGAL: CIMTYPE_ENUMERATION = 4095i32;
 pub const CIM_EMPTY: CIMTYPE_ENUMERATION = 0i32;

@@ -1,14 +1,11 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OfflineFilesEnable(benable: super::super::Foundation::BOOL, pbrebootrequired: *mut super::super::Foundation::BOOL) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OfflineFilesQueryStatus(pbactive: *mut super::super::Foundation::BOOL, pbenabled: *mut super::super::Foundation::BOOL) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn OfflineFilesQueryStatusEx(pbactive: *mut super::super::Foundation::BOOL, pbenabled: *mut super::super::Foundation::BOOL, pbavailable: *mut super::super::Foundation::BOOL) -> u32;
-    pub fn OfflineFilesStart() -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type OfflineFilesEnable = unsafe extern "system" fn(benable: super::super::Foundation::BOOL, pbrebootrequired: *mut super::super::Foundation::BOOL) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OfflineFilesQueryStatus = unsafe extern "system" fn(pbactive: *mut super::super::Foundation::BOOL, pbenabled: *mut super::super::Foundation::BOOL) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type OfflineFilesQueryStatusEx = unsafe extern "system" fn(pbactive: *mut super::super::Foundation::BOOL, pbenabled: *mut super::super::Foundation::BOOL, pbavailable: *mut super::super::Foundation::BOOL) -> u32;
+pub type OfflineFilesStart = unsafe extern "system" fn() -> u32;
 pub type IEnumOfflineFilesItems = *mut ::core::ffi::c_void;
 pub type IEnumOfflineFilesSettings = *mut ::core::ffi::c_void;
 pub type IOfflineFilesCache = *mut ::core::ffi::c_void;

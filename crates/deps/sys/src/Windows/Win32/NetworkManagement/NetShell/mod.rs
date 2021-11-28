@@ -1,22 +1,19 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clashing_extern_declarations, clippy::all)]
-#[link(name = "windows")]
-extern "system" {
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MatchEnumTag(hmodule: super::super::Foundation::HANDLE, pwcarg: super::super::Foundation::PWSTR, dwnumarg: u32, penumtable: *const TOKEN_VALUE, pdwvalue: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn MatchToken(pwszusertoken: super::super::Foundation::PWSTR, pwszcmdtoken: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PreprocessCommand(hmodule: super::super::Foundation::HANDLE, ppwcarguments: *mut super::super::Foundation::PWSTR, dwcurrentindex: u32, dwargcount: u32, ptttags: *mut TAG_TYPE, dwtagcount: u32, dwminargs: u32, dwmaxargs: u32, pdwtagtype: *mut u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PrintError(hmodule: super::super::Foundation::HANDLE, dwerrid: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PrintMessage(pwszformat: super::super::Foundation::PWSTR) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn PrintMessageFromModule(hmodule: super::super::Foundation::HANDLE, dwmsgid: u32) -> u32;
-    #[cfg(feature = "Win32_Foundation")]
-    pub fn RegisterContext(pchildcontext: *const NS_CONTEXT_ATTRIBUTES) -> u32;
-    pub fn RegisterHelper(pguidparentcontext: *const ::windows_sys::core::GUID, pfnregistersubcontext: *const NS_HELPER_ATTRIBUTES) -> u32;
-}
+#[cfg(feature = "Win32_Foundation")]
+pub type MatchEnumTag = unsafe extern "system" fn(hmodule: super::super::Foundation::HANDLE, pwcarg: super::super::Foundation::PWSTR, dwnumarg: u32, penumtable: *const TOKEN_VALUE, pdwvalue: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type MatchToken = unsafe extern "system" fn(pwszusertoken: super::super::Foundation::PWSTR, pwszcmdtoken: super::super::Foundation::PWSTR) -> super::super::Foundation::BOOL;
+#[cfg(feature = "Win32_Foundation")]
+pub type PreprocessCommand = unsafe extern "system" fn(hmodule: super::super::Foundation::HANDLE, ppwcarguments: *mut super::super::Foundation::PWSTR, dwcurrentindex: u32, dwargcount: u32, ptttags: *mut TAG_TYPE, dwtagcount: u32, dwminargs: u32, dwmaxargs: u32, pdwtagtype: *mut u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type PrintError = unsafe extern "system" fn(hmodule: super::super::Foundation::HANDLE, dwerrid: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type PrintMessage = unsafe extern "system" fn(pwszformat: super::super::Foundation::PWSTR) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type PrintMessageFromModule = unsafe extern "system" fn(hmodule: super::super::Foundation::HANDLE, dwmsgid: u32) -> u32;
+#[cfg(feature = "Win32_Foundation")]
+pub type RegisterContext = unsafe extern "system" fn(pchildcontext: *const NS_CONTEXT_ATTRIBUTES) -> u32;
+pub type RegisterHelper = unsafe extern "system" fn(pguidparentcontext: *const ::windows_sys::core::GUID, pfnregistersubcontext: *const NS_HELPER_ATTRIBUTES) -> u32;
 #[repr(C)]
 #[cfg(feature = "Win32_Foundation")]
 pub struct CMD_ENTRY {
